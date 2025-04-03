@@ -83,3 +83,98 @@
   font-size: 1rem;
   margin-right: 0.5rem; 
 }
+
+
+
+
+/* Sidebar*/
+.sidebar {
+  background-color: #12112f;
+  color: #ffffff; 
+  height: 100vh; 
+  width: 268px; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  box-shadow: 4px 0 6px rgba(52, 52, 52, 1.1); 
+  border: none;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo .admin-icon {
+  font-size: 3rem;
+  color: #ffffff; 
+  margin-right: 0.5rem; 
+}
+
+.logo .dashboard-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem; 
+  color: #ffffff; 
+  text-decoration: none; 
+  font-size: 1.1rem; 
+  transition: background-color 0.3s, transform 0.3s, color 0.3s; 
+  font-family: "Unbounded", sans-serif;
+  font-weight: bold;
+}
+
+.logo .dashboard-link:hover {
+  color: #ffffff; 
+  transform: translateY(-3px); 
+  font-size: 1.1rem;
+}
+
+
+.list-group-item {
+  color: #ffffff; 
+  background-color: transparent; 
+  border: none; 
+  padding: 1rem; 
+  margin-top: 5px;
+  border-bottom-left-radius: 20px !important;
+  border-top-left-radius: 20px !important;
+  transition: background-color 0.3s, transform 0.3s, color 0.3s, box-shadow 0.3s; 
+  display: flex;
+  align-items: center; 
+  font-family: 'Gruppo', sans-serif;
+  font-weight: bolder;
+}
+
+.list-group-item.active-link {
+  color: #ffc107; 
+}
+
+.list-group-item:hover {
+  background-color: #333744; 
+  color: #e4c916; 
+  transform: translateX(5px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.logout-link {
+  margin-top: auto; 
+  padding: 1rem; 
+  border-top: 1px solid #333; 
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.logout-link i {
+  color: #ffffff; 
+  font-size: 1.25rem; 
+  margin-right: 0.75rem; 
+ 
+}
+
+.logout-link:hover {
+  background-color: #333744; 
+  color:  #d32f2f; 
+}
