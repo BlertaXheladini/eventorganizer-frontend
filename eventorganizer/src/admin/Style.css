@@ -5,12 +5,21 @@
 
 /*Navbar*/
 .navbar {
-  background-color: #12112f;
+  background-color: #B29C80;
   padding: 0.5rem 1rem;
   top: 0;
   z-index: 1000;
   height: 60px; 
+  width: calc(100% - 268px);
+  position: fixed;
+  left: 268px;
+  right: 0;
+  transition: all 0.3s ease;
+}
+
+.navbar.sidebar-hidden {
   width: 100%;
+  left: 0;
 }
 
 .navbar-collapse {
@@ -40,7 +49,7 @@
   border: none;
   border-radius: 15px;
   background-color: #ffffff; 
-  color: #000;
+  color: #000000;
   font-size: 0.9rem;
 }
 
@@ -89,7 +98,7 @@
 
 /* Sidebar*/
 .sidebar {
-  background-color: #12112f;
+  background-color: #B29C80;
   color: #ffffff; 
   height: 100vh; 
   width: 268px; 
@@ -99,6 +108,7 @@
   overflow-y: auto;
   box-shadow: 4px 0 6px rgba(52, 52, 52, 1.1); 
   border: none;
+  z-index: 1000;
 }
 
 .logo {
@@ -152,8 +162,8 @@
 }
 
 .list-group-item:hover {
-  background-color: #333744; 
-  color: #e4c916; 
+  background-color: #A08C70; 
+  color: #ffc107; 
   transform: translateX(5px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
@@ -171,10 +181,38 @@
   color: #ffffff; 
   font-size: 1.25rem; 
   margin-right: 0.75rem; 
- 
 }
 
 .logout-link:hover {
-  background-color: #333744; 
-  color:  #d32f2f; 
+  background-color: #A08C70; 
+  color: #dc3545; 
+}
+
+/* Main Content Area */
+.main-content {
+  margin-top: 60px; /* Height of the navbar */
+  padding: 20px;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background-color: #fff;
+}
+
+.main-content.sidebar-hidden {
+  margin-left: 0;
+  width: 100%;
+}
+
+.main-content.sidebar-visible {
+  margin-left: 268px;
+  width: calc(100% - 268px);
+}
+
+/* Remove the Edit and Delete button styles */
+.btn-edit:hover span,
+.btn-delete:hover span,
+.btn-edit:hover i,
+.btn-delete:hover i {
+  color: #ffc107;
+  transition: color 0.3s;
 }

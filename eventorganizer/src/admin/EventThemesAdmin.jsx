@@ -39,8 +39,10 @@ function EventThemesAdmin() {
   async function Load() {
     try {
       const result = await axios.get(
-        "https://localhost:7137/api/EventThemes/GetAllList"
+        "http://localhost:5091/api/EventThemes/GetAllList"
       );
+      console.log(result);
+      
       setEventThemes(result.data);
     } catch (err) {
       console.error(err);
@@ -50,7 +52,7 @@ function EventThemesAdmin() {
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("https://localhost:7137/api/EventThemes/Add", {
+      await axios.post("http://localhost:5091/api/EventThemes/Add", {
         themeName: themeName,
         description: description,
       });
@@ -74,7 +76,7 @@ function EventThemesAdmin() {
 
   async function deleteEventThemes(id) {
     try {
-      await axios.delete(`https://localhost:7137/api/EventThemes/Delete?Id=${id}`);
+      await axios.delete(`http://localhost:5091/api/EventThemes/Delete?Id=${id}`);
       showAlert("The event theme has been successfully deleted!", "alert-success");
       setId("");
       setThemeName("");
@@ -88,15 +90,15 @@ function EventThemesAdmin() {
   async function update(event) {
     event.preventDefault();
     try {
-      const eventTheme = eventThemes.find((p) => p.id === id);
-      await axios.put(
-        `https://localhost:7137/api/EventThemes/Update/${eventTheme.id}`,
+      const response = await axios.put(
+        "http://localhost:5091/api/EventThemes/Update",
         {
-          id: eventTheme.id,
+          id: id,
           themeName: themeName,
           description: description,
         }
       );
+      console.log("Update response:", response);
       showAlert("The event theme has been successfully edited!", "alert-success");
       setId("");
       setThemeName("");
@@ -104,7 +106,8 @@ function EventThemesAdmin() {
       setIsFormVisible(false); 
       Load();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      console.error("Update error:", err);
+      showAlert(`Error: ${err.message}`, "alert-danger");
     }
   }
 
@@ -128,6 +131,64 @@ function EventThemesAdmin() {
         backgroundSize: "cover",
       }}
     >
+      <style>
+        {`
+          .btn-add {
+            background-color: #B29C80;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .btn-add:hover {
+            background-color: #9A8569;
+            color: white;
+          }
+          .btn-add i {
+            color: white;
+            margin-right: 8px;
+          }
+          .btn-save {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-right: 10px;
+          }
+          .btn-save:hover {
+            background-color: #218838;
+            color: white;
+          }
+          .btn-update {
+            background-color: #ffc107;
+            color: black;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-right: 10px;
+          }
+          .btn-update:hover {
+            background-color: #e0a800;
+            color: black;
+          }
+          .btn-cancel {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+          }
+          .btn-cancel:hover {
+            background-color: #c82333;
+            color: white;
+          }
+        `}
+      </style>
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -135,8 +196,7 @@ function EventThemesAdmin() {
           </div>
         )}
 
-        <div className="col-4 col-md-2"></div>
-        <div className="col">
+        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
           <Navbar Toggle={Toggle} />
 
           <div className="d-flex justify-content-between align-items-center mt-4 px-5">
@@ -147,11 +207,10 @@ function EventThemesAdmin() {
             </button>
           </div>
 
-
           {isFormVisible && (
-            <div className="container mt-4 text-white align-item-center">
-              <form>
-                <div className="form-group px-5 ">
+            <div className="container mt-4 px-5">
+              <form className="bg-white p-4 rounded shadow">
+                <div className="form-group">
                   <input
                     type="text"
                     className="form-control"
@@ -163,7 +222,7 @@ function EventThemesAdmin() {
                     }}
                   />
 
-                  <label className="label">Theme Name:</label>
+                  <label className="label text-dark">Theme Name:</label>
                   <input
                     type="text"
                     className="form-control mb-3"
@@ -174,7 +233,7 @@ function EventThemesAdmin() {
                     }}
                   />
 
-                  <label className="label">Description:</label>
+                  <label className="label text-dark">Description:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -187,19 +246,16 @@ function EventThemesAdmin() {
                 </div>
 
                 <div className="mt-3">
-                  <button className="btn btn-save" onClick={save}>
-                    Save
-                  </button>
-                  <button
-                    className="btn btn-update"
-                    onClick={update}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-cancel "
-                    onClick={cancel}
-                  >
+                  {id ? (
+                    <button className="btn btn-update" onClick={update}>
+                      Update
+                    </button>
+                  ) : (
+                    <button className="btn btn-save" onClick={save}>
+                      Save
+                    </button>
+                  )}
+                  <button className="btn btn-cancel" onClick={cancel}>
                     Cancel
                   </button>
                 </div>
