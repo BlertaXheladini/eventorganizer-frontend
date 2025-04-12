@@ -5,6 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Dashboard from "./admin/Dashboard";
 import EventThemesAdmin from "./admin/EventThemesAdmin";
 import EventCategoriesAdmin from "./admin/EventCategoriesAdmin";
+import EventsAdmin from "./admin/EventsAdmin";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Router>
     <Routes>
     <Route path="/" element={<Dashboard />} />
+    <Route path="/eventsAdmin" element={<EventsAdmin />} />
 
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/eventThemesAdmin" element={<EventThemesAdmin />} />
