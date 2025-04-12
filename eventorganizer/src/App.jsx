@@ -6,6 +6,7 @@ import Dashboard from "./admin/Dashboard";
 import EventThemesAdmin from "./admin/EventThemesAdmin";
 import EventCategoriesAdmin from "./admin/EventCategoriesAdmin";
 import EventsAdmin from "./admin/EventsAdmin";
+import RestaurantTypesAdmin from "./admin/RestaurantTypesAdmin";
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Dashboard />} />
     <Route path="/eventsAdmin" element={<EventsAdmin />} />
-
+    <Route path="/restaurantTypesAdmin" element={<RestaurantTypesAdmin />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/eventThemesAdmin" element={<EventThemesAdmin />} />
       <Route path="/eventCategoriesAdmin" element={<EventCategoriesAdmin />} />
