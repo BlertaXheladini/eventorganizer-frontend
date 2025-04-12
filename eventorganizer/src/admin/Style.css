@@ -216,3 +216,40 @@
   color: #ffc107;
   transition: color 0.3s;
 }
+
+ 
+ 
+   /*////////////////////////////////////////////*/
+   /*Dashboard*/
+ .event-cards .card {
+   overflow: hidden;
+   width: 90%;
+ }
+ 
+ .event-cards .card img {
+   border-bottom: 1px solid #ddd;
+   height: 95px;
+ }
+ 
+ .event-cards .card-body {
+   padding: 15px;
+ }
+ 
+ .event-cards .btn {
+   margin-top: 5px;
+ }
+ 
+ .event-details{
+   background-color: #ffbf00;
+   color: #fff;
+   font-family: "Unbounded", sans-serif;
+ }
+ 
+ .event-details:hover{
+   background-color: #eeb304;
+ }
+ 
+ .chart-title{
+   font-family: "Unbounded", sans-serif;
+   font-size: 17px;
+ }
