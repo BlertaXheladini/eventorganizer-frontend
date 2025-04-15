@@ -1,19 +1,20 @@
+// AboutUs.js
 import React from 'react';
 import Navbar from '../include/Navbar';
 import Footer from '../include/Footer';
-import './Home.css';
+import './AboutUs.css';
 
 
-const Home = () => {
+const AboutUs = () => {
   return (
     <div>
       <Navbar />
       
      
 
-      {/* { <Footer /> } */}
+      { <Footer /> }
     </div>
   );
 };
 
-export default Home;
+export default AboutUs;
