@@ -11,6 +11,7 @@ import RestaurantsAdmin from "./admin/RestaurantsAdmin";
 import StaffAdmin from "./admin/StaffAdmin"; 
 import ContactAdmin from './admin/ContactAdmin';
 import Users from "./admin/Users";
+import Reservations from "./admin/Reservations"
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Route path="/staffAdmin" element={<StaffAdmin />} />
       <Route path="/contactAdmin" element={<ContactAdmin />} />
       <Route path="/users" element={<Users />} />
+      <Route path="/reservations" element={<Reservations />} />
 
     </Routes>
   </Router>
