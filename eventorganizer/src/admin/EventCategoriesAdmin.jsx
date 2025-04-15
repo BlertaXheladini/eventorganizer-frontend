@@ -3,11 +3,12 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
+import "./Style.css";
 
 function EventCategoriesAdmin() {
   const [toggle, setToggle] = useState(true);
-
   const navigate = useNavigate();
+  
   const Toggle = () => {
     setToggle(!toggle);
   };
@@ -17,7 +18,7 @@ function EventCategoriesAdmin() {
   const [description, setDescription] = useState("");
   const [eventCategories, setEventCategories] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
-  const [alertType, setAlertType] = useState(""); 
+  const [alertType, setAlertType] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -41,8 +42,6 @@ function EventCategoriesAdmin() {
       const result = await axios.get(
         "http://localhost:5091/api/EventCategories/GetAllList"
       );
-      console.log(result);
-      
       setEventCategories(result.data);
     } catch (err) {
       console.error(err);
@@ -91,22 +90,20 @@ function EventCategoriesAdmin() {
     event.preventDefault();
     try {
       const response = await axios.put(
-        "http://localhost:5091/api/EventCategories/Update",
+        `http://localhost:5091/api/EventCategories/Update/${id}`,
         {
           id: id,
           categoryName: categoryName,
           description: description,
         }
       );
-      console.log("Update response:", response);
       showAlert("The event category has been successfully edited!", "alert-success");
       setId("");
       setCategoryName("");
       setDescription("");
-      setIsFormVisible(false); 
+      setIsFormVisible(false);
       Load();
     } catch (err) {
-      console.error("Update error:", err);
       showAlert(`Error: ${err.message}`, "alert-danger");
     }
   }
@@ -122,72 +119,7 @@ function EventCategoriesAdmin() {
   }
 
   return (
-    <div
-      className="container-fluid"
-      style={{
-        backgroundColor: "#fff",
-        minHeight: "100vh",
-        backgroundSize: "cover",
-      }}
-    >
-      <style>
-        {`
-          .btn-add {
-            background-color: #B29C80;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .btn-add:hover {
-            background-color: #9A8569;
-            color: white;
-          }
-          .btn-add i {
-            color: white;
-            margin-right: 8px;
-          }
-          .btn-save {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            margin-right: 10px;
-          }
-          .btn-save:hover {
-            background-color: #218838;
-            color: white;
-          }
-          .btn-update {
-            background-color: #ffc107;
-            color: black;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            margin-right: 10px;
-          }
-          .btn-update:hover {
-            background-color: #e0a800;
-            color: black;
-          }
-          .btn-cancel {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-          }
-          .btn-cancel:hover {
-            background-color: #c82333;
-            color: white;
-          }
-        `}
-      </style>
+    <div className="container-fluid">
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -197,119 +129,113 @@ function EventCategoriesAdmin() {
 
         <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
           <Navbar Toggle={Toggle} />
+          
+          <div className="admin-container">
+            <div className="d-flex justify-content-between align-items-center">
+              <h4 className="admin-title">Event Categories</h4>
+              <button className="btn btn-add" onClick={toggleFormVisibility}>
+                <i className="fas fa-plus"></i>
+                <span>Add Category</span>
+              </button>
+            </div>
 
-          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
-            <h4 className="text-dark">Data for Event Categories</h4>
-            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
-              <i className="fas fa-plus me-2"></i>
-              Add
-            </button>
-          </div>
-
-          {isFormVisible && (
-            <div className="container mt-4 px-5">
-              <form className="bg-white p-4 rounded shadow">
-                <div className="form-group">
+            {isFormVisible && (
+              <div className="admin-form">
+                <form>
                   <input
                     type="text"
                     className="form-control"
                     id="id"
                     hidden
                     value={id}
-                    onChange={(event) => {
-                      setId(event.target.value);
-                    }}
+                    onChange={(event) => setId(event.target.value)}
                   />
 
-                  <label className="label text-dark">Category Name:</label>
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    id="categoryName"
-                    value={categoryName}
-                    onChange={(event) => {
-                      setCategoryName(event.target.value);
-                    }}
-                  />
+                  <div className="form-group">
+                    <label className="label">Category Name:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="categoryName"
+                      value={categoryName}
+                      onChange={(event) => setCategoryName(event.target.value)}
+                    />
+                  </div>
 
-                  <label className="label text-dark">Description:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    value={description}
-                    onChange={(event) => {
-                      setDescription(event.target.value);
-                    }}
-                  />
-                </div>
+                  <div className="form-group">
+                    <label className="label">Description:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="description"
+                      value={description}
+                      onChange={(event) => setDescription(event.target.value)}
+                    />
+                  </div>
 
-                <div className="mt-3">
-                  {id ? (
-                    <button className="btn btn-update" onClick={update}>
-                      Update
-                    </button>
-                  ) : (
-                    <button className="btn btn-save" onClick={save}>
-                      Save
-                    </button>
-                  )}
-                  <button className="btn btn-cancel" onClick={cancel}>
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
-
-          <br />
-
-          {isAlertVisible && (
-            <div
-              className={`alert ${alertType}`}
-            >
-              {alertMessage}
-            </div>
-          )}
-
-          <div className="table-responsive m-4 px-4">
-            <table className="table border-gray">
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Options</th>
-                </tr>
-              </thead>
-              <tbody>
-                {eventCategories.map((eventCategory) => (
-                  <tr key={eventCategory.id}>
-                    <td>{eventCategory.id}</td>
-                    <td>{eventCategory.categoryName}</td>
-                    <td className="description-cell">{eventCategory.description}</td>
-                    <td className="options-cell d-flex justify-content-center align-items-center">
-                      <button
-                        type="button"
-                        className="btn btn-edit mx-2 d-flex align-items-center"
-                        onClick={() => editEventCategories(eventCategory)}
-                      >
-                        <i className="fas fa-edit"></i>
-                        <span className="ms-2">Edit</span>
+                  <div className="mt-3">
+                    {id ? (
+                      <button className="btn btn-update" onClick={update}>
+                        <i className="fas fa-save me-2"></i>Update
                       </button>
-                      <button
-                        type="button"
-                        className="btn btn-delete mx-2 d-flex align-items-center"
-                        onClick={() => deleteEventCategories(eventCategory.id)}
-                      >
-                        <i className="fas fa-trash-alt"></i>
-                        <span className="ms-2">Delete</span>
+                    ) : (
+                      <button className="btn btn-save" onClick={save}>
+                        <i className="fas fa-save me-2"></i>Save
                       </button>
-                    </td>
+                    )}
+                    <button className="btn btn-cancel" onClick={cancel}>
+                      <i className="fas fa-times me-2"></i>Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {isAlertVisible && (
+              <div className={`admin-alert ${alertType}`}>
+                {alertMessage}
+              </div>
+            )}
+
+            <div className="table-responsive">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Options</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {eventCategories.map((eventCategory) => (
+                    <tr key={eventCategory.id}>
+                      <td>{eventCategory.id}</td>
+                      <td>{eventCategory.categoryName}</td>
+                      <td className="description-cell">{eventCategory.description}</td>
+                      <td className="options-cell d-flex justify-content-center align-items-center">
+                        <button
+                          type="button"
+                          className="btn btn-edit mx-2 d-flex align-items-center"
+                          onClick={() => editEventCategories(eventCategory)}
+                        >
+                          <i className="fas fa-edit"></i>
+                          <span className="ms-2">Edit</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-delete mx-2 d-flex align-items-center"
+                          onClick={() => deleteEventCategories(eventCategory.id)}
+                        >
+                          <i className="fas fa-trash-alt"></i>
+                          <span className="ms-2">Delete</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
