@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+
+.footer-container {
+    background-color: #12112f;
+    padding: 35px;
+    text-align: center;
+    color: white;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 15px;
+  }
+  
+  .footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    transition: color 0.3s ease;
+    font-family: "Gruppo", sans-serif;
+  }
+  
+  .footer-links a:hover {
+    color: #ffbf00; 
+  }
+  
+  .footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 35px;
+    margin-top: 5px;
+  }
+  
+  .footer-icons a {
+    color: white;
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-icons a:hover {
+    color: #ffbf00; 
+  }
+  
+  .footer-text {
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: -5px;
+    font-family: "Gruppo", sans-serif;
+  }
+  
