@@ -26,39 +26,45 @@ function StaffAdmin() {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const inputFileRef = useRef(null);
-
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
 
   const cancel = () => {
     setIsFormVisible(false);
-    clearForm();
+    setId("");
+    setFirstName("");
+    setLastName("");
+    setPosition("");
+    setContactNumber("");
+    setImage("");
+    setSelectedImage("");
   };
 
   useEffect(() => {
-    loadStaff();
+    (async () => await loadStaff())();
   }, []);
 
   async function loadStaff() {
     try {
       const result = await axios.get("https://localhost:7214/api/Staff/GetAllList");
       setStaffList(result.data);
-    } catch (err) {
-      console.error("Error loading staff:", err);
+    } catch (err) {(err);
     }
   }
+
+  const inputFileRef = useRef(null);
+ 
 
   async function save(event) {
     event.preventDefault();
     try {
       await axios.post("https://localhost:7214/api/Staff/Add", {
-        firstName,
-        lastName,
-        position,
-        contactNumber,
-        image,
+         firstName: firstName,
+         lastName: lastName,
+         position: position,
+         contactNumber: contactNumber,
+         image: image,
       });
       showAlert("Staff member has been successfully registered!", "alert-success");
       clearForm();
@@ -94,13 +100,16 @@ function StaffAdmin() {
   async function update(event) {
     event.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Staff/Update/${id}`, {
-        id,
-        firstName,
-        lastName,
-        position,
-        contactNumber,
-        image,
+        const staff = staffList.find((p) => p.id === id);
+        await axios.put(
+          `https://localhost:7214/api/Staff/Update/${staff.id}`, 
+          {
+            id: staff.id,
+            firstName: firstName,
+            lastName: lastName,
+            position: position,
+            contactNumber: contactNumber,
+            image: image,
       });
       showAlert("Staff member has been successfully updated!", "alert-success");
       clearForm();
@@ -156,7 +165,7 @@ function StaffAdmin() {
           <Navbar Toggle={Toggle} />
           
           <div className="d-flex justify-content-between align-items-center mt-4 px-5">
-            <h4 className="text-dark">Staff Management</h4>
+            <h4 className="text-dark">Staff Data</h4>
             <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
               <i className="fas fa-plus me-2"></i>
               Add
@@ -305,14 +314,24 @@ function StaffAdmin() {
                         alt="StaffPhoto"
                       />
                     </td>
-                    <td className="options-cell d-flex justify-content-center">
-                      <button className="btn btn-update me-2" onClick={() => editStaff(staff)}>
-                        Edit
-                      </button>
-                      <button className="btn btn-cancel" onClick={() => deleteStaff(staff.id)}>
-                        Delete
-                      </button>
-                    </td>
+                    <td className="options-cell d-flex justify-content-center align-items-center">
+                             <button
+                               type="button"
+                               className="btn btn-edit mx-2 d-flex align-items-center"
+                               onClick={() => editStaff(staff)}
+                             >
+                                <i className="fas fa-edit"></i>
+                                <span className="ms-2">Edit</span>
+                             </button>
+                             <button
+                               type="button"
+                               className="btn btn-delete mx-2 d-flex align-items-center"
+                               onClick={() => deleteStaff(staff.id)}
+                             >
+                                <i className="fas fa-trash-alt"></i>
+                                <span className="ms-2">Delete</span>
+                             </button>
+                         </td>
                   </tr>
                 ))}
               </tbody>
