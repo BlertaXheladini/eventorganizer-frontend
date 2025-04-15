@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt, FaSignOutAlt  , FaUtensils , FaConciergeBell , FaUserTie} from "react-icons/fa";
+import { FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt, FaSignOutAlt  , FaUtensils , FaConciergeBell , FaUserTie , FaEnvelope} from "react-icons/fa";
 import "../style.css";
 
 function Sidebar() {
@@ -99,6 +99,15 @@ function Sidebar() {
          >
            <FaUserTie className="fs-5 me-3" /> <span>Staff</span>
            </Link>
+
+           <Link
+           to="/contactAdmin"
+           className={`list-group-item py-2 rounded ${
+            location.pathname === "/contactAdmin" ? "active-link" : ""
+           }`}
+           >
+         <FaEnvelope className="fs-5 me-3" /> <span>Contact</span>
+          </Link>
 
         <br/>
         <br/>
