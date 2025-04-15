@@ -8,6 +8,7 @@ import EventCategoriesAdmin from "./admin/EventCategoriesAdmin";
 import EventsAdmin from "./admin/EventsAdmin";
 import RestaurantTypesAdmin from "./admin/RestaurantTypesAdmin";
 import RestaurantsAdmin from "./admin/RestaurantsAdmin";
+import StaffAdmin from "./admin/StaffAdmin"; 
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/eventThemesAdmin" element={<EventThemesAdmin />} />
       <Route path="/eventCategoriesAdmin" element={<EventCategoriesAdmin />} />
       <Route path="/restaurantsAdmin" element={<RestaurantsAdmin />} />
+      <Route path="/staffAdmin" element={<StaffAdmin />} />
 
     </Routes>
   </Router>

@@ -151,7 +151,7 @@ function Dashboard() {
                      <div className="row">
                        <div className="col-md-6 mb-3">
                          <div className="card">
-                           <img src="./images/image.png" className="card-img-top" alt="Event 1" />
+                           <img src="./images/event1.png" className="card-img-top" alt="Event 1" />
                            <div className="card-body">
                              <h6 className="card-subtitle mb-1 text-muted">Wedding Ceremony</h6>
                              <p className="card-text"><em>12th Oct 2024</em></p>
@@ -161,7 +161,7 @@ function Dashboard() {
                        </div>
                        <div className="col-md-6 mb-3">
                          <div className="card">
-                           <img src="./images/image1.avif" className="card-img-top" alt="Event 2" />
+                           <img src="./images/event2.avif" className="card-img-top" alt="Event 2" />
                            <div className="card-body">
                              <h6 className="card-subtitle mb-1 text-muted">Corporate Gala</h6>
                              <p className="card-text"><em>25th Nov 2024</em></p>
