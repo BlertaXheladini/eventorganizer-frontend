@@ -91,7 +91,7 @@ const Home = () => {
           <section className="photo-grid-section">
             <h2>Past Events</h2>
             <div className="photo-grid">
-              {[event1, event2, event3, event4, event5, event6].map((event, index) => (
+              {[event1, event2, event3, event4, event5, event6, event7, event8].map((event, index) => (
                 <div key={index} className="photo-grid-item">
                   <img src={event} alt={`Event ${index + 1}`} />
                 </div>
