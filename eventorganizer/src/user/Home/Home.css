@@ -40,6 +40,7 @@
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  margin-top: 5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
@@ -200,15 +201,51 @@
   aspect-ratio: 1;
   overflow: hidden;
   position: relative;
-  background-color: #e0e0e0;  /* Fallback color */
+  background-color: #e0e0e0;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .photo-grid-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.photo-grid-item:hover img {
+  transform: scale(1.1);
+}
+
+.photo-grid-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.photo-grid-item:hover::before {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.photo-grid-item .overlay-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  transform: translateY(100%);
   transition: transform 0.3s ease;
+}
+
+.photo-grid-item:hover .overlay-text {
+  transform: translateY(0);
 }
 
 /* CTA Section */
