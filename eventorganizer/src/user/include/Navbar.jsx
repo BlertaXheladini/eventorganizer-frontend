@@ -29,7 +29,7 @@ const Navbar = () => {
             <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>Home</Link>
           </li>
           <li>
-            <Link to="/about" className="nav-link" onClick={() => setIsMenuOpen(false)}>About Us</Link>
+            <Link to="/AboutUs" className="nav-link" onClick={() => setIsMenuOpen(false)}>About Us</Link>
           </li>
           <li>
             <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>Services</Link>

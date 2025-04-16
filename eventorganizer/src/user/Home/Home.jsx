@@ -20,6 +20,14 @@ import event8 from '../images/event8.jpg';
 
 const Home = () => {
     const servicesRef = useRef(null);
+    const eventTitles = [
+        "Elegant Wedding Ceremony",
+        "Corporate Gala Night",
+        "Birthday Celebration",
+        "Engagement Party",
+        "Anniversary Dinner",
+        "Graduation Event"
+    ];
 
     const scrollToServices = () => {
       servicesRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +82,7 @@ const Home = () => {
                   the details so you can enjoy a smooth and memorable experience. Whether it's a small gathering or a
                    big celebration, we're here to make it extraordinary and stress-free.
                 </p>
-                <Link to="/aboutus" className="btn">Read More</Link>
+                <Link to="/AboutUs" className="btn">Read More</Link>
               </div>
             </div>
           </section>
