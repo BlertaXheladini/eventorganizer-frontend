@@ -4,8 +4,19 @@ import Navbar from '../include/Navbar';
 import Footer from '../include/Footer';
 import './Home.css';
 
-// Temporary placeholder for images until real ones are added
-const placeholderImage = 'https://via.placeholder.com/400x300';
+import weddings from '../images/wedding.jpg'; 
+import birthday from '../images/birthday.jpg'; 
+import topimage from '../images/top-image.jpg'; 
+import engagement from '../images/engagement.jpg'; 
+import imgpng from '../images/whyus.jpg'; 
+import event1 from '../images/event1.jpg'; 
+import event2 from '../images/event2.jpg'; 
+import event3 from '../images/event3.jpg'; 
+import event4 from '../images/event4.jpg'; 
+import event5 from '../images/event5.jpg'; 
+import event6 from '../images/event6.jpg'; 
+import event7 from '../images/event7.jpg'; 
+import event8 from '../images/event8.jpg'; 
 
 const Home = () => {
     const servicesRef = useRef(null);
@@ -32,19 +43,19 @@ const Home = () => {
             <h2>Our Services</h2>
             <div className="service-cards">
               <div className="service-card">
-                <img src={placeholderImage} alt="Wedding Events" />
+                <img src={weddings} alt="Wedding Events" />
                 <h3>Weddings</h3>
                 <p>We specialize in planning and executing the perfect wedding, tailored to your unique style and preferences.</p>
                 <Link to="/events" className="btn">Reserve Now</Link>
               </div>
               <div className="service-card">
-                <img src={placeholderImage} alt="Engagement Events" />
+                <img src={engagement} alt="Engagement Events" />
                 <h3>Engagements</h3>
                 <p>Celebrate your engagement with a memorable event that reflects your love and commitment.</p>
                 <Link to="/events" className="btn">Reserve Now</Link>
               </div>
               <div className="service-card">
-                <img src={placeholderImage} alt="Birthday Events" />
+                <img src={birthday} alt="Birthday Events" />
                 <h3>Birthday Parties</h3>
                 <p>Make your birthday celebration stand out with our creative and personalized party planning services.</p>
                 <Link to="/events" className="btn">Reserve Now</Link>
@@ -55,7 +66,7 @@ const Home = () => {
           {/* Image & Text Section */}
           <section className="image-text-section">
             <div className="image-text-container">
-              <img src={placeholderImage} alt="Special Event" />
+              <img src={imgpng} alt="Special Event" />
               <div className="text-content">
                 <h2>Why Choose Us?</h2>
                 <p>We have years of experience in planning events, and we know how to make your special day perfect. 
@@ -72,9 +83,9 @@ const Home = () => {
           <section className="photo-grid-section">
             <h2>Past Events</h2>
             <div className="photo-grid">
-              {[1, 2, 3, 4, 5, 6].map((num) => (
-                <div key={num} className="photo-grid-item">
-                  <img src={placeholderImage} alt={`Event ${num}`} />
+              {[event1, event2, event3, event4, event5, event6].map((event, index) => (
+                <div key={index} className="photo-grid-item">
+                  <img src={event} alt={`Event ${index + 1}`} />
                 </div>
               ))}
             </div>
