@@ -12,7 +12,8 @@ import StaffAdmin from "./admin/StaffAdmin";
 import ContactAdmin from './admin/ContactAdmin';
 import Users from "./admin/Users";
 import Reservations from "./admin/Reservations"
-
+import Home from "./user/Home/Home";
+import AboutUs from "./user/AboutUs/AboutUs";
 
 function App() {
 
@@ -20,10 +21,11 @@ function App() {
   return (
     <Router>
     <Routes>
-    <Route path="/" element={<Dashboard />} />
+
+     {/*Admin Part*/}
+     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/eventsAdmin" element={<EventsAdmin />} />
     <Route path="/restaurantTypesAdmin" element={<RestaurantTypesAdmin />} />
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/eventThemesAdmin" element={<EventThemesAdmin />} />
       <Route path="/eventCategoriesAdmin" element={<EventCategoriesAdmin />} />
       <Route path="/restaurantsAdmin" element={<RestaurantsAdmin />} />
@@ -32,6 +34,11 @@ function App() {
       <Route path="/users" element={<Users />} />
       <Route path="/reservations" element={<Reservations />} />
 
+
+       {/*User Part*/}
+       <Route path="/" element={<Home />} />
+       <Route path="/home" element={<Home />} />
+       <Route path="/aboutus" element={<AboutUs />} />
     </Routes>
   </Router>
   )

@@ -27,7 +27,7 @@ const Footer = () => {
           <i className="fab fa-pinterest"></i>
         </a>
       </div>
-      <p className="footer-text">© Event Organizer | 2024</p>
+      <p className="footer-text">© Event Organizer | 2025</p>
     </footer>
   );
 };
