@@ -48,10 +48,17 @@ function StaffAdmin() {
 
   async function loadStaff() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Staff/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Staff/GetAllList");
       setStaffList(result.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error loading staff:", err);
+      if (err.response) {
+        showAlert(`Error loading staff: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error loading staff: ${err.message}`, "alert-danger");
+      }
     }
   }
 
@@ -60,7 +67,7 @@ function StaffAdmin() {
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Staff/Add", {
+      await axios.post("http://localhost:5091/api/Staff/Add", {
          firstName: firstName,
          lastName: lastName,
          position: position,
@@ -72,7 +79,14 @@ function StaffAdmin() {
       setIsFormVisible(false);
       loadStaff();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      console.error("Error saving staff:", err);
+      if (err.response) {
+        showAlert(`Error saving staff: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error saving staff: ${err.message}`, "alert-danger");
+      }
     }
   }
 
@@ -89,12 +103,19 @@ function StaffAdmin() {
 
   async function deleteStaff(staffId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Staff/Delete?Id=${staffId}`);
+      await axios.delete(`http://localhost:5091/api/Staff/Delete?Id=${staffId}`);
       showAlert("Staff member has been successfully deleted!", "alert-success");
       clearForm();
       loadStaff();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      console.error("Error deleting staff:", err);
+      if (err.response) {
+        showAlert(`Error deleting staff: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error deleting staff: ${err.message}`, "alert-danger");
+      }
     }
   }
 

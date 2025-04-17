@@ -51,54 +51,95 @@ function EventsAdmin() {
 
   async function loadEventCategories() {
     try {
+      console.log("Loading categories...");
       const result = await axios.get(
-        "https://localhost:7137/api/EventCategories/GetAllList"
+        "http://localhost:5091/api/EventCategories/GetAllList"
       );
+      console.log("Categories loaded:", result.data);
       setEventCategories(result.data);
     } catch (err) {
       console.error("Error loading eventCategories:", err);
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+        showAlert(`Error loading categories: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error loading categories: ${err.message}`, "alert-danger");
+      }
     }
   }
 
   async function loadEventThemes() {
     try {
+      console.log("Loading themes...");
       const result = await axios.get(
-        "https://localhost:7137/api/EventThemes/GetAllList"
+        "http://localhost:5091/api/EventThemes/GetAllList"
       );
+      console.log("Themes loaded:", result.data);
       setEventThemes(result.data);
     } catch (err) {
       console.error("Error loading eventThemes:", err);
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+        showAlert(`Error loading themes: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error loading themes: ${err.message}`, "alert-danger");
+      }
     }
   }
 
   async function loadEvents() {
     try {
+      console.log("Loading events...");
       const result = await axios.get(
-        "https://localhost:7137/api/Events/GetAllList"
+        "http://localhost:5091/api/Events/GetAllList"
       );
+      console.log("Events loaded:", result.data);
       setEvents(result.data);
     } catch (err) {
       console.error("Error loading events:", err);
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+        showAlert(`Error loading events: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error loading events: ${err.message}`, "alert-danger");
+      }
     }
   }
 
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("https://localhost:7137/api/Events/Add", {
+      if (!categoryId || !themeId) {
+        showAlert("Please select both a category and a theme", "alert-danger");
+        return;
+      }
+
+      const formData = {
         eventName: eventName,
         description: description,
         image: image,
         price: price,
-        categoryId: categoryId,
-        themeId: themeId, 
-      });
+        categoryId: parseInt(categoryId),
+        themeId: parseInt(themeId)
+      };
+
+      await axios.post("http://localhost:5091/api/Events/Add", formData);
       showAlert("The event has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadEvents();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      console.error("Error saving event:", err);
+      showAlert(`Error saving event: ${err.response?.data || err.message}`, "alert-danger");
     }
   }
 
@@ -130,11 +171,18 @@ function EventsAdmin() {
 
   async function deleteEvents(eventId) {
     try {
-      await axios.delete(`https://localhost:7137/api/Events/Delete?Id=${eventId}`);
+      await axios.delete(`http://localhost:5091/api/Events/Delete?Id=${eventId}`);
       showAlert("The event has been successfully deleted!", "alert-success");
       loadEvents();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      console.error("Error deleting event:", err);
+      if (err.response) {
+        showAlert(`Error deleting event: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error deleting event: ${err.message}`, "alert-danger");
+      }
     }
   }
 
