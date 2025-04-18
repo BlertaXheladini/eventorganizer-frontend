@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+
+.mainContainer{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
+                url('../User/images/event7.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .loginBox {
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.475); 
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6); 
+    transition: transform 0.2s ease-in-out;
+    height: 410px;
+    width:420px;
+    border-radius: 5px;
+  }
+
+.titleContainer h2{
+  font-family: 'Allura', cursive;
+  font-weight: bold;
+  font-size: 45px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+  
+.inputContainer input{
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);  
+  font-size: 13px;
+  font-family: "Unbounded", sans-serif;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 20px !important;
+  width: 350px;
+  margin: 0 auto;
+}
+  
+.inputContainer > .errorLabel {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  } 
+
+  .inputContainer .inputButton{
+    background-color: #ff7b54 !important;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    text-transform: uppercase;
+    font-family: "Gruppo", sans-serif;  
+    font-weight: bolder;
+    border-radius: none !important;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .inputContainer .inputButton:hover{
+    background-color: #e76541 !important;
+  }
+
+  
+  .registerContainer p{
+    text-align: center;
+    font-family: "Unbounded", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .registerContainer .registerButton{
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    cursor: pointer;
+    padding: 9px 15px;
+    width: 50%;
+    margin-top: -7px;
+    border: none;
+    border-radius: 5px;
+    background-color: #616161;
+    color:#fff;
+    text-transform: uppercase;
+    font-family: "Gruppo", sans-serif;  
+    font-weight: bolder;
+    display: flex;
+  }
+
+  .registerContainer .registerButton:hover{
+    background-color: #525151;
+  }
+   
+
+.toast-error-custom { 
+  font-weight: bold; 
+  font-family: "Unbounded", sans-serif;
+  color: #000;
+  font-size: 15px;
+}

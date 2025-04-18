@@ -14,6 +14,10 @@ import Users from "./admin/Users";
 import Reservations from "./admin/Reservations"
 import Home from "./user/Home/Home";
 import AboutUs from "./user/AboutUs/AboutUs";
+import Login from "./login/login";
+import Register from "./register/Register";
+
+
 
 function App() {
 
@@ -33,6 +37,9 @@ function App() {
       <Route path="/contactAdmin" element={<ContactAdmin />} />
       <Route path="/users" element={<Users />} />
       <Route path="/reservations" element={<Reservations />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
 
 
        {/*User Part*/}
