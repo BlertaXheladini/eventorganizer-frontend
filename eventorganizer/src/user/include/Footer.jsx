@@ -6,12 +6,12 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-links">
-        <a href="#">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Services</a>
-        <a href="#">Events</a>
-        <a href="#">Restaurants</a>
-        <a href="#">Contact</a>
+        <a href="/home">Home</a>
+        <a href="/AboutUs">About Us</a>
+        <a href="/services">Services</a>
+        <a href="/events">Events</a>
+        <a href="/restaurants">Restaurants</a>
+        <a href="/contact">Contact</a>
       </div>
       <div className="footer-icons">
         <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
