@@ -32,10 +32,10 @@ const Navbar = () => {
             <Link to="/AboutUs" className="nav-link" onClick={() => setIsMenuOpen(false)}>About Us</Link>
           </li>
           <li>
-            <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>Services</Link>
+            <Link to="/staff" className="nav-link" onClick={() => setIsMenuOpen(false)}>Staff</Link>
           </li>
           <li>
-            <Link to="/events" className="nav-link" onClick={() => setIsMenuOpen(false)}>Events</Link>
+            <Link to="/eventList" className="nav-link" onClick={() => setIsMenuOpen(false)}>Events</Link>
           </li>
           <li>
             <Link to="/restaurants" className="nav-link" onClick={() => setIsMenuOpen(false)}>Restaurants</Link>

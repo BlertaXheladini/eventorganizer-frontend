@@ -141,3 +141,39 @@ font-weight: bolder;
 .btn-restaurant-back:hover {
 background-color: #5a6268;
 }
+
+/* Stilizimi i fushës për kërkim */
+.search-bar {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.search-input {
+  padding: 7px 20px;
+  width: 600px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  outline: none;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-family: "Gruppo", sans-serif;
+  font-weight: bolder;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.search-button:hover {
+  background-color: #e55b50;
+  box-shadow: 0 6px 12px rgba(187, 109, 0, 0.3);
+}

@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+
+/*Css per EventList.js*/
+.container-event {
+    padding: 10px 150px;
+    padding-bottom: 50px;
+  }
+
+.no-events-message h4{
+  font-weight: bold;
+  color: #000; 
+  font-family: "Unbounded", sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.event-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);  
+    transition: transform 0.2s ease-in-out;    
+    overflow: hidden;                          
+    border-radius: 0;                
+    border-top-left-radius: 50% 150px;   
+    border-top-right-radius: 50% 150px; 
+    width: 90%;  
+    margin: 0 auto;  
+  }
+  
+  .event-card:hover {
+    transform: translateY(-5px);              
+  }
+  
+  .event-img-container {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;                          
+    position: relative;                      
+  }
+
+  .event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                       
+    transition: transform 0.5s ease;        
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+ 
+  }
+  
+  .event-card:hover .event-img {
+    transform: scale(1.2);                     
+  }
+
+  .card-title-event {
+    color: #000;    
+    font-family: 'Allura', cursive;     
+    font-weight: bold;
+    font-size: 28px;                     
+  }
+  
+  .event-price {
+    font-size: 28px;
+    font-weight: bolder;
+    color: #000; 
+    font-family: "Gruppo", sans-serif;                    
+  }
+
+  .btn-event {             
+    border: none;   
+    padding: 7px 10px;
+    background-color: #ff7b54;
+    color: white;
+    text-transform: uppercase;
+    font-family: "Gruppo", sans-serif;  
+    font-weight: bolder;   
+    border-radius: 0;       
+    text-decoration: none;
+    text-align: center;  
+    margin: 0 auto;
+    width: 190px;            
+  }
+  
+  .btn-event:hover {
+    background-color: #e76541;           
+  }
+  
+
+  
+  /*Css per EventDetails.js*/
+.container-details{
+    padding: 30px 130px;
+}
+
+.event-details-text {
+  padding: 20px;
+  max-width: 70%; 
+  margin: 0 auto; 
+  padding-left: 100px;
+  color: #4f4f4f;
+}
+
+.event-title-details{
+  font-family: 'Allura', cursive;
+  font-size: 45px;
+  font-weight: bold;
+  color:#000;
+  
+}
+
+.event-price-details{
+  font-size: 35px;
+  font-weight: bolder;
+  color: #000; 
+  font-family: "Gruppo", sans-serif;   
+}
+
+
+.event-img-container-details {
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.event-img-details {
+  width: 100%;
+  height: 430px;
+  min-width: 520px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.event-img-details:hover {
+  transform: scale(1.05); 
+}
+
+.btn-event-back {
+  background-color: #727b84;
+  border: none;
+  padding: 10px 30px;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: "Gruppo", sans-serif;  
+  color: #fff;
+  font-weight: bolder;
+}
+
+.btn-event-back:hover {
+  background-color: #5a6268;
+}
+
+.btn-event-reserve {
+  background-color: #ff7b54;
+  border: none;
+  padding: 10px 30px;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: "Gruppo", sans-serif;  
+  color: #fff;
+  font-weight: bolder;
+}
+
+.btn-event-reserve:hover {
+  background-color: #e76541;  
+}
+
+

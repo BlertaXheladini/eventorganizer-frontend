@@ -18,6 +18,8 @@ import RestaurantList from "./user/Restaurants/RestaurantList";
 import Login from "./login/login";
 import Register from "./register/Register";
 import RestaurantDetails from "./user/Restaurants/RestaurantDetails";
+import EventList from "./user/Events/EventList";
+import EventDetails from "./user/Events/EventDetails";
  
 
 
@@ -44,6 +46,8 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/restaurantlist" element={<RestaurantList/>} />
       <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+      <Route path="/eventlist" element={<EventList />} />
+      <Route path="/event/:id" element={<EventDetails />} />
 
 
 
