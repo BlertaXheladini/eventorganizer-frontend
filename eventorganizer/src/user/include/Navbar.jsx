@@ -39,6 +39,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link to="/restaurants" className="nav-link" onClick={() => setIsMenuOpen(false)}>Restaurants</Link>
+            <Link to="/restaurantlist" className="nav-link">Restaurants</Link>
           </li>
           <li>
             <Link to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</Link>
