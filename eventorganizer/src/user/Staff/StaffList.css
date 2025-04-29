@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+/* Stilizimi për container-in e stafit */
+.staff-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
+  
+  .staff-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  /* Grid layout për kartat */
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 3 karta për çdo rresht */
+    gap: 20px;
+  }
+  
+  /* Stilizimi për kartat e stafit */
+  .staff-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .staff-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Stilizimi për imazhin e stafit */
+  .staff-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Stilizimi për detajet e stafit */
+  .staff-details {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .staff-name {
+    font-family: "Gruppo", sans-serif;
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+  }
+  
+  .staff-position {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 10px;
+    
+  }
+  
+  .staff-contact {
+    font-size: 16px;
+    color: #555;
+   
+  }
+  
+  .stafftop-image {
+    position: relative;
+    background-image: url('../images/staff.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
+
+  .stafftop-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); 
+    z-index: 1; 
+  }
+
+  .staff-container h2{
+    font-size: 50px;
+    margin-bottom: 20px;
+    font-family: 'Allura', cursive;
+    font-weight: bold;
+    text-align: left;
+  }

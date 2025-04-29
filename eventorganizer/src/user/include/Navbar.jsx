@@ -32,7 +32,7 @@ const Navbar = () => {
             <Link to="/AboutUs" className="nav-link" onClick={() => setIsMenuOpen(false)}>About Us</Link>
           </li>
           <li>
-            <Link to="/staff" className="nav-link" onClick={() => setIsMenuOpen(false)}>Staff</Link>
+          <Link to="/stafflist" className="nav-link">Staff</Link>
           </li>
           <li>
             <Link to="/eventList" className="nav-link" onClick={() => setIsMenuOpen(false)}>Events</Link>
