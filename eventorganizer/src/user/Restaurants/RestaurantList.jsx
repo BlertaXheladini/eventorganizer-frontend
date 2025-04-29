@@ -1,25 +1,22 @@
-// Events.js
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../include/Navbar';
-// import Footer from '../include/Footer';
 
 const RestaurantList = () => {
-  const [events, setEvents] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    // Ngarkimi i eventeve
-    async function fetchEvents() {
+    // Ngarkimi i restoranteve
+    async function fetchRestaurants() {
       try {
         const response = await axios.get('https://localhost:7214/api/Restaurants/GetAllList');
-        setEvents(response.data);
+        setRestaurants(response.data);
       } catch (err) {
-        console.error("Error loading events:", err);
+        console.error("Error loading restaurants:", err);
       }
     }
-    fetchEvents();
+    fetchRestaurants();
   }, []);
 
   return (
@@ -28,19 +25,19 @@ const RestaurantList = () => {
         <div className="container mt-4">
           <h2>Restaurants</h2>
           <div className="row">
-            {events.map((event) => (
-              <div key={event.id} className="col-md-4 mb-4">
+            {restaurants.map((restaurant) => (
+              <div key={restaurant.id} className="col-md-4 mb-4">
                 <div className="card h-100">
                   <img
-                    src={event.image}
+                    src={restaurant.image}
                     className="card-img-top"
-                    alt={event.eventName}
+                    alt={restaurant.name}
                     style={{ maxHeight: '200px', objectFit: 'cover' }}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{event.eventName}</h5>
-                    <p className="card-text">{event.description.substring(0, 100)}...</p>
-                    <Link to={`/event/${event.id}`} className="btn btn-primary">
+                    <h5 className="card-title">{restaurant.name}</h5>
+                    <p className="card-text">{restaurant.description.substring(0, 100)}...</p>
+                    <Link to={`/restaurant/${restaurant.id}`} className="btn btn-primary">
                       See More Details
                     </Link>
                   </div>

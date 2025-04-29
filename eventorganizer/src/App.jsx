@@ -17,6 +17,8 @@ import AboutUs from "./user/AboutUs/AboutUs";
 import RestaurantList from "./user/Restaurants/RestaurantList";
 import Login from "./login/login";
 import Register from "./register/Register";
+import RestaurantDetails from "./user/Restaurants/RestaurantDetails";
+ 
 
 
 
@@ -41,6 +43,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/restaurantlist" element={<RestaurantList/>} />
+      <Route path="/restaurant/:id" element={<RestaurantDetails />} />
 
 
 
