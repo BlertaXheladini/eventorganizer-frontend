@@ -4,6 +4,7 @@
 
 .restaurant-container {
     padding: 20px 150px;
+    margin-bottom: 80px;
   }
   
 
@@ -80,3 +81,63 @@
   .restaurant-btn:hover {
     background-color: #e55b50;
   }
+
+  /* CSS për RestaurantDetails.js */
+.container-details {
+  padding: 30px 130px;
+}
+
+.restaurant-details-text {
+padding: 20px;
+max-width: 70%; 
+margin: 0 auto; 
+padding-left: 100px;
+color: #4f4f4f;
+}
+
+.restaurant-title-details {
+font-family: 'Allura', cursive;
+font-size: 45px;
+font-weight: bold;
+color: #000;
+}
+
+.restaurant-location-details {
+font-size: 30px;
+font-weight: bolder;
+color: #000; 
+font-family: "Gruppo", sans-serif;   
+}
+
+.restaurant-img-container-details {
+padding: 10px;
+width: 100%;
+max-width: 100%;
+}
+
+.restaurant-img-details {
+width: 100%;
+height: 430px;
+min-width: 520px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+transition: transform 0.3s ease;
+}
+
+.restaurant-img-details:hover {
+transform: scale(1.05); 
+}
+
+.btn-restaurant-back {
+background-color: #727b84;
+border: none;
+padding: 10px 30px;
+font-size: 18px;
+text-transform: uppercase;
+font-family: "Gruppo", sans-serif;  
+color: #fff;
+font-weight: bolder;
+}
+
+.btn-restaurant-back:hover {
+background-color: #5a6268;
+}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../include/Navbar';
 import './Restaurant.css';
+import Footer from '../include/Footer';
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
