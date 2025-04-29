@@ -42,7 +42,7 @@ function Users() {
 
   async function loadUsers() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Users/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Users/GetAllList");
       setUsers(result.data);
     } catch (err) {
       console.error("Error loading Users:", err);
@@ -52,19 +52,46 @@ function Users() {
   async function save(e) {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Users/Register", {
-        firstName: FirstName,
-        lastName: LastName,
-        email: Email,
-        password: Password,
-        roleId: roleId,
-      });
+      if (!FirstName || !LastName || !Email || !Password || !roleId) {
+        showAlert("Please fill in all required fields", "alert-danger");
+        return;
+      }
+
+      // Make sure roleId is a valid number
+      const roleIdNum = parseInt(roleId);
+      if (isNaN(roleIdNum) || roleIdNum <= 0) {
+        showAlert("Please select a valid role", "alert-danger");
+        return;
+      }
+
+      // Try a different format for the user data
+      const userData = {
+        FirstName: FirstName,
+        LastName: LastName,
+        Email: Email,
+        Password: Password,
+        RoleId: roleIdNum
+      };
+
+      console.log("Sending user data:", userData);
+      const response = await axios.post("http://localhost:5091/api/Users/Register", userData);
+      console.log("Server response:", response.data);
+      
       showAlert("The user has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadUsers();
     } catch (err) {
-      showAlert(`Error: ${err.message}`, "alert-danger");
+      console.error("Error saving user:", err);
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+        showAlert(`Error saving user: ${err.response.data}`, "alert-danger");
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
+      } else {
+        showAlert(`Error saving user: ${err.message}`, "alert-danger");
+      }
     }
   }
 
@@ -80,7 +107,7 @@ function Users() {
 
   async function deleteUser(userId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Users/Delete?Id=${userId}`);
+      await axios.delete(`http://localhost:5091/api/Users/Delete?Id=${userId}`);
       showAlert("The user has been successfully deleted!", "alert-success");
       loadUsers();
     } catch (err) {
@@ -91,7 +118,7 @@ function Users() {
   async function update(e) {
     e.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Users/UpdateUser`, {
+      await axios.put(`http://localhost:5091/api/Users/UpdateUser`, {
         id: Id,
         firstName: FirstName,
         lastName: LastName,
