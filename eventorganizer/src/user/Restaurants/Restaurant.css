@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+
+
+.restaurant-container {
+    padding: 20px 150px;
+  }
+  
+
+  .restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  
+    gap: 20px;  
+  }
+  
+ 
+  .restaurant-card {
+    display: flex;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 350px;  
+  }
+  
+  
+  .restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  .restaurant-img {
+    width: 50%;  
+    object-fit: cover;
+    height: 100%; 
+  }
+  
+  
+  .restaurant-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;  
+  }
+  
+ 
+  .restaurant-title {
+    font-family: 'Allura', cursive;
+    font-weight: bold;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+ 
+  .restaurant-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  
+  .restaurant-btn {
+    background-color: #ff6f61;
+    color: white;
+    padding: 8px 16px;  
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: "Gruppo", sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    width: 220px;  
+    transition: background-color 0.3s ease;
+    text-align: center; 
+  }
+  
+  .restaurant-btn:hover {
+    background-color: #e55b50;
+  }
