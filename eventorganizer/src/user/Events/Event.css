@@ -170,7 +170,7 @@
 
 
 /*Search Bar*/
-.search-bar {
+.search-bar-event {
   display: flex;
   gap: 10px;
   justify-content: left;
@@ -179,7 +179,7 @@
   padding-left: 20px;
 }
 
-.search-bar input {
+.search-bar-event input {
   padding: 7px 20px;
   border: none;
   border-radius: 50px;
@@ -191,12 +191,12 @@
   
 }
 
-.search-bar input:focus {
+.search-bar-event input:focus {
   border-color: #ff7b54;
   box-shadow: 0 6px 12px rgba(187, 87, 0, 0.3);
 }
 
-.search-bar button {
+.search-bar-event button {
   padding: 7px 20px;
   border: none;
   background-color: #ff7b54;
@@ -210,7 +210,7 @@
   font-weight: bolder;
 }
 
-.search-bar button:hover {
+.search-bar-event button:hover {
   background-color: #e76541;
   box-shadow: 0 6px 12px rgba(187, 109, 0, 0.3);
 }

@@ -42,7 +42,7 @@ const Navbar = () => {
             <Link to="/restaurantlist" className="nav-link">Restaurants</Link>
           </li>
           <li>
-            <Link to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Link to="/contactus" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</Link>
           </li>
           <li>
             <Link to="/dashboard" className="nav-link" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
