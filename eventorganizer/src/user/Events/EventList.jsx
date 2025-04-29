@@ -1,29 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../include/Navbar';
+import Nav from '../include/Navbar';
 import Footer from '../include/Footer';
 import './Event.css'; 
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState(''); 
 
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await axios.get('https://localhost:7214/api/Events/GetAllList');
+        const response = await axios.get('https://localhost:7137/api/Events/GetAllList');
         setEvents(response.data);
       } catch (err) {
-        console.error("Error loading events:", err);
+        console.error("Error fetching events:", err);
       }
     }
     fetchEvents();
   }, []);
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`https://localhost:7137/api/Events/SearchEvent`, {
+        params: {
+          searchEvent: searchTerm
+        }
+      });
+      setEvents(response.data);
+    } catch (err) {
+      console.error("Error searching events:", err);
+    }
+  };
+
+  const handleSortChange = async (event) => {
+    const sortOrder = event.target.value;
+    setSortOrder(sortOrder); 
+
+    try {
+      const response = await axios.get('https://localhost:7137/api/Events/SortEvents', {
+        params: {
+          sortOrder: sortOrder
+        }
+      });
+      setEvents(response.data); 
+    } catch (err) {
+      console.error("Error sorting events:", err);
+    }
+  };
+
   return (
     <div>
-      <Navbar/>
-      <div className="container-event mt-4">
+      <Nav/>
+      <div className="container-event mt-3">
+        <div className="search-bar mb-4">
+          <input
+            type="text"
+            placeholder="Search by event name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+
+         {/* Dropdown për renditjen sipas çmimit */}
+         <select 
+            value={sortOrder} 
+            onChange={handleSortChange} 
+            className="price-sort-dropdown"
+          >
+            <option value="" className='price-sort-option'>Sort by Price</option>
+            <option value="LowToHigh" className='price-sort-option'>Low to High</option>
+            <option value="HighToLow" className='price-sort-option' >High to Low</option>
+          </select>
+        </div>
+
         {/* Kontrollo nëse ka evente */}
         {events.length === 0 ? (
           <div className="no-events-message">

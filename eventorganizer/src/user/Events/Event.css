@@ -168,3 +168,83 @@
 }
 
 
+
+/*Search Bar*/
+.search-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: left;
+  align-items: left;
+  padding-bottom: 30px;
+  padding-left: 20px;
+}
+
+.search-bar input {
+  padding: 7px 20px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  width: 40%; 
+  
+}
+
+.search-bar input:focus {
+  border-color: #ff7b54;
+  box-shadow: 0 6px 12px rgba(187, 87, 0, 0.3);
+}
+
+.search-bar button {
+  padding: 7px 20px;
+  border: none;
+  background-color: #ff7b54;
+  color: white;
+  border-radius: 50px;
+  font-size: 19px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  font-family: "Gruppo", sans-serif;   
+  font-weight: bolder;
+}
+
+.search-bar button:hover {
+  background-color: #e76541;
+  box-shadow: 0 6px 12px rgba(187, 109, 0, 0.3);
+}
+
+/*CSS per Order By Price*/
+.price-sort-dropdown {
+  padding: 7px 20px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  font-size: 19px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-color: #7e7e7e;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 380px; 
+  width: 15%; 
+  font-family: "Gruppo", sans-serif;   
+  font-weight: bolder;
+}
+
+.price-sort-dropdown:hover,
+.price-sort-dropdown:focus {
+  border-color: #ff7b54;
+  box-shadow: 0 6px 12px rgba(255, 123, 84, 0.3);
+}
+
+.price-sort-option {
+  background-color: #fff;
+  color: #000;
+  font-size: 19px;
+  padding: 7px 20px;
+  border-radius: 50px;
+  font-weight: bolder;
+}
+
