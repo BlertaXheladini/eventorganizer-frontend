@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 function StaffAdmin() {
   const [toggle, setToggle] = useState(true);
-
   const navigate = useNavigate();
   const Toggle = () => {
     setToggle(!toggle);
@@ -22,12 +21,10 @@ function StaffAdmin() {
   const [staffList, setStaffList] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
 
-
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
-
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -48,9 +45,14 @@ function StaffAdmin() {
     (async () => await loadStaff())();
   }, []);
 
-  
+  // Përfshi `accessToken` në headers e çdo kërkese Axios
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  };
 
-
+  // Funksioni që rendit stafin në varësi të rendit (asc ose desc)
   const sortStaff = (order) => {
     const sortedStaff = [...staffList].sort((a, b) => {
       if (order === "asc") {
@@ -62,19 +64,25 @@ function StaffAdmin() {
     setStaffList(sortedStaff);
   };
 
+  // Funksioni për të ndryshuar renditjen e stafit
   const handleSortOrderChange = (e) => {
     setSortOrder(e.target.value);
-    sortStaff(e.target.value);
+    sortStaff(e.target.value); // Thërret funksionin për të renditur listën e stafit
   };
-  
 
   async function loadStaff() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Staff/GetAllList"
+      const result = await axios.get(
+        "https://localhost:7214/api/Staff/GetAllList",
+        axiosConfig
       );
       setStaffList(result.data);
     } catch (err) {
       console.error(err);
+      showAlert(
+        "Failed to load staff list. Please check your authorization.",
+        "alert-danger"
+      );
     }
   }
 
@@ -83,14 +91,21 @@ function StaffAdmin() {
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Staff/Add", {
-        firstName: firstName,
-        lastName: lastName,
-        position: position,
-        contactNumber: contactNumber,
-        image: image,
-      });
-      showAlert(" The staff member has been successfully registered!", "alert-success");
+      await axios.post(
+        "https://localhost:7214/api/Staff/Add",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          position: position,
+          contactNumber: contactNumber,
+          image: image,
+        },
+        axiosConfig
+      );
+      showAlert(
+        "The staff member has been successfully registered!",
+        "alert-success"
+      );
       clearForm();
       setIsFormVisible(false);
       loadStaff();
@@ -112,8 +127,14 @@ function StaffAdmin() {
 
   async function deleteStaff(staffId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Staff/Delete?Id=${staffId}`);
-      showAlert("The staff member has been successfully deleted!", "alert-success");
+      await axios.delete(
+        `https://localhost:7214/api/Staff/Delete?Id=${staffId}`,
+        axiosConfig
+      );
+      showAlert(
+        "The staff member has been successfully deleted!",
+        "alert-success"
+      );
       clearForm();
       loadStaff();
     } catch (err) {
@@ -126,7 +147,7 @@ function StaffAdmin() {
     try {
       const staff = staffList.find((p) => p.id === id);
       await axios.put(
-        `https://localhost:7214/api/Staff/Update/${staff.id}`, 
+        `https://localhost:7214/api/Staff/Update/${staff.id}`,
         {
           id: staff.id,
           firstName: firstName,
@@ -134,8 +155,13 @@ function StaffAdmin() {
           position: position,
           contactNumber: contactNumber,
           image: image,
-      });
-      showAlert("The staff member has been successfully updated!", "alert-success");
+        },
+        axiosConfig
+      );
+      showAlert(
+        "The staff member has been successfully updated!",
+        "alert-success"
+      );
       clearForm();
       setIsFormVisible(false);
       loadStaff();
@@ -189,10 +215,13 @@ function StaffAdmin() {
         <div className="col-4 col-md-2"></div>
         <div className="col">
           <Navbar Toggle={Toggle} />
-          
+
           <div className="d-flex justify-content-between align-items-center mt-4 px-5">
             <h4 className="text-dark">Data for Staff</h4>
-            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+            <button
+              className="btn btn-add d-flex align-items-center"
+              onClick={toggleFormVisibility}
+            >
               <i className="fas fa-plus me-2"></i>
               Add
             </button>
@@ -262,11 +291,13 @@ function StaffAdmin() {
                     className="form-control mb-3"
                     id="image"
                     onChange={(event) => {
-                      setSelectedImage(URL.createObjectURL(event.target.files[0]));
+                      setSelectedImage(
+                        URL.createObjectURL(event.target.files[0])
+                      );
                       setImage("./images/" + event.target.files[0].name);
                     }}
                   />
-                  
+
                   {selectedImage && (
                     <img
                       src={selectedImage}
@@ -285,16 +316,10 @@ function StaffAdmin() {
                   <button className="btn btn-save" onClick={save}>
                     Save
                   </button>
-                  <button
-                    className="btn btn-update"
-                    onClick={update}
-                  >
+                  <button className="btn btn-update" onClick={update}>
                     Update
                   </button>
-                  <button
-                    className="btn btn-cancel"
-                    onClick={cancel}
-                  >
+                  <button className="btn btn-cancel" onClick={cancel}>
                     Cancel
                   </button>
                 </div>
@@ -303,13 +328,11 @@ function StaffAdmin() {
           )}
 
           {isAlertVisible && (
-            <div className={`alert ${alertType}`}>
-              {alertMessage}
-            </div>
+            <div className={`alert ${alertType}`}>{alertMessage}</div>
           )}
 
           <div className="user-order">
-            <select 
+            <select
               className="form-select-user"
               onChange={handleSortOrderChange}
               value={sortOrder}
@@ -318,7 +341,6 @@ function StaffAdmin() {
               <option value="desc">Sort Z-A</option>
             </select>
           </div>
-
 
           <div className="table-responsive m-4 px-4">
             <table className="table border-gray">
@@ -353,23 +375,23 @@ function StaffAdmin() {
                       />
                     </td>
                     <td className="options-cell d-flex justify-content-center align-items-center">
-                            <button
-                              type="button"
-                              className="btn btn-edit mx-2 d-flex align-items-center"
-                              onClick={() => editStaff(staff)}
-                            >
-                               <i className="fas fa-edit"></i>
-                               <span className="ms-2">Edit</span>
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-delete mx-2 d-flex align-items-center"
-                              onClick={() => deleteStaff(staff.id)}
-                            >
-                               <i className="fas fa-trash-alt"></i>
-                               <span className="ms-2">Delete</span>
-                            </button>
-                        </td>
+                      <button
+                        type="button"
+                        className="btn btn-edit mx-2 d-flex align-items-center"
+                        onClick={() => editStaff(staff)}
+                      >
+                        <i className="fas fa-edit"></i>
+                        <span className="ms-2">Edit</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-delete mx-2 d-flex align-items-center"
+                        onClick={() => deleteStaff(staff.id)}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                        <span className="ms-2">Delete</span>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

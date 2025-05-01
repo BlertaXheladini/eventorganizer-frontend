@@ -1,3 +1,4 @@
+// UserProfile.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserProfile.css'; // CSS për stilizimin e profilit
@@ -12,14 +13,22 @@ const UserProfile = () => {
   useEffect(() => {
     // Merr ID-në e përdoruesit nga localStorage
     const userId = localStorage.getItem('userId');
+    const accessToken = localStorage.getItem('accessToken'); // Merr accessToken
 
     // Merr detajet e përdoruesit dhe rezervimet
     const fetchUserData = async () => {
       try {
-        const userResponse = await axios.get(`https://localhost:7214/api/Users/GetUserById?id=${userId}`);
+        // Përfshi accessToken në header të kërkesave axios
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        const userResponse = await axios.get(`https://localhost:7214/api/Users/GetUserById?id=${userId}`, config);
         setUserDetails(userResponse.data);
 
-        const reservationResponse = await axios.get(`https://localhost:7214/api/Reservation/GetAllList`);
+        const reservationResponse = await axios.get(`https://localhost:7214/api/Reservation/GetAllList`, config);
         const userReservations = reservationResponse.data.filter(
           (reservation) => reservation.userID === parseInt(userId)
         );
@@ -44,10 +53,9 @@ const UserProfile = () => {
         ← Back
       </button>
 
-    
       <div className="profile-wrapper">
         <div className="profile-card">
-        <h1 className="profile-title">My Profile</h1>
+          <h1 className="profile-title">My Profile</h1>
           <FaUserCircle className="profile-icon" />
           <h2 className="profile-name">
             {userDetails.firstName} {userDetails.lastName}

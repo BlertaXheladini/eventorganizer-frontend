@@ -291,6 +291,7 @@ function Reservations() {
             
               <button className="btn btn-export-excel ms-1" onClick={exportReservations}>
                   Export to Excel
+                  <i className="fas fa-file-excel ms-2"></i>
                 </button>
           </div>
 

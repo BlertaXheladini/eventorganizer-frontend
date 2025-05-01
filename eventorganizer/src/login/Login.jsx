@@ -1,3 +1,4 @@
+// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,46 +9,50 @@ import './Login.css';
 const Login = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
-  const [FirstName,setFirstName] = useState('')
-  const [LastName,setLastName] = useState('')
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [ServerError, setServerError] = useState('');
 
   const navigate = useNavigate();
 
-  const handleInputChange = (setter, errorSetter, validator) => (ev) => {
+  const handleInputChange = (setter, errorSetter) => (ev) => {
     const value = ev.target.value;
     setter(value);
     errorSetter('');
-    if (validator) validator(value);
   };
 
-  const onLoginClick = async () => {  
+  const onLoginClick = async () => {
     const userData = {
       email: Email,
       password: Password
     };
-  
+
     if (!Email) {
       toast.error('Email is required!');
       return;
     }
-  
+
     if (!Password) {
       toast.error('Password is required!');
       return;
     }
-  
+
     try {
       const response = await axios.post('https://localhost:7214/api/Users/Login', userData);
       if (response.status === 200) {
-        const { roleId , userId , firstName , lastName} = response.data;
-        console.log(response.data)
+        const { roleId, userId, firstName, lastName, AccessToken, RefreshToken } = response.data;
+
+        // Ruaj të dhënat në localStorage
         localStorage.setItem('roleId', roleId);
-        localStorage.setItem('userId',userId);
-        localStorage.setItem('firstName',firstName)
-        localStorage.setItem('lastName',lastName)
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('firstName', firstName);
+        localStorage.setItem('lastName', lastName);
+        localStorage.setItem('accessToken', AccessToken);
+        localStorage.setItem('refreshToken', RefreshToken);
+
+        // Konfiguro axios për të përfshirë token-in në kërkesa të ardhshme
+        axios.defaults.headers.common['Authorization'] = `Bearer ${AccessToken}`;
+
         toast.success('Logged in successfully!');
         navigate('/');
       } else {

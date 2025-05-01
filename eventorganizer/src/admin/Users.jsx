@@ -1,3 +1,4 @@
+// Users.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./include/Navbar";
@@ -26,6 +27,8 @@ function Users() {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  const loggedInRoleId = localStorage.getItem("roleId"); // Merr rolin e përdoruesit të loguar
+
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
@@ -35,12 +38,11 @@ function Users() {
     clearForm();
   };
 
-
   const handleSortOrderChange = (e) => {
     setSortOrder(e.target.value);
     sortUsers(e.target.value);
   };
-  
+
   const sortUsers = (order) => {
     const sortedUsers = [...Users].sort((a, b) => {
       if (order === "asc") {
@@ -72,7 +74,7 @@ function Users() {
   // Ngarko të gjitha rolet
   async function loadRoles() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Roles/GetAllList"); // Endpoin për rolet
+      const result = await axios.get("https://localhost:7214/api/Roles/GetAllList");
       setRoles(result.data);
     } catch (err) {
       console.error("Error loading roles:", err);
@@ -81,16 +83,8 @@ function Users() {
 
   // Ruaj përdoruesin e ri
   async function save(e) {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     try {
-      console.log({
-        firstName: FirstName,
-        lastName: LastName,
-        email: Email,
-        password: Password,
-        roleId: roleId,
-      });
-
       await axios.post("https://localhost:7214/api/Users/Register", {
         firstName: FirstName,
         lastName: LastName,
@@ -102,7 +96,7 @@ function Users() {
       showAlert("The user has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
-      loadUsers(); // Reload the users after saving
+      loadUsers();
     } catch (err) {
       showAlert(`Error: ${err.response.data}`, "alert-danger");
       console.error("Error saving user:", err.response.data);
@@ -125,7 +119,7 @@ function Users() {
     try {
       await axios.delete(`https://localhost:7214/api/Users/Delete?Id=${userId}`);
       showAlert("The user has been successfully deleted!", "alert-success");
-      loadUsers(); // Reload the users after deleting
+      loadUsers();
     } catch (err) {
       showAlert(`Error: ${err.response.data}`, "alert-danger");
       console.error("Error deleting user:", err.response.data);
@@ -134,21 +128,21 @@ function Users() {
 
   // Përditëso përdoruesin
   async function update(e) {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     try {
       await axios.put(`https://localhost:7214/api/Users/UpdateUser`, {
         id: Id,
         firstName: FirstName,
         lastName: LastName,
         email: Email,
-        password: Password, // Send new password if it was changed
+        password: Password,
         roleId: roleId,
       });
 
       showAlert("The user has been successfully updated!", "alert-success");
       clearForm();
       setIsFormVisible(false);
-      loadUsers(); // Reload the users after update
+      loadUsers();
     } catch (err) {
       showAlert(`Error: ${err.response.data}`, "alert-danger");
       console.error("Error updating user:", err.response.data);
@@ -165,29 +159,25 @@ function Users() {
     setRoleId("");
   }
 
-
   // Funksioni për eksportimin e përdoruesve në Excel
-const exportToExcel = async () => {
-  try {
-    const response = await axios({
-      url: "https://localhost:7214/api/Users/ExportUsersToExcel", // Endpoint-i i backend për eksportimin
-      method: "GET",
-      responseType: "blob", // Kjo përdoret për të pranuar fajl binar
-    });
+  const exportToExcel = async () => {
+    try {
+      const response = await axios({
+        url: "https://localhost:7214/api/Users/ExportUsersToExcel",
+        method: "GET",
+        responseType: "blob",
+      });
 
-    // Krijo një URL për fajlin Excel dhe bëj shkarkimin
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "Users.xlsx"); // Emri i fajlit që do të shkarkohet
-    document.body.appendChild(link);
-    link.click();
-  } catch (error) {
-    console.error("Error exporting users to Excel:", error);
-  }
-};
-
-
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Users.xlsx");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error exporting users to Excel:", error);
+    }
+  };
 
   // Shfaqje e mesazhit të gabimit ose suksesit
   function showAlert(message, type) {
@@ -196,7 +186,7 @@ const exportToExcel = async () => {
     setIsAlertVisible(true);
     setTimeout(() => {
       setIsAlertVisible(false);
-    }, 4000); // Hide the alert after 4 seconds
+    }, 4000);
   }
 
   return (
@@ -285,7 +275,11 @@ const exportToExcel = async () => {
                     onChange={(e) => setRoleId(e.target.value)}
                   >
                     <option value="">Select Role</option>
-                    {Roles.map((role) => (
+                    {Roles.filter(
+                      (role) =>
+                        loggedInRoleId === "1" || // SuperAdmin mund të zgjedhë të gjitha rolet
+                        (loggedInRoleId === "2" && role.name === "User") // Mod mund të zgjedhë vetëm rolin "User"
+                    ).map((role) => (
                       <option key={role.id} value={role.id}>
                         {role.name}
                       </option>
@@ -316,12 +310,13 @@ const exportToExcel = async () => {
 
           <div className="user-order">
             <select className="form-select-user" value={sortOrder} onChange={handleSortOrderChange}>
-                <option value="asc">Sort A-Z</option>
-                <option value="desc">Sort Z-A</option>
+              <option value="asc">Sort A-Z</option>
+              <option value="desc">Sort Z-A</option>
             </select>
             <button className="btn btn-export-excel ms-3" onClick={exportToExcel}>
-                Export to Excel
-              </button>
+              Export to Excel
+              <i className="fas fa-file-excel ms-2"></i>
+            </button>
           </div>
 
           <div className="table-responsive m-4 px-4">
@@ -333,7 +328,8 @@ const exportToExcel = async () => {
                   <th scope="col">Last Name</th>
                   <th scope="col">Email</th>
                   <th scope="col">Role</th>
-                  <th scope="col">Options</th>
+                  {/* Fsheh kolonën Options nëse është Mod */}
+                  {loggedInRoleId === "1" && <th scope="col">Options</th>}
                 </tr>
               </thead>
               <tbody>
@@ -344,24 +340,27 @@ const exportToExcel = async () => {
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>{Roles.find((role) => role.id === user.roleId)?.name || "N/A"}</td>
-                    <td className="options-cell d-flex justify-content-center align-items-center">
-                      <button
-                        type="button"
-                        className="btn btn-edit mx-2 d-flex align-items-center"
-                        onClick={() => editUser(user)}
-                      >
-                        <i className="fas fa-edit"></i>
-                        <span className="ms-2">Edit</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-delete mx-2 d-flex align-items-center"
-                        onClick={() => deleteUser(user.id)}
-                      >
-                        <i className="fas fa-trash-alt"></i>
-                        <span className="ms-2">Delete</span>
-                      </button>
-                    </td>
+                    {/* Fsheh butonat Edit dhe Delete nëse është Mod */}
+                    {loggedInRoleId === "1" && (
+                      <td className="options-cell d-flex justify-content-center align-items-center">
+                        <button
+                          type="button"
+                          className="btn btn-edit mx-2 d-flex align-items-center"
+                          onClick={() => editUser(user)}
+                        >
+                          <i className="fas fa-edit"></i>
+                          <span className="ms-2">Edit</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-delete mx-2 d-flex align-items-center"
+                          onClick={() => deleteUser(user.id)}
+                        >
+                          <i className="fas fa-trash-alt"></i>
+                          <span className="ms-2">Delete</span>
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

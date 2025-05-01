@@ -413,6 +413,7 @@ function EventsAdmin() {
             </button>
             <button className="btn btn-export-excel ms-2" onClick={exportEventsToExcel}>
               Export to Excel
+              <i className="fas fa-file-excel ms-2"></i>
             </button>
             </div>
 
