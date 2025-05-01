@@ -1,94 +1,128 @@
 @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
 
 /* Navbar.css */
 .navbar-container {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #fff;
     color: #000;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar-top {
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .navbar-top {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 5px 20px;
+    padding: 10px 20px;
     margin-bottom: 60px;
     position: relative;
-}
-
-.logo-home {
-    height: 50px;
-    width: auto;
+  }
+  
+  .logo-home {
+    height: 74px; 
+    width: auto; 
     margin: 0;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 5px;
-}
-
-.icons {
+    margin-top: 5px;
+  }
+  
+  .icons {
     position: absolute;
     right: 20px;
     display: flex;
-    gap: 10px;
-    top: 10px;
-}
+    gap: 15px;
+  }
 
-.icons i {
+  .icons i{
+    color: #fff;
+    padding-right: 10px;
     font-size: 18px;
-    color: #000;
-    margin: 0 5px;
-    position: relative;
-    cursor: pointer;
-}
+  }
 
-.icons i:hover {
-    color: #B29C80;
-}
-
-/* Mobile Menu Button */
-.mobile-menu-btn {
-    display: none;
-    background: none;
+  #loginButton{
+    padding: 7px 20px;
+    background-color: #ff7b54;
+    color: #fff;
     border: none;
-    color: #000;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    position: absolute;
-    left: 20px;
-    top: 10px;
-}
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  }
 
-.navbar-bottom {
+  #loginButton:hover{
+    background-color: #e76541;
+  }
+
+  #registerButton{
+    padding: 7px 20px;
+    background-color: #3f3f3f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  #registerButton:hover{
+    background-color: #2c2c2c;
+  }
+
+
+  #logoutButton{
+    padding: 8px 20px;
+    background-color: #3f3f3f;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
+
+  #logoutButton:hover{
+    background-color: #2c2c2c;
+  }
+  
+  .navbar-bottom {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
-}
-
-.nav-list {
+    margin-top: 5px;
+  }
+  
+  .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 15px;
-}
-
-.nav-link {
+    gap: 20px;
+  }
+  
+  .nav-list li {
+    display: inline;
+  }
+  
+  .nav-link {
     text-decoration: none;
     color: #000;
-    padding: 8px;
+    padding: 10px;
     font-family: "Gruppo", sans-serif;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 21px;
     position: relative;
     transition: color 0.3s, border-bottom 0.3s;
-}
-
-.nav-link::after {
+  }
+  
+  .nav-link::after {
     content: "";
     display: block;
     width: 0;
@@ -98,68 +132,27 @@
     bottom: 3px;
     left: 0;
     transition: width 0.3s;
-}
-
-.nav-link:hover {
-    color: #000;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* Responsive Design */
-@media (max-width: 992px) {
-    .nav-list {
-        gap: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar-top {
-        padding: 5px;
-    }
-
-    .mobile-menu-btn {
-        display: block;
-    }
-
-    .nav-list {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #fff;
-        flex-direction: column;
-        align-items: center;
-        padding: 0.5rem 0;
-        gap: 0.5rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-list.active {
-        display: flex;
-    }
-
-    .nav-link {
-        width: 100%;
-        text-align: center;
-        padding: 0.5rem 0;
-    }
-
-    .icons {
-        gap: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-home {
-        height: 40px;
-    }
-
-    .icons i {
-        font-size: 1rem;
-    }
-}
+  }
   
+  .nav-link:hover {
+    color: #000;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+
+.custom-toast {
+  background-color: #fff !important; 
+  color: #000 !important; 
+  font-size: 16px !important; 
+  border-radius: 5px !important;
+  padding: 8px 10px !important; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important; 
+  font-family: "Unbounded", sans-serif;
+  font-size: 14px !important;
+}
+
+
+ 

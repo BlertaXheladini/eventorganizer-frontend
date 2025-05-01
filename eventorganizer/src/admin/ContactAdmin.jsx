@@ -3,7 +3,6 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
-import "./Style.css";
 
 function ContactAdmin() {
   const [toggle, setToggle] = useState(true);
@@ -18,6 +17,7 @@ function ContactAdmin() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [contactList, setContactList] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
@@ -36,6 +36,27 @@ function ContactAdmin() {
   useEffect(() => {
     (async () => await loadContacts())();
   }, []);
+
+
+  const sortContact = (order) => {
+    const sortedContact = [...contactList].sort((a, b) => {
+      const nameA = a.name || ''; 
+      const nameB = b.name || ''; 
+  
+      if (order === "asc") {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    });
+    setContactList(sortedContact);
+  };
+  
+
+  const handleSortOrderChange = (e) => {
+    setSortOrder(e.target.value);
+    sortContact(e.target.value);
+  };
 
   async function loadContacts() {
     try {
@@ -73,7 +94,7 @@ function ContactAdmin() {
 
   async function deleteContact(contactId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Contact/Delete/${contactId}`);
+      await axios.delete(`https://localhost:7214/api/Contact/Delete?Id=${contactId}`);
       showAlert("Contact deleted successfully!", "alert-success");
       loadContacts();
     } catch (err) {
@@ -116,7 +137,14 @@ function ContactAdmin() {
   }
 
   return (
-    <div className="container-fluid">
+    <div
+      className="container-fluid"
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -124,21 +152,22 @@ function ContactAdmin() {
           </div>
         )}
 
-        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+        <div className="col-4 col-md-2"></div>
+        <div className="col">
           <Navbar Toggle={Toggle} />
-          
-          <div className="admin-container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="admin-title">Contact Management</h4>
-              <button className="btn btn-add" onClick={toggleFormVisibility}>
-                <i className="fas fa-plus"></i>
-                <span>Add Contact</span>
-              </button>
-            </div>
 
-            {isFormVisible && (
-              <div className="admin-form">
-                <form>
+          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
+            <h4 className="text-dark">Data for Contacts</h4>
+            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+              <i className="fas fa-plus me-2"></i>
+              Add
+            </button>
+          </div>
+
+          {isFormVisible && (
+            <div className="container mt-4 text-white align-item-center">
+              <form>
+                <div className="form-group px-5">
                   <input
                     type="text"
                     className="form-control"
@@ -148,104 +177,99 @@ function ContactAdmin() {
                     onChange={(event) => setId(event.target.value)}
                   />
 
-                  <div className="form-group">
-                    <label className="label">Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                    />
-                  </div>
+                  <label className="label">Name:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Email:</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Email:</label>
+                  <input
+                    type="email"
+                    className="form-control mb-3"
+                    id="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Message:</label>
-                    <textarea
-                      className="form-control"
-                      id="message"
-                      value={message}
-                      onChange={(event) => setMessage(event.target.value)}
-                      rows="3"
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Message:</label>
+                  <textarea
+                    className="form-control mb-3"
+                    id="message"
+                    rows={6}
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                  />
+                </div>
 
-                  <div className="mt-3">
-                    {id ? (
-                      <button className="btn btn-update" onClick={update}>
-                        <i className="fas fa-save me-2"></i>Update
-                      </button>
-                    ) : (
-                      <button className="btn btn-save" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Save
-                      </button>
-                    )}
-                    <button className="btn btn-cancel" onClick={cancel}>
-                      <i className="fas fa-times me-2"></i>Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {isAlertVisible && (
-              <div className={`admin-alert ${alertType}`}>
-                {alertMessage}
-              </div>
-            )}
-
-            <div className="table-responsive">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Message</th>
-                    <th scope="col">Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contactList.map((contact) => (
-                    <tr key={contact.id}>
-                      <td>{contact.id}</td>
-                      <td>{contact.name}</td>
-                      <td>{contact.email}</td>
-                      <td className="description-cell">{contact.message}</td>
-                      <td className="options-cell d-flex justify-content-center align-items-center">
-                        <button
-                          type="button"
-                          className="btn btn-edit mx-2 d-flex align-items-center"
-                          onClick={() => editContact(contact)}
-                        >
-                          <i className="fas fa-edit"></i>
-                          <span className="ms-2">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-delete mx-2 d-flex align-items-center"
-                          onClick={() => deleteContact(contact.id)}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                          <span className="ms-2">Delete</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                <div className="mt-3">
+                  <button className="btn btn-save" onClick={save}>
+                    Save
+                  </button>
+                  
+                  <button className="btn btn-cancel" onClick={cancel}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
+          )}
+
+          {isAlertVisible && <div className={`alert ${alertType}`}>{alertMessage}</div>}
+
+          <div className="user-order">
+            <select 
+              className="form-select-user"
+              onChange={handleSortOrderChange}
+              value={sortOrder}
+            >
+              <option value="asc">Sort A-Z</option>
+              <option value="desc">Sort Z-A</option>
+            </select>
+          </div>
+
+
+
+          <div className="table-responsive m-4 px-4">
+            <table className="table border-gray">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Message</th>
+                  <th scope="col">Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contactList.map((contact) => (
+                  <tr key={contact.id}>
+                    <td>{contact.id}</td>
+                    <td>{contact.name}</td>
+                    <td>{contact.email}</td>
+                    <td>{contact.message}</td>
+                    <td className="options-cell d-flex justify-content-center align-items-center">
+                      
+                      <button
+                        type="button"
+                        className="btn btn-delete mx-2 d-flex align-items-center"
+                        onClick={() => deleteContact(contact.id)}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                        <span className="ms-2">Delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -3,10 +3,10 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
-import "./Style.css";
 
 function RestaurantsAdmin() {
   const [toggle, setToggle] = useState(true);
+
   const navigate = useNavigate();
   const Toggle = () => {
     setToggle(!toggle);
@@ -21,6 +21,8 @@ function RestaurantsAdmin() {
   const [restaurantTypesId, setRestaurantTypesId] = useState("");
   const [restaurantTypes, setRestaurantTypes] = useState([]); 
   const [restaurants, setRestaurants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState(""); 
@@ -33,7 +35,13 @@ function RestaurantsAdmin() {
 
   const cancel = () => {
     setIsFormVisible(false);
-    clearForm();
+    setId("");
+    setName("");
+    setLocation("");
+    setImage("");
+    setSelectedImage("");
+    setDescription("");
+    setRestaurantTypesId("");
   };
 
   useEffect(() => {
@@ -43,41 +51,42 @@ function RestaurantsAdmin() {
     })();
   }, []);
 
+
   async function loadRestaurantTypes() {
     try {
       const result = await axios.get(
-        "https://localhost:7137/api/RestaurantTypes/GetAllList"
+        "https://localhost:7214/api/RestaurantTypes/GetAllList"
       );
       setRestaurantTypes(result.data);
     } catch (err) {
-      console.error("Error loading restaurant types:", err);
+      console.error("Error loading eventThemes:", err);
     }
   }
 
   async function loadRestaurants() {
     try {
-      const result = await axios.get(
-        "https://localhost:7137/api/Restaurants/GetAllList"
-      );
-      setRestaurants(result.data);
+        const result = await axios.get(
+            "https://localhost:7214/api/Restaurants/GetAllList"
+        );
+        setRestaurants(result.data);
     } catch (err) {
-      console.error("Error loading restaurants:", err);
+        console.error("Error loading events:", err);
     }
-  }
+}
 
   const inputFileRef = useRef(null);
 
-  async function save(event) {
-    event.preventDefault();
+  async function save(restaurant) {
+    restaurant.preventDefault();
     try {
-      await axios.post("https://localhost:7137/api/Restaurants/Add", {
+      await axios.post("https://localhost:7214/api/Restaurants/Add", {
         name: name,
         location: location,
         image: image,
         description: description,
         restaurantTypesId: restaurantTypesId, 
       });
-      showAlert("Restaurant added successfully!", "alert-success");
+      showAlert("The restaurant has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadRestaurants();
@@ -91,14 +100,17 @@ function RestaurantsAdmin() {
     setName("");
     setLocation("");
     setImage("");
-    setSelectedImage(null);
+    setSelectedImage("");
     setDescription("");
     setRestaurantTypesId("");
+  
+    setSelectedImage(null);
   
     if (inputFileRef.current) {
       inputFileRef.current.value = "";
     }
   }
+  
 
   async function editRestaurants(restaurant) {
     setName(restaurant.name);
@@ -113,26 +125,30 @@ function RestaurantsAdmin() {
 
   async function deleteRestaurants(restaurantId) {
     try {
-      await axios.delete(`https://localhost:7137/api/Restaurants/Delete/${restaurantId}`);
-      showAlert("Restaurant deleted successfully!", "alert-success");
+      await axios.delete(`https://localhost:7214/api/Restaurants/Delete/${restaurantId}`);
+      showAlert("The restaurant has been successfully deleted!", "alert-success");
+      clearForm();
       loadRestaurants();
     } catch (err) {
       showAlert(`Error: ${err}`, "alert-danger");
     }
   }
+  
+  
 
-  async function update(event) {
-    event.preventDefault();
+  async function update(restaurant) {
+    restaurant.preventDefault();
     try {
-      await axios.put(`https://localhost:7137/api/Restaurants/Update/${id}`, {
-        id: id,
+      const restaurant = restaurants.find((p) => p.id === id);
+      await axios.put(`https://localhost:7214/api/Restaurants/Update/${restaurant.id}`, {
+        id: restaurant.id,
         name: name,
         location: location,
         image: image,
         description: description,
         restaurantTypesId: restaurantTypesId, 
       });
-      showAlert("Restaurant updated successfully!", "alert-success");
+      showAlert("The restaurant has been successfully edited!", "alert-success");
       clearForm();
       setIsFormVisible(false); 
       loadRestaurants();
@@ -141,17 +157,41 @@ function RestaurantsAdmin() {
     }
   }
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get('https://localhost:7214/api/Restaurants/SearchRestaurant', {
+        params: {
+          searchRestaurant: searchTerm,
+        },
+      });
+      setRestaurants(response.data);
+    } catch (err) {
+      console.error("Error searching events:", err);
+    }
+  };
+
   function showAlert(message, type) {
     setAlertMessage(message);
     setAlertType(type);
     setIsAlertVisible(true);
+
     setTimeout(() => {
       setIsAlertVisible(false);
-    }, 4000);
+    }, 4000); // Hide the alert after 4 seconds
   }
 
+  
+
+  ///////////////////////////////////////////////////////////////
   return (
-    <div className="container-fluid">
+    <div
+      className="container-fluid"
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -159,173 +199,215 @@ function RestaurantsAdmin() {
           </div>
         )}
 
-        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+        <div className="col-4 col-md-2"></div>
+        <div className="col">
           <Navbar Toggle={Toggle} />
           
-          <div className="admin-container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="admin-title">Restaurants Management</h4>
-              <button className="btn btn-add" onClick={toggleFormVisibility}>
-                <i className="fas fa-plus"></i>
-                <span>Add Restaurant</span>
-              </button>
-            </div>
+          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
+            <h4 className="text-dark">Data for Restaurants</h4>
+            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+              <i className="fas fa-plus me-2"></i>
+              Add
+            </button>
+          </div>
 
-            {isFormVisible && (
-              <div className="admin-form">
-                <form>
+
+          {isFormVisible && (
+            <div className="container mt-4 text-white align-item-center">
+              <form>
+                <div className="form-group px-5">
                   <input
                     type="text"
                     className="form-control"
                     id="id"
                     hidden
                     value={id}
-                    onChange={(event) => setId(event.target.value)}
+                    onChange={(restaurant) => {
+                      setId(restaurant.target.value);
+                    }}
                   />
 
-                  <div className="form-group">
-                    <label className="label">Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                    />
-                  </div>
+                  <label className="label">Name:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="name"
+                    value={name}
+                    onChange={(restaurant) => {
+                      setName(restaurant.target.value);
+                    }}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Location:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      value={location}
-                      onChange={(event) => setLocation(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Location:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="location"
+                    value={location}
+                    onChange={(restaurant) => {
+                      setLocation(restaurant.target.value);
+                    }}
+                  />
+                </div>
+              
 
-                  <div className="form-group">
-                    <label className="label">Image:</label>
-                    <input
-                      type="file"
-                      ref={inputFileRef}
-                      className="form-control"
-                      id="image"
-                      onChange={(event) => {
-                        setSelectedImage(URL.createObjectURL(event.target.files[0]));
-                        setImage("./images/" + event.target.files[0].name);
+                <div className="form-group px-5">
+                  <label className="label">Image:</label>
+                  <input
+                    type="file"
+                    ref={inputFileRef}
+                    className="form-control mb-3"
+                    id="image"
+                    onChange={(restaurant) => {
+                      setSelectedImage(URL.createObjectURL(restaurant.target.files[0]));
+                      setImage("./images/" + restaurant.target.files[0].name);
+                    }}
+                  />
+                  
+                  {selectedImage && (
+                    <img
+                      src={selectedImage}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        maxHeight: "150px",
+                        marginTop: "10px",
                       }}
+                      alt="SelectedImagePreview"
                     />
-                    
-                    {selectedImage && (
-                      <img
-                        src={selectedImage}
-                        className="admin-image"
-                        alt="SelectedImagePreview"
-                      />
-                    )}
-                  </div>
+                  )}
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Description:</label>
-                    <textarea
-                      className="form-control"
-                      id="description"
-                      value={description}
-                      onChange={(event) => setDescription(event.target.value)}
-                      rows="3"
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Description:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="description"
+                    value={description}
+                    onChange={(restaurant) => {
+                      setDescription(restaurant.target.value);
+                    }}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Type:</label>
-                    <select
-                      className="form-control"
-                      id="type"
-                      value={restaurantTypesId}
-                      onChange={(event) => setRestaurantTypesId(event.target.value)}
-                    >
-                      <option value="">Select Type</option>
-                      {restaurantTypes.map((type) => (
-                        <option key={type.id} value={type.id}>
-                          {type.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
 
-                  <div className="mt-3">
-                    {id ? (
-                      <button className="btn btn-update" onClick={update}>
-                        <i className="fas fa-save me-2"></i>Update
-                      </button>
-                    ) : (
-                      <button className="btn btn-save" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Save
-                      </button>
-                    )}
-                    <button className="btn btn-cancel" onClick={cancel}>
-                      <i className="fas fa-times me-2"></i>Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+                <div className="form-group px-5">
+                  <label className="label">Type:</label>
+                  <select
+                    className="form-control"
+                    id="type"
+                    value={restaurantTypesId}
+                    onChange={(restaurant) => setRestaurantTypesId(restaurant.target.value)}
+                  >
+                    <option value="">Select Type</option>
+                    {restaurantTypes.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+
+                <div className="mt-3">
+                  <button className="btn btn-save" onClick={save}>
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-update"
+                    onClick={update}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="btn btn-cancel "
+                    onClick={cancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+            <br />
+
 
             {isAlertVisible && (
-              <div className={`admin-alert ${alertType}`}>
-                {alertMessage}
-              </div>
-            )}
+            <div
+              className={`alert ${alertType}`}
+            >
+              {alertMessage}
+            </div>
+          )}
 
-            <div className="table-responsive">
-              <table className="admin-table">
+
+          <div className="search-event-admin">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control-search me-2"
+              />
+            <button className="btn btn-search-event me-2" onClick={handleSearch}>Search
+              <i className="fas fa-search"></i>
+            </button>
+
+            </div>
+
+
+            <div className="table-responsive m-4 px-4">
+              <table className="table border-gray">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Location</th>
+                    <th scope="col">RestaurantName</th>
                     <th scope="col">Image</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Type</th>
+                    <th scope="col">Type</th> 
                     <th scope="col">Options</th>
                   </tr>
                 </thead>
                 <tbody>
                   {restaurants.map((restaurant) => (
-                    <tr key={restaurant.id}>
-                      <td>{restaurant.id}</td>
-                      <td>{restaurant.name}</td>
-                      <td>{restaurant.location}</td>
-                      <td>
-                        <img
-                          src={restaurant.image}
-                          className="admin-image"
-                          alt="RestaurantPhoto"
-                        />
-                      </td>
-                      <td className="description-cell">{restaurant.description}</td>
-                      <td>{restaurant.restaurantType ? restaurant.restaurantType.name : "N/A"}</td>
-                      <td className="options-cell d-flex justify-content-center align-items-center">
-                        <button
-                          type="button"
-                          className="btn btn-edit mx-2 d-flex align-items-center"
-                          onClick={() => editRestaurants(restaurant)}
-                        >
-                          <i className="fas fa-edit"></i>
-                          <span className="ms-2">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-delete mx-2 d-flex align-items-center"
-                          onClick={() => deleteRestaurants(restaurant.id)}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                          <span className="ms-2">Delete</span>
-                        </button>
-                      </td>
-                    </tr>
+                      <tr key={restaurant.id}>
+                        <td>{restaurant.id}</td>
+                        <td>{restaurant.name}</td>
+                        <td>
+                          <img
+                            src={restaurant.image}
+                            style={{
+                              minWidth:"100%",
+                              height: "auto",
+                              maxHeight: "150px",
+                            }}
+                            alt="RestaurantPhoto"
+                          />
+                        </td>
+                        <td className="description-cell">{restaurant.description}</td>
+                        <td>{restaurant.restaurantType ? restaurant.restaurantType.name : "N/A"}</td>
+                        <td className="options-cell d-flex justify-content-center align-items-center">
+                            <button
+                              type="button"
+                              className="btn btn-edit mx-2 d-flex align-items-center"
+                              onClick={() => editRestaurants(restaurant)}
+                            >
+                               <i className="fas fa-edit"></i>
+                               <span className="ms-2">Edit</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-delete mx-2 d-flex align-items-center"
+                              onClick={() => deleteRestaurants(restaurant.id)}
+                            >
+                               <i className="fas fa-trash-alt"></i>
+                               <span className="ms-2">Delete</span>
+                            </button>
+                        </td>
+                      </tr>
                   ))}
                 </tbody>
               </table>
@@ -333,7 +415,6 @@ function RestaurantsAdmin() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

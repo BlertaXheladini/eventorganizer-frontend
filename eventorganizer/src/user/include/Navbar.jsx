@@ -12,7 +12,9 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('roleId');
-    toast.success('Logged out successfully!');
+    toast.success('Logged out successfully!', {
+      className: 'custom-toast',
+    });
     navigate('/');
   };
 
@@ -21,9 +23,6 @@ const Navbar = () => {
       <div className="navbar-top">
         <img src={logo} alt="Organizing Events Logo" className="logo-home" />
         <div className="icons">
-          <i className="bi bi-search"></i>
-          <i className="bi bi-bell"></i>
-          <i className="bi bi-list"></i>
           {!roleId ? (
             <>
               <Link to="/login" style={{textDecoration:'none'}}>
@@ -56,7 +55,7 @@ const Navbar = () => {
             <Link to="/restaurantlist" className="nav-link">Restaurants</Link>
           </li>
           <li>
-            <Link to="/contact" className="nav-link">Contact</Link>
+          <Link to="/contact" className="nav-link">Contact</Link>
           </li>
           {roleId === '1' && (
           <li>
