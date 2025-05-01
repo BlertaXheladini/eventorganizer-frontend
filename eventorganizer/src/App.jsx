@@ -23,6 +23,7 @@ import EventDetails from "./user/Events/EventDetails";
 import StaffList from "./user/Staff/StaffList"; 
 import FeedbackAdmin from "./Admin/FeedbackAdmin";
 import AddFeedback from "./user/Home/AddFeedback.jsx";
+import Contact from "./user/Contact/Contact";
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
       <Route path="/stafflist" element={<StaffList />} />
       <Route path="/feedbackAdmin" element={<FeedbackAdmin/>} />
       <Route path="/addfeedback" element={<AddFeedback />} />
+      <Route path="/contact" element={<Contact />} />
       
 
 

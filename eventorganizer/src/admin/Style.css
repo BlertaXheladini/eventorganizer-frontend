@@ -557,3 +557,27 @@
   padding-left: 7px;
   
 }
+
+.btn-search-event:hover{
+  background-color: #333744;
+  color:#fff;
+}
+
+ /*Filter By Star Rating*/
+ .star-rating{
+  margin-left: 50px;
+  margin-top: 30px;
+}
+.star-rating select{
+  padding: 7px 10px;
+  background-color: #ffbf00;
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-size: 14px;
+}
+
+.star-rating option{
+  background-color: #fff;
+  color:#000;
+  font-size: 14px;
+}

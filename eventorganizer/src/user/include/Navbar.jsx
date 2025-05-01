@@ -56,7 +56,7 @@ const Navbar = () => {
             <Link to="/restaurantlist" className="nav-link">Restaurants</Link>
           </li>
           <li>
-            <Link to="/contactus" className="nav-link">Contact</Link>
+            <Link to="/contact" className="nav-link">Contact</Link>
           </li>
           {roleId === '1' && (
           <li>

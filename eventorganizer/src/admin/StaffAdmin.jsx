@@ -3,7 +3,6 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
-import "./Style.css";
 
 function StaffAdmin() {
   const [toggle, setToggle] = useState(true);
@@ -21,11 +20,14 @@ function StaffAdmin() {
   const [image, setImage] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [staffList, setStaffList] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
+
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
+
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -46,19 +48,33 @@ function StaffAdmin() {
     (async () => await loadStaff())();
   }, []);
 
+  
+
+
+  const sortStaff = (order) => {
+    const sortedStaff = [...staffList].sort((a, b) => {
+      if (order === "asc") {
+        return a.firstName.localeCompare(b.firstName);
+      } else {
+        return b.firstName.localeCompare(a.firstName);
+      }
+    });
+    setStaffList(sortedStaff);
+  };
+
+  const handleSortOrderChange = (e) => {
+    setSortOrder(e.target.value);
+    sortStaff(e.target.value);
+  };
+  
+
   async function loadStaff() {
     try {
-      const result = await axios.get("http://localhost:5091/api/Staff/GetAllList");
+      const result = await axios.get("https://localhost:7214/api/Staff/GetAllList"
+      );
       setStaffList(result.data);
     } catch (err) {
-      console.error("Error loading staff:", err);
-      if (err.response) {
-        showAlert(`Error loading staff: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error loading staff: ${err.message}`, "alert-danger");
-      }
+      console.error(err);
     }
   }
 
@@ -67,26 +83,19 @@ function StaffAdmin() {
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5091/api/Staff/Add", {
-         firstName: firstName,
-         lastName: lastName,
-         position: position,
-         contactNumber: contactNumber,
-         image: image,
+      await axios.post("https://localhost:7214/api/Staff/Add", {
+        firstName: firstName,
+        lastName: lastName,
+        position: position,
+        contactNumber: contactNumber,
+        image: image,
       });
-      showAlert("Staff member has been successfully registered!", "alert-success");
+      showAlert(" The staff member has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadStaff();
     } catch (err) {
-      console.error("Error saving staff:", err);
-      if (err.response) {
-        showAlert(`Error saving staff: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error saving staff: ${err.message}`, "alert-danger");
-      }
+      showAlert(`Error: ${err}`, "alert-danger");
     }
   }
 
@@ -103,19 +112,12 @@ function StaffAdmin() {
 
   async function deleteStaff(staffId) {
     try {
-      await axios.delete(`http://localhost:5091/api/Staff/Delete?Id=${staffId}`);
-      showAlert("Staff member has been successfully deleted!", "alert-success");
+      await axios.delete(`https://localhost:7214/api/Staff/Delete?Id=${staffId}`);
+      showAlert("The staff member has been successfully deleted!", "alert-success");
       clearForm();
       loadStaff();
     } catch (err) {
-      console.error("Error deleting staff:", err);
-      if (err.response) {
-        showAlert(`Error deleting staff: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error deleting staff: ${err.message}`, "alert-danger");
-      }
+      showAlert(`Error: ${err}`, "alert-danger");
     }
   }
 
@@ -133,7 +135,7 @@ function StaffAdmin() {
           contactNumber: contactNumber,
           image: image,
       });
-      showAlert("Staff member has been successfully updated!", "alert-success");
+      showAlert("The staff member has been successfully updated!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadStaff();
@@ -163,11 +165,20 @@ function StaffAdmin() {
 
     setTimeout(() => {
       setIsAlertVisible(false);
-    }, 4000);
+    }, 4000); // Hide the alert after 4 seconds
   }
 
+  ////////////////////////////////////////////////////////////////////
+
   return (
-    <div className="container-fluid">
+    <div
+      className="container-fluid"
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -175,21 +186,22 @@ function StaffAdmin() {
           </div>
         )}
 
-        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+        <div className="col-4 col-md-2"></div>
+        <div className="col">
           <Navbar Toggle={Toggle} />
           
-          <div className="admin-container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="admin-title">Staff Management</h4>
-              <button className="btn btn-add" onClick={toggleFormVisibility}>
-                <i className="fas fa-plus"></i>
-                <span>Add Staff</span>
-              </button>
-            </div>
+          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
+            <h4 className="text-dark">Data for Staff</h4>
+            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+              <i className="fas fa-plus me-2"></i>
+              Add
+            </button>
+          </div>
 
-            {isFormVisible && (
-              <div className="admin-form">
-                <form>
+          {isFormVisible && (
+            <div className="container mt-4 text-white align-item-center">
+              <form>
+                <div className="form-group px-5">
                   <input
                     type="text"
                     className="form-control"
@@ -199,147 +211,169 @@ function StaffAdmin() {
                     onChange={(event) => setId(event.target.value)}
                   />
 
-                  <div className="form-group">
-                    <label className="label">First Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstName"
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                    />
-                  </div>
+                  <label className="label">First Name:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="firstName"
+                    value={firstName}
+                    onChange={(event) => setFirstName(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Last Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Last Name:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="lastName"
+                    value={lastName}
+                    onChange={(event) => setLastName(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Position:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="position"
-                      value={position}
-                      onChange={(event) => setPosition(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Position:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="position"
+                    value={position}
+                    onChange={(event) => setPosition(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Contact Number:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="contactNumber"
-                      value={contactNumber}
-                      onChange={(event) => setContactNumber(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Contact Number:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="contactNumber"
+                    value={contactNumber}
+                    onChange={(event) => setContactNumber(event.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Image:</label>
-                    <input
-                      type="file"
-                      ref={inputFileRef}
-                      className="form-control"
-                      id="image"
-                      onChange={(event) => {
-                        setSelectedImage(URL.createObjectURL(event.target.files[0]));
-                        setImage("./images/" + event.target.files[0].name);
+                <div className="form-group px-5">
+                  <label className="label">Image:</label>
+                  <input
+                    type="file"
+                    ref={inputFileRef}
+                    className="form-control mb-3"
+                    id="image"
+                    onChange={(event) => {
+                      setSelectedImage(URL.createObjectURL(event.target.files[0]));
+                      setImage("./images/" + event.target.files[0].name);
+                    }}
+                  />
+                  
+                  {selectedImage && (
+                    <img
+                      src={selectedImage}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        maxHeight: "150px",
+                        marginTop: "10px",
                       }}
+                      alt="SelectedImagePreview"
                     />
-                    
-                    {selectedImage && (
-                      <img
-                        src={selectedImage}
-                        className="admin-image mt-3"
-                        alt="Selected staff"
-                      />
-                    )}
-                  </div>
+                  )}
+                </div>
 
-                  <div className="mt-3">
-                    {id ? (
-                      <button className="btn btn-update" onClick={update}>
-                        <i className="fas fa-save me-2"></i>Update
-                      </button>
-                    ) : (
-                      <button className="btn btn-save" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Save
-                      </button>
-                    )}
-                    <button className="btn btn-cancel" onClick={cancel}>
-                      <i className="fas fa-times me-2"></i>Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {isAlertVisible && (
-              <div className={`admin-alert ${alertType}`}>
-                {alertMessage}
-              </div>
-            )}
-
-            <div className="table-responsive">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Contact Number</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {staffList.map((staff) => (
-                    <tr key={staff.id}>
-                      <td>{staff.id}</td>
-                      <td>{staff.firstName}</td>
-                      <td>{staff.lastName}</td>
-                      <td>{staff.position}</td>
-                      <td>{staff.contactNumber}</td>
-                      <td>
-                        <img
-                          src={staff.image}
-                          className="admin-image"
-                          alt="Staff"
-                        />
-                      </td>
-                      <td className="options-cell d-flex justify-content-center align-items-center">
-                        <button
-                          type="button"
-                          className="btn btn-edit mx-2 d-flex align-items-center"
-                          onClick={() => editStaff(staff)}
-                        >
-                          <i className="fas fa-edit"></i>
-                          <span className="ms-2">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-delete mx-2 d-flex align-items-center"
-                          onClick={() => deleteStaff(staff.id)}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                          <span className="ms-2">Delete</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                <div className="mt-3">
+                  <button className="btn btn-save" onClick={save}>
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-update"
+                    onClick={update}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="btn btn-cancel"
+                    onClick={cancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
+          )}
+
+          {isAlertVisible && (
+            <div className={`alert ${alertType}`}>
+              {alertMessage}
+            </div>
+          )}
+
+          <div className="user-order">
+            <select 
+              className="form-select-user"
+              onChange={handleSortOrderChange}
+              value={sortOrder}
+            >
+              <option value="asc">Sort A-Z</option>
+              <option value="desc">Sort Z-A</option>
+            </select>
+          </div>
+
+
+          <div className="table-responsive m-4 px-4">
+            <table className="table border-gray">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Position</th>
+                  <th scope="col">Contact Number</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {staffList.map((staff) => (
+                  <tr key={staff.id}>
+                    <td>{staff.id}</td>
+                    <td>{staff.firstName}</td>
+                    <td>{staff.lastName}</td>
+                    <td>{staff.position}</td>
+                    <td>{staff.contactNumber}</td>
+                    <td>
+                      <img
+                        src={staff.image}
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto",
+                          maxHeight: "150px",
+                        }}
+                        alt="StaffPhoto"
+                      />
+                    </td>
+                    <td className="options-cell d-flex justify-content-center align-items-center">
+                            <button
+                              type="button"
+                              className="btn btn-edit mx-2 d-flex align-items-center"
+                              onClick={() => editStaff(staff)}
+                            >
+                               <i className="fas fa-edit"></i>
+                               <span className="ms-2">Edit</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-delete mx-2 d-flex align-items-center"
+                              onClick={() => deleteStaff(staff.id)}
+                            >
+                               <i className="fas fa-trash-alt"></i>
+                               <span className="ms-2">Delete</span>
+                            </button>
+                        </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

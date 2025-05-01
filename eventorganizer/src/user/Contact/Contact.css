@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+.contact-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out;
+}
+
+.contact-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Allura', cursive;
+    font-weight: bold;
+    color: #000;
+    font-size: 35px;
+}
+
+.form-group-contact {
+    margin-bottom: 10px;
+}
+
+.form-group-contact label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
+}
+
+.form-group-contact input,
+.form-group-contact textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.text-center button {
+    background-color: #ccc;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.alert-contact {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.alert-success-contact {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.alert-danger-contact {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-contact{
+    background-color: #ff7b54;
+    color: white;
+    text-transform: uppercase;
+    font-family: "Gruppo", sans-serif;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-contact:hover{
+    background-color: #e76541;
+}

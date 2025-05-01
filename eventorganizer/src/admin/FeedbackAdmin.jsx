@@ -6,25 +6,28 @@ import { FaStar } from "react-icons/fa"; // Importo ikonën FaStar për yjet
 
 function FeedbackAdmin() {
   const [toggle, setToggle] = useState(true);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [filteredFeedbacks, setFilteredFeedbacks] = useState([]);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [selectedRating, setSelectedRating] = useState("all");
 
   const Toggle = () => {
     setToggle(!toggle);
   };
-
-  const [feedbacks, setFeedbacks] = useState([]);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertType, setAlertType] = useState("");
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   // Ngarko feedback-et dhe eventet përkatëse
   useEffect(() => {
     loadFeedbacks();
   }, []);
 
+  // Ngarko feedback-et nga API
   async function loadFeedbacks() {
     try {
       const result = await axios.get("https://localhost:7214/api/Feedback/GetAllList");
       setFeedbacks(result.data);
+      setFilteredFeedbacks(result.data);
     } catch (err) {
       console.error("Error loading feedbacks:", err);
     }
@@ -66,6 +69,19 @@ function FeedbackAdmin() {
     return stars;
   }
 
+  // Funksioni për të filtruar feedback-et bazuar në rating
+  function handleRatingFilterChange(e) {
+    const rating = e.target.value;
+    setSelectedRating(rating);
+
+    if (rating === "all") {
+      setFilteredFeedbacks(feedbacks);
+    } else {
+      const filtered = feedbacks.filter(fb => fb.rating === parseInt(rating));
+      setFilteredFeedbacks(filtered);
+    }
+  }
+
   ///////////////////////////////////////////////////////////////
   return (
     <div
@@ -97,6 +113,23 @@ function FeedbackAdmin() {
             </div>
           )}
 
+              {/* Dropdown për filtrimin e feedback-ut */}
+              <div className="star-rating">
+            <select 
+                className="form-select" 
+                value={selectedRating} 
+                onChange={handleRatingFilterChange}
+                style={{ width: "150px" }}
+              >
+                <option value="all">All Ratings</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+              </select>
+            </div>
+
           <div className="table-responsive m-4 px-4">
             <table className="table border-gray">
               <thead>
@@ -113,7 +146,7 @@ function FeedbackAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {feedbacks.map((feedback) => (
+                {filteredFeedbacks.map((feedback) => (
                   <tr key={feedback.id}>
                     <td>{feedback.id}</td>
                     <td>{feedback.name}</td>
