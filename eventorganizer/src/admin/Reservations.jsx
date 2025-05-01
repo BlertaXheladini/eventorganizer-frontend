@@ -128,6 +128,25 @@ function Reservations() {
     setEventId("");
   }
 
+
+  async function exportReservations() {
+    try {
+      const response = await axios.get("https://localhost:7214/api/Reservation/ExportReservationsToExcel", {
+        responseType: 'blob', // Përdorim blob për skedarin
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Reservations.xlsx'); // Emri i skedarit
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error("Error exporting reservations:", err);
+    }
+  }
+
+
   function showAlert(message, type) {
     setAlertMessage(message);
     setAlertType(type);
@@ -260,6 +279,7 @@ function Reservations() {
 
           <div className="mt-4 px-5 reservation-date">
             <label htmlFor="reservationDate" className="label">Select Date:</label>
+            
             <input
               type="date"
               id="reservationDate"
@@ -267,6 +287,11 @@ function Reservations() {
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
             />
+
+            
+              <button className="btn btn-export-excel ms-1" onClick={exportReservations}>
+                  Export to Excel
+                </button>
           </div>
 
           <div className="table-responsive m-4 px-4">

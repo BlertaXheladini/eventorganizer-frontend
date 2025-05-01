@@ -190,6 +190,26 @@ function EventsAdmin() {
   };
   
 
+
+  async function exportEventsToExcel() {
+    try {
+      const response = await axios.get("https://localhost:7214/api/Events/ExportEventsToExcel", {
+        responseType: "blob", // Kjo është e rëndësishme për të pranuar skedarin Excel
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Events.xlsx"); // Emri i skedarit
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error exporting events to Excel:", error);
+    }
+  }
+  
+
   function showAlert(message, type) {
     setAlertMessage(message);
     setAlertType(type);
@@ -391,7 +411,9 @@ function EventsAdmin() {
             <button className="btn btn-search-event me-2" onClick={handleSearch}>Search
               <i className="fas fa-search"></i>
             </button>
-
+            <button className="btn btn-export-excel ms-2" onClick={exportEventsToExcel}>
+              Export to Excel
+            </button>
             </div>
 
             <div className="table-responsive m-4 px-4">

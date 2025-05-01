@@ -95,6 +95,27 @@ function RestaurantsAdmin() {
     }
   }
 
+  const exportRestaurantsToExcel = async () => {
+    try {
+      const response = await axios.get('https://localhost:7214/api/Restaurants/ExportRestaurantsToExcel', {
+        responseType: 'blob',
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Restaurants.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Error exporting restaurants to Excel:', error);
+      showAlert('Error exporting restaurants to Excel', 'alert-danger');
+    }
+  };  
+
+
+
   function clearForm() {
     setId("");
     setName("");
@@ -356,6 +377,9 @@ function RestaurantsAdmin() {
               <i className="fas fa-search"></i>
             </button>
 
+            <button className="btn btn-export-excel ms-2" onClick={exportRestaurantsToExcel}>
+                Export to Excel
+              </button>
             </div>
 
 

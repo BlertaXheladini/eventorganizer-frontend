@@ -165,6 +165,30 @@ function Users() {
     setRoleId("");
   }
 
+
+  // Funksioni për eksportimin e përdoruesve në Excel
+const exportToExcel = async () => {
+  try {
+    const response = await axios({
+      url: "https://localhost:7214/api/Users/ExportUsersToExcel", // Endpoint-i i backend për eksportimin
+      method: "GET",
+      responseType: "blob", // Kjo përdoret për të pranuar fajl binar
+    });
+
+    // Krijo një URL për fajlin Excel dhe bëj shkarkimin
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Users.xlsx"); // Emri i fajlit që do të shkarkohet
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error("Error exporting users to Excel:", error);
+  }
+};
+
+
+
   // Shfaqje e mesazhit të gabimit ose suksesit
   function showAlert(message, type) {
     setAlertMessage(message);
@@ -295,6 +319,9 @@ function Users() {
                 <option value="asc">Sort A-Z</option>
                 <option value="desc">Sort Z-A</option>
             </select>
+            <button className="btn btn-export-excel ms-3" onClick={exportToExcel}>
+                Export to Excel
+              </button>
           </div>
 
           <div className="table-responsive m-4 px-4">
