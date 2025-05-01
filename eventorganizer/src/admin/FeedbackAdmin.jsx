@@ -118,7 +118,7 @@ function FeedbackAdmin() {
                     <td>{feedback.id}</td>
                     <td>{feedback.name}</td>
                     <td>{feedback.surname}</td>
-                    <td>{feedback.comments}</td>
+                    <td className="description-cell">"{feedback.comments}"</td>
                     <td>{renderStars(feedback.rating)}</td> {/* Shfaq rating me yje */}
                     <td>{feedback.events.eventName}</td>
                     <td>{feedback.events.eventCategories?.categoryName}</td>

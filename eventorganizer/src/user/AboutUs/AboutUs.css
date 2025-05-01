@@ -1,124 +1,123 @@
 .aboutustop-image {
-    position: relative;
-    background-image: url('../images/aboutus1.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-  }
-  
-  .aboutustop-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-   
-    z-index: 1; 
-  }
-  
-  /* Mission section */
-  .aboutus-mission {
-    padding: 4rem 8rem;
-    margin-top: 30px;
-  }
-  
-  .mission-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  .mission-text h2 {
-    font-family: 'Allura', cursive;
-    font-size: 50px;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .mission-text p {
-    font-size: 17px;
-    line-height: 1.6;
-  }
-  
-  .mission-image img {
-    width: 100%;
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    overflow: hidden;
-    object-fit: cover; 
-    height: 500px;
-  }
-  
-  /* History section */
-  .aboutus-history {
-    padding: 4rem 0;
-    background-color: #f0f0f0;
-    text-align: center;
-    margin-top: 30px;
-    padding-bottom: 100px;
-  }
-  
-  .aboutus-history h2 {
-    font-family: 'Allura', cursive;
-    font-size: 50px;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .aboutus-history p {
-    font-size: 16.5px;
-    max-width: 1200px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-  
-  /* Testimonials section */
-  .aboutus-testimonials {
-    padding: 4rem 0;
-    background-color: #B29C80;
-    text-align: center;
-  }
-  
-  .aboutus-testimonials h2 {
-    font-family: 'Allura', cursive;
-    font-size: 50px;
-    font-weight: bold;
-    margin-bottom: 2rem;
-  }
-  
-  .testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-  
-  .testimonial {
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .testimonial p {
-    margin-bottom: 1rem;
-  }
-  
-  .testimonial h4 {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    font-family: "Unbounded", sans-serif;
-  }
-  
-  .feedback-event {
-    font-size: 15px;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-  
-  .feedback-stars {
-    margin-bottom: 1rem;
-  }
-  
+  position: relative;
+  background-image: url('../images/aboutus1.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.aboutustop-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 1; 
+}
+
+/* Mission section */
+.aboutus-mission {
+  padding: 4rem 8rem;
+  margin-top: 30px;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mission-text h2 {
+  font-family: 'Allura', cursive;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.mission-text p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.mission-image img {
+  width: 100%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  overflow: hidden;
+  object-fit: cover; 
+  height: 500px;
+}
+
+/* History section */
+.aboutus-history {
+  padding: 4rem 0;
+  background-color: #f0f0f0;
+  text-align: center;
+  margin-top: 30px;
+  padding-bottom: 100px;
+}
+
+.aboutus-history h2 {
+  font-family: 'Allura', cursive;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.aboutus-history p {
+  font-size: 16.5px;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Testimonials section */
+.aboutus-testimonials {
+  padding: 4rem 0;
+  background-color: #ea7f5f;
+  text-align: center;
+}
+
+.aboutus-testimonials h2 {
+  font-family: 'Allura', cursive;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.testimonial {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+  margin-bottom: 1rem;
+}
+
+.testimonial h4 {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  font-family: "Unbounded", sans-serif;
+}
+
+.feedback-event {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.feedback-stars {
+  margin-bottom: 1rem;
+}

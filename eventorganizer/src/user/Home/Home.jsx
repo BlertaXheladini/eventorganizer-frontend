@@ -17,6 +17,7 @@ import event5 from '../images/event5.jpg';
 import event6 from '../images/event6.jpg'; 
 import event7 from '../images/event7.jpg'; 
 import event8 from '../images/event8.jpg'; 
+import AddFeedback from './AddFeedback';
 
 const Home = () => {
     const servicesRef = useRef(null);
@@ -105,7 +106,7 @@ const Home = () => {
             <p>Contact us now to begin planning your perfect event and ensure it's everything you've dreamed of.</p>
             <Link to="/contactus" className="btn">Start Planning</Link>
           </section>
-    
+          <AddFeedback />
           <Footer />
         </div>
       );
