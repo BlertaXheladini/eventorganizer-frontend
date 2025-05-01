@@ -105,7 +105,7 @@ const Home = () => {
            <section className="cta-section">
              <h2>Ready to Plan Your Event?</h2>
              <p>Contact us now to begin planning your perfect event and ensure it's everything you've dreamed of.</p>
-             <Link to="/contactus" className="btn">Start Planning</Link>
+             <Link to="/contact" className="btn">Start Planning</Link>
            </section>
  
            <div className="feedback-form">
