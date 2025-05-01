@@ -24,7 +24,7 @@ import StaffList from "./user/Staff/StaffList";
 import FeedbackAdmin from "./Admin/FeedbackAdmin";
 import AddFeedback from "./user/Home/AddFeedback.jsx";
 import Contact from "./user/Contact/Contact";
-
+import UserReservation from "./user/UserReservations/UserReservation";
 
 function App() {
 
@@ -54,6 +54,7 @@ function App() {
       <Route path="/feedbackAdmin" element={<FeedbackAdmin/>} />
       <Route path="/addfeedback" element={<AddFeedback />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/reservationForUser" element = {<UserReservation/>}/>
       
 
 

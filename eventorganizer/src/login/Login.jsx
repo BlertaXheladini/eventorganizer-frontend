@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -9,90 +8,59 @@ import './Login.css';
 const Login = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const [FirstName,setFirstName] = useState('')
+  const [LastName,setLastName] = useState('')
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [ServerError, setServerError] = useState('');
 
   const navigate = useNavigate();
 
-  const handleInputChange = (setter, errorSetter) => (ev) => {
+  const handleInputChange = (setter, errorSetter, validator) => (ev) => {
     const value = ev.target.value;
     setter(value);
     errorSetter('');
+    if (validator) validator(value);
   };
 
-  const onLoginClick = async () => {
+  const onLoginClick = async () => {  
     const userData = {
       email: Email,
       password: Password
     };
-
-    
+  
     if (!Email) {
-      toast.error('Email is required!', {
-        className: 'toast-error-custom',  // Klasa e personalizuar
-      });
+      toast.error('Email is required!');
       return;
     }
-    
+  
     if (!Password) {
-      toast.error('Password is required!', {
-        className: 'toast-error-custom',  // Klasa e personalizuar
-      });
+      toast.error('Password is required!');
       return;
     }
-    
-
-
+  
     try {
       const response = await axios.post('https://localhost:7214/api/Users/Login', userData);
-      
       if (response.status === 200) {
-        const { roleId, userId, firstName, lastName, AccessToken, RefreshToken } = response.data;
-    
-        // Ruaj të dhënat në localStorage
+        const { roleId , userId , firstName , lastName} = response.data;
+        console.log(response.data)
         localStorage.setItem('roleId', roleId);
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('firstName', firstName);
-        localStorage.setItem('lastName', lastName);
-        localStorage.setItem('accessToken', AccessToken);
-        localStorage.setItem('refreshToken', RefreshToken);
-    
-        // Konfiguro axios për të përfshirë token-in në kërkesa të ardhshme
-        axios.defaults.headers.common['Authorization'] = `Bearer ${AccessToken}`;
-    
+        localStorage.setItem('userId',userId);
+        localStorage.setItem('firstName',firstName)
+        localStorage.setItem('lastName',lastName)
         toast.success('Logged in successfully!');
         navigate('/');
+      } else {
+        toast.error('An error occurred: ' + response.data);
       }
     } catch (error) {
       console.error('Error:', error);
-    
-     // Kontrollo nëse është gabim me status 400 ose 401
-      if (error.response && error.response.status === 400) {
-        toast.error('Email or password is incorrect!', {
-          className: 'toast-error-custom',  // Klasa e personalizuar vetëm për këtë mesazh
-        });
-      } else if (error.response && error.response.status === 401) {
-        toast.error('Unauthorized access. Please try again!');
-      } else {
-        toast.error('An error occurred. Please try again.');
-      }
+      toast.error('An error occurred. Please try again.');
     }
-    
-    
   };
 
-    // Funksioni për të kthyer në Home page
-    const handleBack = () => {
-      navigate('/');
-    };
-
   return (
-      <div className="mainContainer">
-           {/* Butoni për kthim në Home */}
-           <button className="back-Button" onClick={handleBack}>
-        ← Back
-      </button>
+    <div className="mainContainer">
       <div className="loginBox">
         <div className='titleContainer'>
           <h2>Login</h2>
