@@ -20,7 +20,7 @@ const EventDetails = () => {
           return;
         }
 
-        const apiUrl = `https://localhost:7214/api/Events/GetEventById/${id}`;
+        const apiUrl = `http://localhost:5091/api/Events/GetEventById/${id}`;
         const response = await axios.get(apiUrl);
         
         setEvent(response.data);

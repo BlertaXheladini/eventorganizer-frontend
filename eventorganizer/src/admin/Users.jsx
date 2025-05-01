@@ -64,7 +64,7 @@ function Users() {
   // Ngarko të gjithë përdoruesit
   async function loadUsers() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Users/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Users/GetAllList");
       setUsers(result.data);
     } catch (err) {
       console.error("Error loading Users:", err);
@@ -74,7 +74,7 @@ function Users() {
   // Ngarko të gjitha rolet
   async function loadRoles() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Roles/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Roles/GetAllList");
       setRoles(result.data);
     } catch (err) {
       console.error("Error loading roles:", err);
@@ -85,7 +85,7 @@ function Users() {
   async function save(e) {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Users/Register", {
+      await axios.post("http://localhost:5091/api/Users/Register", {
         firstName: FirstName,
         lastName: LastName,
         email: Email,
@@ -117,7 +117,7 @@ function Users() {
   // Fshi përdoruesin
   async function deleteUser(userId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Users/Delete?Id=${userId}`);
+      await axios.delete(`http://localhost:5091/api/Users/Delete?Id=${userId}`);
       showAlert("The user has been successfully deleted!", "alert-success");
       loadUsers();
     } catch (err) {
@@ -130,7 +130,7 @@ function Users() {
   async function update(e) {
     e.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Users/UpdateUser`, {
+      await axios.put(`http://localhost:5091/api/Users/UpdateUser`, {
         id: Id,
         firstName: FirstName,
         lastName: LastName,
@@ -163,7 +163,7 @@ function Users() {
   const exportToExcel = async () => {
     try {
       const response = await axios({
-        url: "https://localhost:7214/api/Users/ExportUsersToExcel",
+        url: "http://localhost:5091/api/Users/ExportUsersToExcel",
         method: "GET",
         responseType: "blob",
       });

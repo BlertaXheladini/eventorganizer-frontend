@@ -42,7 +42,7 @@ function Contact() {
 
     async function Load() {
         try {
-            const result = await axios.get('https://localhost:7214/api/Contact/GetAllList');
+            const result = await axios.get('http://localhost:5091/api/Contact/GetAllList');
             console.log(result.data);
         } catch (error) {
             console.error(error);
@@ -51,7 +51,7 @@ function Contact() {
 
     async function save(event) {
         try {
-            await axios.post('https://localhost:7214/api/Contact/Add', {
+            await axios.post('http://localhost:5091/api/Contact/Add', {
                 name: name,
                 email: email,
                 message: message,

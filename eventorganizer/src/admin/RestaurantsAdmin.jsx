@@ -55,7 +55,7 @@ function RestaurantsAdmin() {
   async function loadRestaurantTypes() {
     try {
       const result = await axios.get(
-        "https://localhost:7214/api/RestaurantTypes/GetAllList"
+        "http://localhost:5091/api/RestaurantTypes/GetAllList"
       );
       setRestaurantTypes(result.data);
     } catch (err) {
@@ -66,7 +66,7 @@ function RestaurantsAdmin() {
   async function loadRestaurants() {
     try {
         const result = await axios.get(
-            "https://localhost:7214/api/Restaurants/GetAllList"
+            "http://localhost:5091/api/Restaurants/GetAllList"
         );
         setRestaurants(result.data);
     } catch (err) {
@@ -79,7 +79,7 @@ function RestaurantsAdmin() {
   async function save(restaurant) {
     restaurant.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Restaurants/Add", {
+      await axios.post("http://localhost:5091/api/Restaurants/Add", {
         name: name,
         location: location,
         image: image,
@@ -97,7 +97,7 @@ function RestaurantsAdmin() {
 
   const exportRestaurantsToExcel = async () => {
     try {
-      const response = await axios.get('https://localhost:7214/api/Restaurants/ExportRestaurantsToExcel', {
+      const response = await axios.get('http://localhost:5091/api/Restaurants/ExportRestaurantsToExcel', {
         responseType: 'blob',
       });
   
@@ -146,7 +146,7 @@ function RestaurantsAdmin() {
 
   async function deleteRestaurants(restaurantId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Restaurants/Delete/${restaurantId}`);
+      await axios.delete(`http://localhost:5091/api/Restaurants/Delete/${restaurantId}`);
       showAlert("The restaurant has been successfully deleted!", "alert-success");
       clearForm();
       loadRestaurants();
@@ -161,7 +161,7 @@ function RestaurantsAdmin() {
     restaurant.preventDefault();
     try {
       const restaurant = restaurants.find((p) => p.id === id);
-      await axios.put(`https://localhost:7214/api/Restaurants/Update/${restaurant.id}`, {
+      await axios.put(`http://localhost:5091/api/Restaurants/Update/${restaurant.id}`, {
         id: restaurant.id,
         name: name,
         location: location,
@@ -180,7 +180,7 @@ function RestaurantsAdmin() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('https://localhost:7214/api/Restaurants/SearchRestaurant', {
+      const response = await axios.get('http://localhost:5091/api/Restaurants/SearchRestaurant', {
         params: {
           searchRestaurant: searchTerm,
         },

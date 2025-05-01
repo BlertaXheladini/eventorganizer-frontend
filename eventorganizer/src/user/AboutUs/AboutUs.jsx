@@ -13,7 +13,7 @@ const AboutUs = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get('https://localhost:7214/api/Feedback/GetAllList');
+        const response = await axios.get('http://localhost:5091/api/Feedback/GetAllList');
         setFeedbacks(response.data);
       } catch (error) {
         console.error('Error loading feedbacks:', error);

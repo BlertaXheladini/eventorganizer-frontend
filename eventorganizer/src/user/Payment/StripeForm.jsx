@@ -35,7 +35,7 @@ export default function StripeForm() {
     const cardElement = elements.getElement(CardElement);
 
     try {
-      const response = await fetch('https://localhost:7214/api/Stripe/CreatePaymentIntent', {
+      const response = await fetch('http://localhost:5091/api/Stripe/CreatePaymentIntent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount, description }),

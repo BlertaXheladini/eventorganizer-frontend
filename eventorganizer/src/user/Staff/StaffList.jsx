@@ -11,7 +11,7 @@ const StaffList = () => {
   useEffect(() => {
     async function fetchStaff() {
       try {
-        const response = await axios.get('https://localhost:7214/api/Staff/GetAllList');
+        const response = await axios.get('http://localhost:5091/api/Staff/GetAllList');
         setStaffList(response.data);
       } catch (err) {
         console.error("Error loading staff:", err);

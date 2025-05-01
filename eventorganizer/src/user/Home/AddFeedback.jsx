@@ -16,7 +16,7 @@ import React, { useState, useEffect } from 'react';
    useEffect(() => {
      const fetchEvents = async () => {
        try {
-         const response = await axios.get('https://localhost:7214/api/Events/GetAllList');
+         const response = await axios.get('http://localhost:5091/api/Events/GetAllList');
          setEvents(response.data);
        } catch (error) {
          console.error('Error loading events:', error);
@@ -38,7 +38,7 @@ import React, { useState, useEffect } from 'react';
          eventsId,
        };
  
-       const response = await axios.post('https://localhost:7214/api/Feedback/Add', feedbackData);
+       const response = await axios.post('http://localhost:5091/api/Feedback/Add', feedbackData);
        setMessage('Feedback submitted successfully!');
        // Pasi të dërgoni feedback-in, mund të pastroni fushat
        setName('');

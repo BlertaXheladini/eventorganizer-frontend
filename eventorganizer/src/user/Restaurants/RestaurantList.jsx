@@ -15,8 +15,8 @@ const RestaurantList = () => {
     setLoading(true); // Fillimi i ngarkimit
     try {
       const response = term
-        ? await axios.get(`https://localhost:7214/api/Restaurants/SearchRestaurant?searchRestaurant=${term}`)
-        : await axios.get('https://localhost:7214/api/Restaurants/GetAllList');
+        ? await axios.get(`http://localhost:5091/api/Restaurants/SearchRestaurant?searchRestaurant=${term}`)
+        : await axios.get('http://localhost:5091/api/Restaurants/GetAllList');
       setRestaurants(response.data);
     } catch (err) {
       console.error("Error loading restaurants:", err);

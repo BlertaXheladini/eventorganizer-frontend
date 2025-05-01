@@ -13,7 +13,7 @@ const EventList = () => {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await axios.get('https://localhost:7214/api/Events/GetAllList');
+        const response = await axios.get('http://localhost:5091/api/Events/GetAllList');
         setEvents(response.data);
       } catch (err) {
         console.error("Error fetching events:", err);
@@ -24,7 +24,7 @@ const EventList = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`https://localhost:7214/api/Events/SearchEvent`, {
+      const response = await axios.get(`http://localhost:5091/api/Events/SearchEvent`, {
         params: {
           searchEvent: searchTerm
         }
@@ -40,7 +40,7 @@ const EventList = () => {
     setSortOrder(sortOrder); 
 
     try {
-      const response = await axios.get('https://localhost:7214/api/Events/SortEvents', {
+      const response = await axios.get('http://localhost:5091/api/Events/SortEvents', {
         params: {
           sortOrder: sortOrder
         }

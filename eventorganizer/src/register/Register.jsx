@@ -78,7 +78,7 @@ const Register = () => {
       };
 
       try {
-        const response = await axios.post('https://localhost:7214/api/Users/Register', userData);
+        const response = await axios.post('http://localhost:5091/api/Users/Register', userData);
         if (response.status === 200) {
           toast.success('Registration successful!'); // Toast for successful registration
           console.log('Sending data:', userData);

@@ -73,7 +73,7 @@ function StaffAdmin() {
   async function loadStaff() {
     try {
       const result = await axios.get(
-        "https://localhost:7214/api/Staff/GetAllList",
+        "http://localhost:5091/api/Staff/GetAllList",
         axiosConfig
       );
       setStaffList(result.data);
@@ -92,7 +92,7 @@ function StaffAdmin() {
     event.preventDefault();
     try {
       await axios.post(
-        "https://localhost:7214/api/Staff/Add",
+        "http://localhost:5091/api/Staff/Add",
         {
           firstName: firstName,
           lastName: lastName,
@@ -128,7 +128,7 @@ function StaffAdmin() {
   async function deleteStaff(staffId) {
     try {
       await axios.delete(
-        `https://localhost:7214/api/Staff/Delete?Id=${staffId}`,
+        `http://localhost:5091/api/Staff/Delete?Id=${staffId}`,
         axiosConfig
       );
       showAlert(
@@ -147,7 +147,7 @@ function StaffAdmin() {
     try {
       const staff = staffList.find((p) => p.id === id);
       await axios.put(
-        `https://localhost:7214/api/Staff/Update/${staff.id}`,
+        `http://localhost:7/api/Staff/Update/${staff.id}`,
         {
           id: staff.id,
           firstName: firstName,

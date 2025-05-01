@@ -25,7 +25,7 @@ function FeedbackAdmin() {
   // Ngarko feedback-et nga API
   async function loadFeedbacks() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Feedback/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Feedback/GetAllList");
       setFeedbacks(result.data);
       setFilteredFeedbacks(result.data);
     } catch (err) {
@@ -36,7 +36,7 @@ function FeedbackAdmin() {
   // Fshini një feedback
   async function deleteFeedback(feedbackId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Feedback/Delete?id=${feedbackId}`);
+      await axios.delete(`http://localhost:5091/api/Feedback/Delete?id=${feedbackId}`);
       showAlert("The feedback has been successfully deleted!", "alert-success");
       loadFeedbacks();
     } catch (err) {

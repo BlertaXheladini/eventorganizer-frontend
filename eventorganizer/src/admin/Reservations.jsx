@@ -44,7 +44,7 @@ function Reservations() {
 
   async function loadReservations() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Reservation/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Reservation/GetAllList");
       setReservations(result.data);
     } catch (err) {
       console.error("Error loading Users:", err);
@@ -60,7 +60,7 @@ function Reservations() {
   async function save(e) {
     e.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Reservation/AddReservation", {
+      await axios.post("http://localhost:5091/api/Reservation/AddReservation", {
         name: Name,
         surname: Surname,
         reservationDate: reservationDate, // Ndryshimi këtu
@@ -90,7 +90,7 @@ function Reservations() {
 
   async function deleteReservation(reservationId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Reservation/DeleteReservation/${reservationId}`);
+      await axios.delete(`http://localhost:5091/api/Reservation/DeleteReservation/${reservationId}`);
       showAlert("The reservation has been successfully deleted!", "alert-success");
       loadReservations();
     } catch (err) {
@@ -101,7 +101,7 @@ function Reservations() {
   async function update(e) {
     e.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Reservation/UpdateReservation/${Id}`, {
+      await axios.put(`http://localhost:5091/api/Reservation/UpdateReservation/${Id}`, {
         name: Name,
         surname: Surname,
         reservationDate: reservationDate, // Ndryshimi këtu
@@ -131,7 +131,7 @@ function Reservations() {
 
   async function exportReservations() {
     try {
-      const response = await axios.get("https://localhost:7214/api/Reservation/ExportReservationsToExcel", {
+      const response = await axios.get("http://localhost:5091/api/Reservation/ExportReservationsToExcel", {
         responseType: 'blob', // Përdorim blob për skedarin
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));

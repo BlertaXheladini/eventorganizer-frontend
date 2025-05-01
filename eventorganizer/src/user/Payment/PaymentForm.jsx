@@ -39,7 +39,7 @@ import React, { useEffect, useState } from 'react';
      };
  
      try {
-         const response = await fetch('https://localhost:7214/api/Payment/AddPayment', {
+         const response = await fetch('http://localhost:5091/api/Payment/AddPayment', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
              body: JSON.stringify(paymentData), // Dërgo të dhënat e pagesës

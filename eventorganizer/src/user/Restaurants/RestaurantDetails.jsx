@@ -20,7 +20,7 @@ const RestaurantDetails = () => {
           return;
         }
 
-        const apiUrl = `https://localhost:7214/api/Restaurants/GetRestaurantsById/${id}`;
+        const apiUrl = `http://localhost:5091/api/Restaurants/GetRestaurantsById/${id}`;
         const response = await axios.get(apiUrl);
         
         setRestaurant(response.data);

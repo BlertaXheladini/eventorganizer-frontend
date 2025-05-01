@@ -26,7 +26,7 @@ export default function UserReservation() {
     if (storedFirstName) setFirstName(storedFirstName);
     if (storedLastName) setLastName(storedLastName);
 
-    fetch('https://localhost:7214/api/Events/GetAllList')
+    fetch('http://localhost:5091/api/Events/GetAllList')
       .then((response) => response.json())
       .then((data) => setEvents(data))
       .catch((error) => console.error('Error fetching events:', error));
@@ -57,7 +57,7 @@ export default function UserReservation() {
     };
   
     try {
-      const response = await fetch('https://localhost:7214/api/Reservation/AddReservation', {
+      const response = await fetch('http://localhost:5091/api/Reservation/AddReservation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reservationData),

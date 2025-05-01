@@ -25,10 +25,10 @@ const UserProfile = () => {
           },
         };
 
-        const userResponse = await axios.get(`https://localhost:7214/api/Users/GetUserById?id=${userId}`, config);
+        const userResponse = await axios.get(`http://localhost:5091/api/Users/GetUserById?id=${userId}`, config);
         setUserDetails(userResponse.data);
 
-        const reservationResponse = await axios.get(`https://localhost:7214/api/Reservation/GetAllList`, config);
+        const reservationResponse = await axios.get(`http://localhost:5091/api/Reservation/GetAllList`, config);
         const userReservations = reservationResponse.data.filter(
           (reservation) => reservation.userID === parseInt(userId)
         );

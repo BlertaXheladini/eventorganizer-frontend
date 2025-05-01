@@ -60,7 +60,7 @@ function ContactAdmin() {
 
   async function loadContacts() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Contact/GetAllList");
+      const result = await axios.get("http://localhost:5091/api/Contact/GetAllList");
       setContactList(result.data);
     } catch (err) {
       console.error(err);
@@ -70,7 +70,7 @@ function ContactAdmin() {
   async function save(event) {
     event.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Contact/Add", {
+      await axios.post("http://localhost:5091/api/Contact/Add", {
         name: name,
         email: email,
         message: message,
@@ -94,7 +94,7 @@ function ContactAdmin() {
 
   async function deleteContact(contactId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Contact/Delete?Id=${contactId}`);
+      await axios.delete(`http://localhost:5091/api/Contact/Delete?Id=${contactId}`);
       showAlert("Contact deleted successfully!", "alert-success");
       loadContacts();
     } catch (err) {
@@ -105,7 +105,7 @@ function ContactAdmin() {
   async function update(event) {
     event.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Contact/Update/${id}`, {
+      await axios.put(`http://localhost:5091/api/Contact/Update/${id}`, {
         id: id,
         name: name,
         email: email,
