@@ -96,7 +96,7 @@ export default function UserReservation() {
   return (
     <div className="reservationContainer">
           <button className="backButton" onClick={handleBackClick}>
-            Back
+          ←Back
           </button>
       <div className="reservationBox">
         <h2>Make Your Reservation</h2>

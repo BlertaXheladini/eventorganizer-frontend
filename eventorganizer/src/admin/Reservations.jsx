@@ -3,7 +3,6 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
-import "./Style.css";
 
 function Reservations() {
   const [toggle, setToggle] = useState(true);
@@ -12,17 +11,21 @@ function Reservations() {
     setToggle(!toggle);
   };
 
-  const [id, setId] = useState("");
+  const [Reservations, setReservations] = useState([]);
+  const [Id, setId] = useState("");
   const [Name, setName] = useState("");
   const [Surname, setSurname] = useState("");
-  const [Date, setDate] = useState("");
+  const [reservationDate, setReservationDate] = useState(""); // Ndryshimi këtu
   const [Price, setPrice] = useState("");
-  const [reservationsList, setReservationsList] = useState([]);
+  const [UserId, setUserId] = useState("");
+  const [EventId, setEventId] = useState("");
+
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -34,71 +37,84 @@ function Reservations() {
   };
 
   useEffect(() => {
-    (async () => await loadReservations())();
+    (async () => {
+      await loadReservations();
+    })();
   }, []);
 
   async function loadReservations() {
     try {
-      const result = await axios.get("https://localhost:7214/api/Reservations/GetAllList");
-      setReservationsList(result.data);
+      const result = await axios.get("https://localhost:7214/api/Reservation/GetAllList");
+      setReservations(result.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error loading Users:", err);
     }
   }
 
-  async function save(event) {
-    event.preventDefault();
+  const filteredReservations = selectedDate
+    ? Reservations.filter(reservation =>
+        new Date(reservation.reservationDate).toDateString() === new Date(selectedDate).toDateString()
+      )
+    : Reservations;
+
+  async function save(e) {
+    e.preventDefault();
     try {
-      await axios.post("https://localhost:7214/api/Reservations/Add", {
+      await axios.post("https://localhost:7214/api/Reservation/AddReservation", {
         name: Name,
         surname: Surname,
-        date: Date,
-        price: Price,
+        reservationDate: reservationDate, // Ndryshimi këtu
+        totalPrice: Price,
+        userId: UserId,
+        eventId: EventId
       });
-      showAlert("Reservation added successfully!", "alert-success");
+      showAlert("The reservation has been successfully done!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadReservations();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      showAlert(`Error: ${err.message}`, "alert-danger");
     }
   }
 
   async function editReservation(reservation) {
+    setId(reservation.reservationID);
     setName(reservation.name);
     setSurname(reservation.surname);
-    setDate(reservation.date);
-    setPrice(reservation.price);
-    setId(reservation.id);
+    setReservationDate(reservation.reservationDate); // Ndryshimi këtu
+    setPrice(reservation.totalPrice);
+    setUserId(reservation.userID);
+    setEventId(reservation.eventID);
     setIsFormVisible(true);
   }
 
   async function deleteReservation(reservationId) {
     try {
-      await axios.delete(`https://localhost:7214/api/Reservations/Delete/${reservationId}`);
-      showAlert("Reservation deleted successfully!", "alert-success");
+      await axios.delete(`https://localhost:7214/api/Reservation/DeleteReservation/${reservationId}`);
+      showAlert("The reservation has been successfully deleted!", "alert-success");
       loadReservations();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      showAlert(`Error: ${err.message}`, "alert-danger");
     }
   }
 
-  async function update(event) {
-    event.preventDefault();
+  async function update(e) {
+    e.preventDefault();
     try {
-      await axios.put(`https://localhost:7214/api/Reservations/Update/${id}`, {
-        id: id,
+      await axios.put(`https://localhost:7214/api/Reservation/UpdateReservation/${Id}`, {
         name: Name,
         surname: Surname,
-        date: Date,
-        price: Price,
+        reservationDate: reservationDate, // Ndryshimi këtu
+        totalPrice: Price,
+        userId: UserId,
+        eventId: EventId
       });
-      showAlert("Reservation updated successfully!", "alert-success");
+      showAlert("The reservation has been successfully updated!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadReservations();
     } catch (err) {
-      showAlert(`Error: ${err}`, "alert-danger");
+      showAlert(`Error: ${err.response ? err.response.data : err.message}`, "alert-danger");
     }
   }
 
@@ -106,8 +122,10 @@ function Reservations() {
     setId("");
     setName("");
     setSurname("");
-    setDate("");
+    setReservationDate(""); // Ndryshimi këtu
     setPrice("");
+    setUserId("");
+    setEventId("");
   }
 
   function showAlert(message, type) {
@@ -120,7 +138,14 @@ function Reservations() {
   }
 
   return (
-    <div className="container-fluid">
+    <div
+      className="container-fluid"
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -128,141 +153,168 @@ function Reservations() {
           </div>
         )}
 
-        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+        <div className="col-4 col-md-2"></div>
+        <div className="col">
           <Navbar Toggle={Toggle} />
-          
-          <div className="admin-container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="admin-title">Reservations Management</h4>
-              <button className="btn btn-add" onClick={toggleFormVisibility}>
-                <i className="fas fa-plus"></i>
-                <span>Add Reservation</span>
-              </button>
-            </div>
 
-            {isFormVisible && (
-              <div className="admin-form">
-                <form>
+          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
+            <h4 className="text-dark">Data for Reservations</h4>
+            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+              <i className="fas fa-plus me-2"></i>
+              Add
+            </button>
+          </div>
+
+          {isFormVisible && (
+            <div className="container mt-4 text-white align-item-center">
+              <form>
+                <div className="form-group px-5">
+                  <input type="text" className="form-control" id="id" hidden value={Id} />
+
+                  <label className="label">Name:</label>
                   <input
                     type="text"
-                    className="form-control"
-                    id="id"
-                    hidden
-                    value={id}
-                    onChange={(event) => setId(event.target.value)}
+                    className="form-control mb-3"
+                    id="name"
+                    value={Name}
+                    onChange={(e) => setName(e.target.value)}
                   />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      value={Name}
-                      onChange={(event) => setName(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Surname:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="surname"
+                    value={Surname}
+                    onChange={(e) => setSurname(e.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Surname:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="surname"
-                      value={Surname}
-                      onChange={(event) => setSurname(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Date:</label>
+                  <input
+                    type="date"
+                    className="form-control mb-3"
+                    id="date"
+                    value={reservationDate} // Ndryshimi këtu
+                    onChange={(e) => setReservationDate(e.target.value)} // Ndryshimi këtu
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Date:</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="date"
-                      value={Date}
-                      onChange={(event) => setDate(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Price:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="price"
+                    value={Price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Price:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={Price}
-                      onChange={(event) => setPrice(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">UserID:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="userId"
+                    value={UserId}
+                    onChange={(e) => setUserId(e.target.value)}
+                  />
+                </div>
 
-                  <div className="mt-3">
-                    {id ? (
-                      <button className="btn btn-update" onClick={update}>
-                        <i className="fas fa-save me-2"></i>Update
-                      </button>
-                    ) : (
-                      <button className="btn btn-save" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Save
-                      </button>
-                    )}
-                    <button className="btn btn-cancel" onClick={cancel}>
-                      <i className="fas fa-times me-2"></i>Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+                <div className="form-group px-5">
+                  <label className="label">EventID:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="eventId"
+                    value={EventId}
+                    onChange={(e) => setEventId(e.target.value)}
+                  />
+                </div>
 
-            {isAlertVisible && (
-              <div className={`admin-alert ${alertType}`}>
-                {alertMessage}
-              </div>
-            )}
-
-            <div className="table-responsive">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reservationsList.map((reservation) => (
-                    <tr key={reservation.id}>
-                      <td>{reservation.id}</td>
-                      <td>{reservation.name}</td>
-                      <td>{reservation.surname}</td>
-                      <td>{reservation.date}</td>
-                      <td>{reservation.price}</td>
-                      <td className="options-cell d-flex justify-content-center align-items-center">
-                        <button
-                          type="button"
-                          className="btn btn-edit mx-2 d-flex align-items-center"
-                          onClick={() => editReservation(reservation)}
-                        >
-                          <i className="fas fa-edit"></i>
-                          <span className="ms-2">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-delete mx-2 d-flex align-items-center"
-                          onClick={() => deleteReservation(reservation.id)}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                          <span className="ms-2">Delete</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                <div className="mt-3">
+                  <button className="btn btn-save" onClick={save}>
+                    Save
+                  </button>
+                  <button className="btn btn-update" onClick={update}>
+                    Update
+                  </button>
+                  <button className="btn btn-cancel" onClick={cancel}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
+          )}
+
+          {isAlertVisible && (
+            <div className={`alert ${alertType}`}>
+              {alertMessage}
+            </div>
+          )}
+
+
+          <div className="mt-4 px-5 reservation-date">
+            <label htmlFor="reservationDate" className="label">Select Date:</label>
+            <input
+              type="date"
+              id="reservationDate"
+              className="form-control mb-3"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
+          </div>
+
+          <div className="table-responsive m-4 px-4">
+            <table className="table border-gray">
+              <thead>
+                <tr>
+                <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
+                  <th scope="col">Reservation Date</th>
+                  <th scope="col">Total Price</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredReservations.map((reservation, index) => (
+                  <tr key={index}>
+                    <td>{reservation.reservationID}</td>
+                    <td>{reservation.name}</td>
+                    <td>{reservation.surname}</td>
+                    <td>{reservation.reservationDate}</td>
+                    <td>{reservation.totalPrice}</td>
+                    <td>{reservation.userID}</td>
+                    <td>{reservation.eventID}</td>
+                    <td className="options-cell d-flex justify-content-center align-items-center">
+                      <button
+                        type="button"
+                        className="btn btn-edit mx-2 d-flex align-items-center"
+                        onClick={() => editReservation(reservation)}
+                      >
+                         <i className="fas fa-edit"></i>
+                         <span className="ms-2">Edit</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-delete mx-2 d-flex align-items-center"
+                        onClick={() => deleteReservation(reservation.reservationID)}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                        <span className="ms-2">Delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

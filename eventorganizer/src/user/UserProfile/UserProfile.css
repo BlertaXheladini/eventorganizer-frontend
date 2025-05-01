@@ -1,111 +1,144 @@
-/* UserProfile.css */
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+
 .profile-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background: linear-gradient(to right, #76b852, #8DC26F);
-  font-family: 'Unbounded', sans-serif;
-  margin-top: 40px;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+      url('/src/User/images/wedding.jpg'); 
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+  }
+  
+  .back-Button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #494949;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "Gruppo", sans-serif;
+    font-weight: bolder;
+    text-transform: uppercase;
+  }
+  
+  .back-Button:hover {
+    background-color: #242222;
+  }
+  
 
-.profile-title {
-  text-align: center;
-  font-size: 28px;
-  font-family: 'Gruppo', sans-serif;
-  margin-bottom: 20px;
-}
+  .profile-title {
+    font-family: 'Allura', cursive;
+    font-size: 60px;
+    color: #333;
+    margin: 55px 0;
+    font-weight: 550;
+  }
+  
+  .profile-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.7); 
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.9); 
+    border-radius: 8px;
+    padding: 25px;
+  }
+  
+  .profile-card {
+    width: 35%;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .profile-icon {
+    font-size: 100px;
+    color: #ff7b54;
+  }
+  
+  .profile-name {
+    font-size: 23px;
+    font-family: 'Unbounded', sans-serif;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .profile-content {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .profile-section {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 19px;
+    margin-bottom: 10px;
+    font-family: 'Unbounded', sans-serif;
+    text-align: left;
+  }
+  
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .info-table td {
+    padding: 10px;
+    font-family: 'Unbounded', sans-serif;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .info-table td:first-child {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .reservation-table-wrapper {
+    max-height: 300px;
+    overflow-y: auto; 
+  }
+  
+  .reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .reservation-table th, .reservation-table td {
+    padding: 12px;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .reservation-table th {
+    background-color: #ff7b54;
+    color: white;
+    font-family: "Gruppo", sans-serif;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .reservation-table td {
+    background-color: #f9f9f9;
+    text-align: center;
+    font-size: 15px;
+  }
+  
 
-.profile-wrapper {
-  display: flex;
-  gap: 20px;
-}
-
-.profile-card {
-  flex: 0.3; /* Zvogëlo madhësinë e kartelës së profilit */
-  text-align: center;
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 200px; /* Kufizo gjerësinë maksimale për ta bërë më të vogël */
-  height: 200px;
-  margin-top: 80px;
-  padding-top: 50px;
-}
-
-.profile-icon {
-  font-size: 60px; /* Zvogëlo madhësinë e ikonës */
-  color: #6c757d;
-}
-
-.profile-name {
-  margin-top: 5px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.profile-content {
-  flex: 1.7;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.profile-section {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.section-title {
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #4d4d4d;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-}
-
-.info-table,
-.reservation-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.info-table td,
-.reservation-table th,
-.reservation-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.reservation-table th {
-  background: #f0f0f0;
-  font-weight: bold;
-}
-
-.reservation-table-wrapper {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #ff7b54;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: 'Gruppo', sans-serif;
-  font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.back-button:hover {
-  background-color: #e76541;
-}
+  

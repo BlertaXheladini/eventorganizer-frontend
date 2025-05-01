@@ -40,13 +40,14 @@ const UserProfile = () => {
   return (
     <div className="profile-container">
       {/* Butoni për kthim në Home */}
-      <button className="back-button" onClick={handleBack}>
+      <button className="back-Button" onClick={handleBack}>
         ← Back
       </button>
 
-      <h1 className="profile-title">Profile</h1>
+    
       <div className="profile-wrapper">
         <div className="profile-card">
+        <h1 className="profile-title">My Profile</h1>
           <FaUserCircle className="profile-icon" />
           <h2 className="profile-name">
             {userDetails.firstName} {userDetails.lastName}

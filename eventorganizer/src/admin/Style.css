@@ -581,3 +581,22 @@
   color:#000;
   font-size: 14px;
 }
+ 
+/*Reservation-date*/
+.reservation-date{
+  margin-top: 30px;
+  width: 25%;
+}
+
+.reservation-date label{
+  font-family: "Unbounded", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.reservation-date input{
+  border: 2px solid black;
+  padding: 7px;
+  font-family: "Unbounded", sans-serif;
+  font-size: 14px;
+}
