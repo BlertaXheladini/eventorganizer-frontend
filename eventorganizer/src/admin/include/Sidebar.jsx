@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt, FaSignOutAlt  , FaUtensils , FaConciergeBell , FaUserTie , FaEnvelope} from "react-icons/fa";
+import { FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt, FaSignOutAlt, FaUtensils, FaConciergeBell, FaUserTie, FaEnvelope, FaComments} from "react-icons/fa";
 import "../style.css";
 
 function Sidebar() {
@@ -111,9 +111,6 @@ function Sidebar() {
 
         <br/>
         <br/>
-        <br/>
-        <br/>
-
 
         {/* Logout Link */}
         <Link

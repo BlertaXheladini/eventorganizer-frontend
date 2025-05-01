@@ -21,6 +21,7 @@ import RestaurantDetails from "./user/Restaurants/RestaurantDetails";
 import EventList from "./user/Events/EventList";
 import EventDetails from "./user/Events/EventDetails";
 import StaffList from "./user/Staff/StaffList"; 
+import FeedbackAdmin from "./Admin/FeedbackAdmin";
 
 
 
@@ -49,6 +50,7 @@ function App() {
       <Route path="/eventlist" element={<EventList />} />
       <Route path="/event/:id" element={<EventDetails />} />
       <Route path="/stafflist" element={<StaffList />} />
+      <Route path="/feedbackAdmin" element={<FeedbackAdmin/>} />
 
 
 
