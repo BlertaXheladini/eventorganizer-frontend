@@ -1,43 +1,31 @@
 // Sidebar.js
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {
-  FaUserShield,
-  FaHome,
-  FaUsers,
-  FaCalendarDay,
-  FaTag,
-  FaListAlt,
-  FaSignOutAlt,
-  FaUtensils,
-  FaConciergeBell,
-  FaUserTie,
-  FaEnvelope,
-  FaComments,
-} from "react-icons/fa";
+import {FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt,FaSignOutAlt, FaUtensils, FaConciergeBell, FaUserTie, FaEnvelope,FaComments,} from "react-icons/fa";
 import "../style.css";
+import { toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const roleId = localStorage.getItem('roleId'); // Merr rolin nga localStorage
 
-  // Funksioni për të bërë logout
   const handleLogout = () => {
-    // Pastro të gjitha të dhënat nga localStorage
     localStorage.removeItem('roleId');
     localStorage.removeItem('userId');
     localStorage.removeItem('firstName');
     localStorage.removeItem('lastName');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-
-    // Shfaq një mesazh për sukses (mund të shtosh edhe toast nëse ke nevojë)
-    alert('Logged out successfully!'); // Opsionale: Mund ta zëvendësosh me toast nëse ke përdorur librarinë
-
-    // Ridrejto përdoruesin në faqen kryesore (Home)
-    navigate('/');
+    toast.success('Logged out successfully!', {
+      className: 'custom-toast',
+    });
+    setTimeout(() => {
+      navigate('/'); // Navigo pas 2 sekondash
+    }, 2000); // 2000 milisekonda = 2 sekonda
   };
+  
 
   return (
     <div className="sidebar p-2">
@@ -160,13 +148,13 @@ function Sidebar() {
 
         <br></br>
 
-        {/* Logout Button */}
-        <button
-          className="list-group-item logout-link py-2 rounded"
-          onClick={handleLogout}
-        >
-          <FaSignOutAlt className="fs-5 me-3" /> <span>Logout</span>
-        </button>
+         {/* Logout Button */}
+      <button
+        className="list-group-item logout-link py-2 rounded"
+        onClick={handleLogout} // Thërrisni funksionin handleLogout
+      >
+        <FaSignOutAlt className="fs-5 me-3" /> <span>Logout</span>
+      </button>
       </div>
     </div>
   );

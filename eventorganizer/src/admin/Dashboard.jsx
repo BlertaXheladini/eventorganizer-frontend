@@ -6,6 +6,7 @@ import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import "./Style.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
+import { ToastContainer } from 'react-toastify';
 
 ChartJS.register(
   CategoryScale,
@@ -155,6 +156,15 @@ function Dashboard() {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+         style={{
+           position: 'fixed',
+           top: '20px', 
+           right: '20px',
+           zIndex: 2000,
+         }}
+       />
     </div>
   );
 }

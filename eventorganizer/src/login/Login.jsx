@@ -27,21 +27,29 @@ const Login = () => {
       password: Password
     };
 
+    
     if (!Email) {
-      toast.error('Email is required!');
+      toast.error('Email is required!', {
+        className: 'toast-error-custom',  // Klasa e personalizuar
+      });
       return;
     }
-
+    
     if (!Password) {
-      toast.error('Password is required!');
+      toast.error('Password is required!', {
+        className: 'toast-error-custom',  // Klasa e personalizuar
+      });
       return;
     }
+    
+
 
     try {
       const response = await axios.post('https://localhost:7214/api/Users/Login', userData);
+      
       if (response.status === 200) {
         const { roleId, userId, firstName, lastName, AccessToken, RefreshToken } = response.data;
-
+    
         // Ruaj të dhënat në localStorage
         localStorage.setItem('roleId', roleId);
         localStorage.setItem('userId', userId);
@@ -49,23 +57,42 @@ const Login = () => {
         localStorage.setItem('lastName', lastName);
         localStorage.setItem('accessToken', AccessToken);
         localStorage.setItem('refreshToken', RefreshToken);
-
+    
         // Konfiguro axios për të përfshirë token-in në kërkesa të ardhshme
         axios.defaults.headers.common['Authorization'] = `Bearer ${AccessToken}`;
-
+    
         toast.success('Logged in successfully!');
         navigate('/');
-      } else {
-        toast.error('An error occurred: ' + response.data);
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('An error occurred. Please try again.');
+    
+     // Kontrollo nëse është gabim me status 400 ose 401
+      if (error.response && error.response.status === 400) {
+        toast.error('Email or password is incorrect!', {
+          className: 'toast-error-custom',  // Klasa e personalizuar vetëm për këtë mesazh
+        });
+      } else if (error.response && error.response.status === 401) {
+        toast.error('Unauthorized access. Please try again!');
+      } else {
+        toast.error('An error occurred. Please try again.');
+      }
     }
+    
+    
   };
 
+    // Funksioni për të kthyer në Home page
+    const handleBack = () => {
+      navigate('/');
+    };
+
   return (
-    <div className="mainContainer">
+      <div className="mainContainer">
+           {/* Butoni për kthim në Home */}
+           <button className="back-Button" onClick={handleBack}>
+        ← Back
+      </button>
       <div className="loginBox">
         <div className='titleContainer'>
           <h2>Login</h2>

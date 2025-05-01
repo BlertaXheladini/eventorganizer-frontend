@@ -115,3 +115,10 @@
   color: #000;
   font-size: 15px;
 }
+
+.toast-error-custom { 
+  font-weight: bold; 
+  font-family: "Unbounded", sans-serif;
+  color: #000;
+  font-size: 15px;
+}
