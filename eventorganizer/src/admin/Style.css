@@ -526,3 +526,34 @@
 .form-select-user:hover{
   background-color: #888787;
 }
+ 
+ 
+/*Search Event*/
+.search-event-admin{
+  margin-left: 50px;
+  margin-top: 20px;;
+}
+
+.search-event-admin input{
+  border: none;
+  box-shadow: 0px 4px 6px 5px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 300px;
+}
+
+.btn-search-event {
+  background-color: #525660;
+  padding: 7px 15px;
+  color: white;
+  font-family: "Unbounded", sans-serif;
+  font-size: 14px;
+}
+
+.btn-search-event i {
+  font-size: 1.rem; 
+  color: white;
+  padding-left: 7px;
+  
+}

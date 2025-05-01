@@ -3,10 +3,15 @@ import axios from "axios";
 import Navbar from "./include/Navbar";
 import Sidebar from "./include/Sidebar";
 import { useNavigate } from "react-router-dom";
-import "./Style.css";
 
 function EventsAdmin() {
   const [toggle, setToggle] = useState(true);
+
+  const navigate = useNavigate();
+  const Toggle = () => {
+    setToggle(!toggle);
+  };
+
   const [id, setId] = useState("");
   const [eventName, setEventName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,12 +23,13 @@ function EventsAdmin() {
   const [eventCategories, setEventCategories] = useState([]);
   const [eventThemes, setEventThemes] = useState([]); 
   const [events, setEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState(""); 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const inputFileRef = useRef(null);
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -51,95 +57,56 @@ function EventsAdmin() {
 
   async function loadEventCategories() {
     try {
-      console.log("Loading categories...");
       const result = await axios.get(
-        "http://localhost:5091/api/EventCategories/GetAllList"
+        "https://localhost:7214/api/EventCategories/GetAllList"
       );
-      console.log("Categories loaded:", result.data);
       setEventCategories(result.data);
     } catch (err) {
       console.error("Error loading eventCategories:", err);
-      if (err.response) {
-        console.error("Error response:", err.response.data);
-        showAlert(`Error loading categories: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        console.error("No response received:", err.request);
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error loading categories: ${err.message}`, "alert-danger");
-      }
     }
   }
 
   async function loadEventThemes() {
     try {
-      console.log("Loading themes...");
       const result = await axios.get(
-        "http://localhost:5091/api/EventThemes/GetAllList"
+        "https://localhost:7214/api/EventThemes/GetAllList"
       );
-      console.log("Themes loaded:", result.data);
       setEventThemes(result.data);
     } catch (err) {
       console.error("Error loading eventThemes:", err);
-      if (err.response) {
-        console.error("Error response:", err.response.data);
-        showAlert(`Error loading themes: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        console.error("No response received:", err.request);
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error loading themes: ${err.message}`, "alert-danger");
-      }
     }
   }
 
   async function loadEvents() {
     try {
-      console.log("Loading events...");
       const result = await axios.get(
-        "http://localhost:5091/api/Events/GetAllList"
+        "https://localhost:7214/api/Events/GetAllList"
       );
-      console.log("Events loaded:", result.data);
       setEvents(result.data);
     } catch (err) {
       console.error("Error loading events:", err);
-      if (err.response) {
-        console.error("Error response:", err.response.data);
-        showAlert(`Error loading events: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        console.error("No response received:", err.request);
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error loading events: ${err.message}`, "alert-danger");
-      }
     }
   }
+
+  const inputFileRef = useRef(null);
 
   async function save(event) {
     event.preventDefault();
     try {
-      if (!categoryId || !themeId) {
-        showAlert("Please select both a category and a theme", "alert-danger");
-        return;
-      }
-
-      const formData = {
+      await axios.post("https://localhost:7214/api/Events/Add", {
         eventName: eventName,
         description: description,
         image: image,
         price: price,
-        categoryId: parseInt(categoryId),
-        themeId: parseInt(themeId)
-      };
-
-      await axios.post("http://localhost:5091/api/Events/Add", formData);
+        categoryId: categoryId,
+        themeId: themeId, 
+      });
       showAlert("The event has been successfully registered!", "alert-success");
       clearForm();
       setIsFormVisible(false);
       loadEvents();
     } catch (err) {
-      console.error("Error saving event:", err);
-      showAlert(`Error saving event: ${err.response?.data || err.message}`, "alert-danger");
+      showAlert(`Error: ${err}`, "alert-danger");
     }
   }
 
@@ -151,11 +118,14 @@ function EventsAdmin() {
     setPrice("");
     setCategoryId("");
     setThemeId(""); 
+  
     setSelectedImage(null);
+  
     if (inputFileRef.current) {
       inputFileRef.current.value = "";
     }
   }
+  
 
   async function editEvents(event) {
     setEventName(event.eventName);
@@ -171,20 +141,54 @@ function EventsAdmin() {
 
   async function deleteEvents(eventId) {
     try {
-      await axios.delete(`http://localhost:5091/api/Events/Delete?Id=${eventId}`);
+      await axios.delete(`https://localhost:7214/api/Events/Delete?Id=${eventId}`);
       showAlert("The event has been successfully deleted!", "alert-success");
+      clearForm();
       loadEvents();
     } catch (err) {
-      console.error("Error deleting event:", err);
-      if (err.response) {
-        showAlert(`Error deleting event: ${err.response.data}`, "alert-danger");
-      } else if (err.request) {
-        showAlert("Could not connect to the server. Please check if the backend is running.", "alert-danger");
-      } else {
-        showAlert(`Error deleting event: ${err.message}`, "alert-danger");
-      }
+      showAlert(`Error: ${err}`, "alert-danger");
     }
   }
+  
+  
+
+  async function update(event) {
+    event.preventDefault();
+    try {
+      const event = events.find((p) => p.id === id);
+      await axios.put(`https://localhost:7214/api/Events/Update/${event.id}`, {
+        id: event.id,
+        eventName: eventName,
+        description: description,
+        image: image,
+        price: price,
+        categoryId: categoryId,
+        themeId: themeId, 
+      });
+      showAlert("The event has been successfully edited!", "alert-success");
+      clearForm();
+      setIsFormVisible(false); 
+      loadEvents();
+    } catch (err) {
+      showAlert(`Error: ${err}`, "alert-danger");
+    }
+  }
+
+
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get('https://localhost:7214/api/Events/SearchEvent', {
+        params: {
+          searchEvent: searchTerm,
+        },
+      });
+      setEvents(response.data);
+    } catch (err) {
+      console.error("Error searching events:", err);
+    }
+  };
+  
 
   function showAlert(message, type) {
     setAlertMessage(message);
@@ -193,11 +197,21 @@ function EventsAdmin() {
 
     setTimeout(() => {
       setIsAlertVisible(false);
-    }, 4000);
+    }, 4000); // Hide the alert after 4 seconds
   }
 
+  
+
+  ///////////////////////////////////////////////////////////////
   return (
-    <div className="container-fluid">
+    <div
+      className="container-fluid"
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="row">
         {toggle && (
           <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
@@ -205,191 +219,235 @@ function EventsAdmin() {
           </div>
         )}
 
-        <div className={`main-content ${toggle ? 'sidebar-visible' : 'sidebar-hidden'}`}>
-          <Navbar Toggle={() => setToggle(!toggle)} />
+        <div className="col-4 col-md-2"></div>
+        <div className="col">
+          <Navbar Toggle={Toggle} />
           
-          <div className="admin-container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="admin-title">Event Management</h4>
-              <button className="btn btn-add" onClick={toggleFormVisibility}>
-                <i className="fas fa-plus"></i>
-                <span>Add Event</span>
-              </button>
-            </div>
+          <div className="d-flex justify-content-between align-items-center mt-4 px-5">
+            <h4 className="text-dark">Data for Events</h4>
+            <button className="btn btn-add d-flex align-items-center" onClick={toggleFormVisibility}>
+              <i className="fas fa-plus me-2"></i>
+              Add
+            </button>
+          </div>
 
-            {isFormVisible && (
-              <div className="admin-form">
-                <form>
+ 
+          {isFormVisible && (
+            <div className="container mt-4 text-white align-item-center">
+              <form>
+                <div className="form-group px-5">
                   <input
                     type="text"
                     className="form-control"
                     id="id"
                     hidden
                     value={id}
-                    onChange={(event) => setId(event.target.value)}
+                    onChange={(event) => {
+                      setId(event.target.value);
+                    }}
                   />
 
-                  <div className="form-group">
-                    <label className="label">Event Name:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="eventName"
-                      value={eventName}
-                      onChange={(event) => setEventName(event.target.value)}
-                    />
-                  </div>
+                  <label className="label">EventName:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="eventName"
+                    value={eventName}
+                    onChange={(event) => {
+                      setEventName(event.target.value);
+                    }}
+                  />
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Description:</label>
-                    <textarea
-                      className="form-control"
-                      id="description"
-                      value={description}
-                      onChange={(event) => setDescription(event.target.value)}
-                      rows="3"
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Description:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="description"
+                    value={description}
+                    onChange={(event) => {
+                      setDescription(event.target.value);
+                    }}
+                  />
+                </div>
+              
 
-                  <div className="form-group">
-                    <label className="label">Image:</label>
-                    <input
-                      type="file"
-                      ref={inputFileRef}
-                      className="form-control"
-                      id="image"
-                      onChange={(event) => {
-                        setSelectedImage(URL.createObjectURL(event.target.files[0]));
-                        setImage("./images/" + event.target.files[0].name);
+                <div className="form-group px-5">
+                  <label className="label">Image:</label>
+                  <input
+                    type="file"
+                    ref={inputFileRef}
+                    className="form-control mb-3"
+                    id="image"
+                    onChange={(event) => {
+                      setSelectedImage(URL.createObjectURL(event.target.files[0]));
+                      setImage("./images/" + event.target.files[0].name);
+                    }}
+                  />
+                  
+                  {selectedImage && (
+                    <img
+                      src={selectedImage}
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        maxHeight: "150px",
+                        marginTop: "10px",
                       }}
+                      alt="SelectedImagePreview"
                     />
-                    {selectedImage && (
-                      <img
-                        src={selectedImage}
-                        className="admin-image mt-3"
-                        alt="Selected event"
-                      />
-                    )}
-                  </div>
+                  )}
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Price:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={price}
-                      onChange={(event) => setPrice(event.target.value)}
-                    />
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Price:</label>
+                  <input
+                    type="text"
+                    className="form-control mb-3"
+                    id="price"
+                    value={price}
+                    onChange={(event) => {
+                      setPrice(event.target.value);
+                    }}
+                  />
+                </div>
+            
+                <div className="form-group px-5">
+                  <label className="label">Category:</label>
+                  <select
+                    className="form-control mb-3"
+                    id="category"
+                    value={categoryId}
+                    onChange={(event) => setCategoryId(event.target.value)}
+                  >
+                    <option value="">Select Options</option>
+                    {eventCategories.map((eventCategory) => (
+                      <option key={eventCategory.id} value={eventCategory.id}>
+                        {eventCategory.categoryName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Category:</label>
-                    <select
-                      className="form-control"
-                      id="category"
-                      value={categoryId}
-                      onChange={(event) => setCategoryId(event.target.value)}
-                    >
-                      <option value="">Select Category</option>
-                      {eventCategories.map((eventCategory) => (
-                        <option key={eventCategory.id} value={eventCategory.id}>
-                          {eventCategory.categoryName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="form-group px-5">
+                  <label className="label">Theme:</label>
+                  <select
+                    className="form-control"
+                    id="theme"
+                    value={themeId}
+                    onChange={(event) => setThemeId(event.target.value)}
+                  >
+                    <option value="">Select Theme</option>
+                    {eventThemes.map((theme) => (
+                      <option key={theme.id} value={theme.id}>
+                        {theme.themeName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                  <div className="form-group">
-                    <label className="label">Theme:</label>
-                    <select
-                      className="form-control"
-                      id="theme"
-                      value={themeId}
-                      onChange={(event) => setThemeId(event.target.value)}
-                    >
-                      <option value="">Select Theme</option>
-                      {eventThemes.map((theme) => (
-                        <option key={theme.id} value={theme.id}>
-                          {theme.themeName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
 
-                  <div className="mt-3">
-                    {id ? (
-                      <button className="btn btn-update" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Update
-                      </button>
-                    ) : (
-                      <button className="btn btn-save" onClick={save}>
-                        <i className="fas fa-save me-2"></i>Save
-                      </button>
-                    )}
-                    <button className="btn btn-cancel" onClick={cancel}>
-                      <i className="fas fa-times me-2"></i>Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+                <div className="mt-3">
+                  <button className="btn btn-save" onClick={save}>
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-update"
+                    onClick={update}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="btn btn-cancel "
+                    onClick={cancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+            <br />
+
 
             {isAlertVisible && (
-              <div className={`admin-alert ${alertType}`}>
-                {alertMessage}
-              </div>
-            )}
+            <div
+              className={`alert ${alertType}`}
+            >
+              {alertMessage}
+            </div>
+          )}
 
-            <div className="table-responsive">
-              <table className="admin-table">
+
+            <div className="search-event-admin">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control-search me-2"
+              />
+            <button className="btn btn-search-event me-2" onClick={handleSearch}>Search
+              <i className="fas fa-search"></i>
+            </button>
+
+            </div>
+
+            <div className="table-responsive m-4 px-4">
+              <table className="table border-gray">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Event Name</th>
+                    <th scope="col">EventName</th>
                     <th scope="col">Description</th>
                     <th scope="col">Image</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
-                    <th scope="col">Theme</th>
+                    <th scope="col">Theme</th> 
                     <th scope="col">Options</th>
                   </tr>
                 </thead>
                 <tbody>
                   {events.map((event) => (
-                    <tr key={event.id}>
-                      <td>{event.id}</td>
-                      <td>{event.eventName}</td>
-                      <td className="description-cell">{event.description}</td>
-                      <td>
-                        <img
-                          src={event.image}
-                          className="admin-image"
-                          alt="Event"
-                        />
-                      </td>
-                      <td>${event.price}</td>
-                      <td>{event.eventCategories.categoryName}</td>
-                      <td>{event.eventThemes.themeName}</td>
-                      <td className="options-cell d-flex justify-content-center align-items-center">
-                        <button
-                          type="button"
-                          className="btn btn-edit mx-2 d-flex align-items-center"
-                          onClick={() => editEvents(event)}
-                        >
-                          <i className="fas fa-edit"></i>
-                          <span className="ms-2">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-delete mx-2 d-flex align-items-center"
-                          onClick={() => deleteEvents(event.id)}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                          <span className="ms-2">Delete</span>
-                        </button>
-                      </td>
-                    </tr>
+                      <tr key={event.id}>
+                        <td>{event.id}</td>
+                        <td>{event.eventName}</td>
+                        <td className="description-cell">{event.description}</td>
+                        <td>
+                          <img
+                            src={event.image}
+                            style={{
+                              maxWidth: "100%",
+                              height: "auto",
+                              maxHeight: "150px",
+                            }}
+                            alt="EventPhoto"
+                          />
+                        </td>
+                        <td>{event.price}</td>
+                        <td>{event.eventCategories.categoryName}</td>
+                        <td>{event.eventThemes.themeName}</td> 
+                        <td className="options-cell d-flex justify-content-center align-items-center">
+                            <button
+                              type="button"
+                              className="btn btn-edit mx-2 d-flex align-items-center"
+                              onClick={() => editEvents(event)}
+                            >
+                               <i className="fas fa-edit"></i>
+                               <span className="ms-2">Edit</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-delete mx-2 d-flex align-items-center"
+                              onClick={() => deleteEvents(event.id)}
+                            >
+                               <i className="fas fa-trash-alt"></i>
+                               <span className="ms-2">Delete</span>
+                            </button>
+                        </td>
+                      </tr>
+                  
                   ))}
                 </tbody>
               </table>
@@ -397,7 +455,6 @@ function EventsAdmin() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
