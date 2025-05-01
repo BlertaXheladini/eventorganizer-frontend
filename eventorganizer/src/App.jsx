@@ -26,6 +26,7 @@ import AddFeedback from "./user/Home/AddFeedback.jsx";
 import Contact from "./user/Contact/Contact";
 import UserReservation from "./user/UserReservations/UserReservation";
 import PaymentForm from "./user/Payment/PaymentForm";
+import UserProfile from "./user/UserProfile/UserProfile.jsx";
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
        <Route path="/" element={<Home />} />
        <Route path="/home" element={<Home />} />
        <Route path="/aboutus" element={<AboutUs />} />
+       <Route path="/profile" element={<UserProfile />} />
     </Routes>
   </Router>
   )

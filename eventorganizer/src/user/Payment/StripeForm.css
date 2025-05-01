@@ -1,50 +1,138 @@
-/* StripeForm.css */
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+
+
 .stripeFormContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .stripeFormBox {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stripeFormBox h2 {
-    margin-bottom: 1.5rem;
-  }
-  
-  .inputContainerStripe {
-    margin-bottom: 1rem;
-  }
-  
-  .inputContainerStripe label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  .inputContainerStripe input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .inputButtonStripe {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #6772e5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .inputButtonStripe:hover {
-    background-color: #5469d4;
-  }
-  
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #fdfdfd 0%, #eeeeee 100%);
+}
+
+.leftImageContainer {
+  flex: 1; 
+  background-image: url('/src/User/images/engagement.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+}
+
+.rightFormContainer {
+  flex: 1; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.stripeFormBox {
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease-in-out;
+  width: 500px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.stripeFormBox h2 {
+  font-family: 'Allura', cursive;
+  font-weight: bold;
+  font-size: 46px;
+  margin-bottom: 20px;
+}
+
+.inputContainerStripe {
+  margin-bottom: 20px;
+}
+
+.inputContainerStripe label {
+  font-family: "Unbounded", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left;
+}
+
+.inputContainerStripe {
+  text-align: left; 
+}
+
+.inputContainerStripe label {
+  font-family: "Unbounded", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left; 
+  display: block; 
+  margin-bottom: 3px; 
+  padding-left: 20px;
+
+}
+
+.inputContainerStripe input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-family: "Unbounded", sans-serif;
+  text-align: left;
+  width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.inputContainerStripe input[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+}
+
+.inputButtonStripe {
+  background-color: #3e8628 !important;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+  width: 70%;
+  text-transform: uppercase;
+  font-family: "Gruppo", sans-serif;
+  font-weight: bolder;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+.inputButtonStripe:hover {
+  background-color: #235326 !important;
+}
+
+.paymentSuccessMessage {
+  padding: 35px;
+  background-color: rgba(33, 205, 65, 0.47);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  text-align: center;
+  font-family: 'Unbounded', sans-serif;
+  color: black;
+}
+
+.paymentSuccessMessage h2 {
+  font-family: 'Allura', cursive;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.paymentSuccessMessage p {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.cardImage {
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 400px; 
+  height: 50px; 
+}

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify'; 
 import './UserReservation.css';
 
+
 export default function UserReservation() {
   const location = useLocation();
   const eventDetails = location.state || {};
@@ -30,6 +31,12 @@ export default function UserReservation() {
       .then((data) => setEvents(data))
       .catch((error) => console.error('Error fetching events:', error));
   }, []);
+
+
+  const handleBackClick = () => {
+    navigate(`/event/${eventDetails.eventId}`); // Navigo te faqja e detajeve të ngjarjes
+  };
+
 
   const handleEventChange = (e) => {
     const selectedEvent = events.find((event) => event.id === Number(e.target.value));
@@ -88,6 +95,9 @@ export default function UserReservation() {
 
   return (
     <div className="reservationContainer">
+          <button className="backButton" onClick={handleBackClick}>
+            Back
+          </button>
       <div className="reservationBox">
         <h2>Make Your Reservation</h2>
         <form onSubmit={(e) => e.preventDefault()}>

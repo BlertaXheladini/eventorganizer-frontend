@@ -12,6 +12,9 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('roleId');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
     toast.success('Logged out successfully!', {
       className: 'custom-toast',
     });
@@ -25,10 +28,10 @@ const Navbar = () => {
         <div className="icons">
           {!roleId ? (
             <>
-              <Link to="/login" style={{textDecoration:'none'}}>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
                 <button id="loginButton"><i className="bi bi-person-fill-up"></i>Login</button>
               </Link>
-              <Link to="/register" style={{textDecoration:'none'}}>
+              <Link to="/register" style={{ textDecoration: 'none' }}>
                 <button id="registerButton"><i className="bi bi-person-add"></i>Register</button>
               </Link>
             </>
@@ -55,18 +58,24 @@ const Navbar = () => {
             <Link to="/restaurantlist" className="nav-link">Restaurants</Link>
           </li>
           <li>
-          <Link to="/contact" className="nav-link">Contact</Link>
+            <Link to="/contact" className="nav-link">Contact</Link>
           </li>
           {roleId === '1' && (
-          <li>
-            <Link to="/dashboard" className="nav-link">Dashboard</Link>
-          </li>
+            <li>
+              <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            </li>
+          )}
+          {/* Kontrollo nëse përdoruesi është loguar për të shfaqur linkun e profilit */}
+          {roleId && (
+            <li>
+              <Link to="/profile" className="nav-link">Profile</Link>
+            </li>
           )}
         </ul>
       </div>
       <ToastContainer />
     </div>
   );
-}
+};
 
 export default Navbar;
