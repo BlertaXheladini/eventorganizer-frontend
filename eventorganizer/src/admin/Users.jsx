@@ -19,6 +19,7 @@ function Users() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [roleId, setRoleId] = useState("");
+  const [Roles, setRoles] = useState([]); // Për rolet
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
@@ -48,6 +49,18 @@ function Users() {
       console.error("Error loading Users:", err);
     }
   }
+
+   // Ngarko të gjitha rolet
+   async function loadRoles() {
+    try {
+      const result = await axios.get("https://localhost:7214/api/Roles/GetAllList"); // Endpoin për rolet
+      setRoles(result.data);
+    } catch (err) {
+      console.error("Error loading roles:", err);
+    }
+  }
+
+  // Ruaj përdoruesin e ri
 
   async function save(e) {
     e.preventDefault();
