@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
@@ -11,7 +12,7 @@
     justify-content: center;
     height: 100vh;
     background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
-      url('/src/User/images/event7.jpg');
+      url('/src/User/images/event4.jpg');
     background-size: cover;
     background-position: center;
   }

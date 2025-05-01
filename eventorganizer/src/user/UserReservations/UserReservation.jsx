@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Importo useNavigate
-import { toast, ToastContainer } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify'; 
 import './UserReservation.css';
 
 export default function UserReservation() {
   const location = useLocation();
   const eventDetails = location.state || {};
-  const navigate = useNavigate(); // Inicializo useNavigate
+  const navigate = useNavigate();
 
   const [reservationDate, setReservationDate] = useState('');
   const [totalPrice, setTotalPrice] = useState(eventDetails.eventPrice || '');
@@ -39,9 +39,7 @@ export default function UserReservation() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handlePaymentClick = async () => {
     const reservationData = {
       name: firstName,
       surname: lastName,
@@ -50,17 +48,34 @@ export default function UserReservation() {
       userID: Number(userId),
       eventID,
     };
-
+  
     try {
       const response = await fetch('https://localhost:7214/api/Reservation/AddReservation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reservationData),
       });
-
+  
       if (response.ok) {
-        toast.success('Reservation was made successfully!');
-        setTimeout(() => navigate('/'), 2000); // Ridrejto në Home pas 2 sekondash
+        const result = await response.json();
+        console.log('Server response:', result); // Printo përgjigjen e serverit
+  
+        const reservationId = result.reservationID; // Përdor reservationID në vend të reservationId
+  
+        if (reservationId) {
+          console.log('Reservation ID:', reservationId);
+  
+          // Ruaj të dhënat në localStorage
+          localStorage.setItem('name', firstName);
+          localStorage.setItem('surname', lastName);
+          localStorage.setItem('amount', totalPrice);
+          localStorage.setItem('reservationId', reservationId); // Ruaj reservationId në localStorage
+  
+          navigate('/paymentform');
+        } else {
+          console.error('Reservation ID is undefined.');
+          toast.error('Reservation failed. Please try again.');
+        }
       } else {
         toast.error(`Date ${reservationDate} for this event is reserved!`);
       }
@@ -69,12 +84,13 @@ export default function UserReservation() {
       toast.error('An error occurred!');
     }
   };
+  
 
   return (
     <div className="reservationContainer">
       <div className="reservationBox">
         <h2>Make Your Reservation</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="inputContainer-reservation">
             <label>Name</label>
             <input type="text" value={firstName || ""} required readOnly />
@@ -95,7 +111,9 @@ export default function UserReservation() {
             <label>Total Price</label>
             <input type="number" value={totalPrice || ""} required readOnly />
           </div>
-          <button type="submit" className="inputButton">Book Now</button>
+          <button type="button" className="inputButton" onClick={handlePaymentClick}>
+            Book Now
+          </button>
           <ToastContainer />
         </form>
       </div>

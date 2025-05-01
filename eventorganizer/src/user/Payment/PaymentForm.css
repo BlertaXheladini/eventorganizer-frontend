@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+ 
+ 
+ /* Stili kryesor për komponentin e pagesës */
+ .paymentFormContainer {
+     flex-direction: column;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+     background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+       url('/src/User/images/event3.jpeg'); 
+     background-size: cover;
+     background-position: center;
+   }
+   
+   .paymentFormBox {
+     padding: 30px;
+     background-color: rgba(255, 255, 255, 0.475);
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+     transition: transform 0.2s ease-in-out;
+     width: 500px;
+     border-radius: 5px;
+   }
+   
+   .paymentFormBox h2 {
+     font-family: 'Allura', cursive;
+     font-weight: bold;
+     font-size: 46px;
+     text-align: center;
+   }
+   
+   .inputContainerPayment {
+     margin-bottom: 20px;
+   }
+   
+   .inputContainerPayment label {
+     font-family: "Unbounded", sans-serif;
+     font-weight: bold;
+     font-size: 14px;
+     padding-left: 26px;
+   }
+   
+   .inputContainerPayment input {
+     padding: 10px 15px;
+     border: 1px solid #ccc;
+     border-radius: 7px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+     font-size: 13px;
+     font-family: "Unbounded", sans-serif;
+     text-align: left;
+     width: 400px;
+     margin: 0 auto;
+     display: block;
+   }
+   
+   .inputContainerPayment input[readonly] {
+     background-color: #f9f9f9;
+     color: #666;
+   }
+   
+   .inputContainerPayment > .errorLabel {
+     color: red;
+     font-size: 12px;
+     margin-top: 5px;
+   }
+   
+   .inputButtonPayment {
+     background-color: #ff7b54 !important;
+     color: white;
+     padding: 8px 20px;
+     border: none;
+     cursor: pointer;
+     width: 50%;
+     text-transform: uppercase;
+     font-family: "Gruppo", sans-serif;
+     font-weight: bolder;
+     margin: 0 auto;
+     text-align: center;
+     display: block;
+     font-size: 16px;
+   }
+   
+   .inputButtonPayment:hover {
+     background-color: #e76541 !important;
+   }
+   

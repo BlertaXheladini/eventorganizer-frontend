@@ -25,6 +25,7 @@ import FeedbackAdmin from "./Admin/FeedbackAdmin";
 import AddFeedback from "./user/Home/AddFeedback.jsx";
 import Contact from "./user/Contact/Contact";
 import UserReservation from "./user/UserReservations/UserReservation";
+import PaymentForm from "./user/Payment/PaymentForm";
 
 function App() {
 
@@ -55,11 +56,7 @@ function App() {
       <Route path="/addfeedback" element={<AddFeedback />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/reservationForUser" element = {<UserReservation/>}/>
-      
-
-
-
-       {/*User Part*/}
+      <Route path="/paymentform" element = {<PaymentForm/>}/>
        <Route path="/" element={<Home />} />
        <Route path="/home" element={<Home />} />
        <Route path="/aboutus" element={<AboutUs />} />
