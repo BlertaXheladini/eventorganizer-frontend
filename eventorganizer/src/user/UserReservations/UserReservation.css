@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
+
+
 /* Stili kryesor për komponentin e rezervimeve */
 .reservationContainer {
     flex-direction: column;
@@ -16,22 +21,29 @@
     background-color: rgba(255, 255, 255, 0.475);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
     transition: transform 0.2s ease-in-out;
-    width: 420px;
+    width: 500px;
     border-radius: 5px;
   }
   
-  .titleContainer h2 {
+  .reservationBox h2 {
     font-family: 'Allura', cursive;
     font-weight: bold;
-    font-size: 45px;
+    font-size: 46px;
     text-align: center;
   }
   
-  .inputContainer {
+  .inputContainer-reservation {
     margin-bottom: 20px;
   }
+
+  .inputContainer-reservation label{
+    font-family: "Unbounded", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding-left: 26px;
+  }
   
-  .inputContainer input {
+  .inputContainer-reservation input {
     padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 7px;
@@ -39,17 +51,17 @@
     font-size: 13px;
     font-family: "Unbounded", sans-serif;
     text-align: left;
-    width: 350px;
+    width: 400px;
     margin: 0 auto;
     display: block;
   }
   
-  .inputContainer input[readonly] {
+  .inputContainer-reservation input[readonly] {
     background-color: #f9f9f9;
     color: #666;
   }
   
-  .inputContainer > .errorLabel {
+  .inputContainer-reservation > .errorLabel {
     color: red;
     font-size: 12px;
     margin-top: 5px;

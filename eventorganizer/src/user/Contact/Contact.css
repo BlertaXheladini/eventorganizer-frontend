@@ -2,16 +2,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
 
-.contact-form-container {
-    max-width: 600px;
-    margin: 40px auto;
+html, body {
+    margin: 0;
+    padding: 0;
+    /* overflow-y: hidden;  */
+}
+
+
+.contact-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    max-width: 1000px; 
+    margin: 0 auto;
+}
+
+
+.contact-image {
+    max-width: 40%; 
+    height: auto; 
+    margin-right: 0; 
+    margin-left: -130px; 
+    margin-bottom: 130px; 
+    position: relative; 
+}
+
+
+.contact-form {
+    flex-grow: 1;
     padding: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 70px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 600px; 
     transition: transform 0.2s ease-in-out;
 }
 
-.contact-form-container h2 {
+
+.contact-form h2 {
     text-align: center;
     margin-bottom: 20px;
     font-family: 'Allura', cursive;
@@ -20,9 +50,11 @@
     font-size: 35px;
 }
 
+
 .form-group-contact {
     margin-bottom: 10px;
 }
+
 
 .form-group-contact label {
     display: block;
@@ -32,6 +64,7 @@
     font-size: 14px;
 }
 
+
 .form-group-contact input,
 .form-group-contact textarea {
     width: 100%;
@@ -40,6 +73,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 
 .text-center button {
     background-color: #ccc;
@@ -51,6 +85,7 @@
     font-size: 16px;
 }
 
+
 .alert-contact {
     margin-top: 20px;
     padding: 10px;
@@ -58,8 +93,10 @@
 }
 
 .alert-success-contact {
-    background-color: #4CAF50;
+    background-color: #1d591f;
     color: white;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
 }
 
 .alert-danger-contact {
@@ -67,7 +104,8 @@
     color: white;
 }
 
-.btn-contact{
+
+.btn-contact {
     background-color: #ff7b54;
     color: white;
     text-transform: uppercase;
@@ -78,6 +116,6 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.btn-contact:hover{
+.btn-contact:hover {
     background-color: #e76541;
 }

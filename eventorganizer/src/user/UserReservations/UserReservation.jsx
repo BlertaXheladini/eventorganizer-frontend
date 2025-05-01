@@ -59,42 +59,43 @@ export default function UserReservation() {
       });
 
       if (response.ok) {
-        toast.success('Rezervimi u krijua me sukses!');
+        toast.success('Reservation was made successfully!');
         setTimeout(() => navigate('/'), 2000); // Ridrejto në Home pas 2 sekondash
       } else {
-        toast.error(`Data ${reservationDate} për këtë event është e zënë!`);
+        toast.error(`Date ${reservationDate} for this event is reserved!`);
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Ka ndodhur një gabim.');
+      toast.error('An error occurred!');
     }
   };
 
   return (
     <div className="reservationContainer">
       <div className="reservationBox">
+        <h2>Make Your Reservation</h2>
         <form onSubmit={handleSubmit}>
-          <div className="inputContainer">
-            <label>Emri</label>
+          <div className="inputContainer-reservation">
+            <label>Name</label>
             <input type="text" value={firstName || ""} required readOnly />
           </div>
-          <div className="inputContainer">
-            <label>Mbiemri</label>
+          <div className="inputContainer-reservation">
+            <label>Surname</label>
             <input type="text" value={lastName || ""} required readOnly />
           </div>
-          <div className="inputContainer">
-            <label>Data e Rezervimit</label>
+          <div className="inputContainer-reservation">
+            <label>Booking Date</label>
             <input type="date" value={reservationDate} onChange={(e) => setReservationDate(e.target.value)} required />
           </div>
-          <div className="inputContainer">
-            <label>Eventi</label>
+          <div className="inputContainer-reservation">
+            <label>Event</label>
             <input type="text" value={eventDetails.eventName || ""} required readOnly />
           </div>
-          <div className="inputContainer">
-            <label>Çmimi Total</label>
+          <div className="inputContainer-reservation">
+            <label>Total Price</label>
             <input type="number" value={totalPrice || ""} required readOnly />
           </div>
-          <button type="submit" className="inputButton">Krijo Rezervimin</button>
+          <button type="submit" className="inputButton">Book Now</button>
           <ToastContainer />
         </form>
       </div>
