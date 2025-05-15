@@ -46,6 +46,7 @@ const Login = () => {
 
     try {
       const response = await axios.post('http://localhost:5091/api/Users/Login', userData);
+      console.log(response);
       
       if (response.status === 200) {
         const { roleId, userId, firstName, lastName, AccessToken, RefreshToken } = response.data;

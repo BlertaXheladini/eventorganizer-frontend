@@ -55,11 +55,57 @@ function Users() {
   };
 
   useEffect(() => {
+    const checkTokenExpiration = () => {
+      const token = localStorage.getItem('token');
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
+      
+      console.log('Token Status Check:', {
+        hasToken: !!token,
+        expirationTime: tokenExpiration ? new Date(parseInt(tokenExpiration)).toLocaleTimeString() : 'No expiration time',
+        currentTime: new Date().toLocaleTimeString(),
+        timeRemaining: tokenExpiration ? Math.max(0, (parseInt(tokenExpiration) - new Date().getTime()) / 1000 / 60) : 0
+      });
+      
+      if (token && tokenExpiration) {
+        const now = new Date().getTime();
+        if (now > parseInt(tokenExpiration)) {
+          console.log('Token has expired! Redirecting to login...');
+          localStorage.removeItem('token');
+          localStorage.removeItem('tokenExpiration');
+          localStorage.removeItem('roleId');
+          navigate('/login');
+        }
+      }
+    };
+
+    // Check token expiration every minute
+    const interval = setInterval(checkTokenExpiration, 60000);
+    
+    // Initial check
+    checkTokenExpiration();
+
+    // Load data
     (async () => {
       await loadUsers();
-      await loadRoles(); // Thirrja për të marrë rolet
+      await loadRoles();
     })();
-  }, []);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, [navigate]);
+
+  // Add this function to handle successful login
+  const handleSuccessfulLogin = (token) => {
+    const expirationTime = new Date().getTime() + 10 * 60 * 1000; // 10 minutes from now
+    localStorage.setItem('token', token);
+    localStorage.setItem('tokenExpiration', expirationTime.toString());
+    
+    console.log('New Token Set:', {
+      token: token.substring(0, 10) + '...', // Show only first 10 chars for security
+      expiresAt: new Date(expirationTime).toLocaleTimeString(),
+      timeRemaining: '10 minutes'
+    });
+  };
 
   // Ngarko të gjithë përdoruesit
   async function loadUsers() {
@@ -85,6 +131,16 @@ function Users() {
   async function save(e) {
     e.preventDefault();
     try {
+      // Check token expiration before making the request
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
+      if (tokenExpiration && new Date().getTime() > parseInt(tokenExpiration)) {
+        console.log('Token expired during save operation');
+        showAlert("Your session has expired. Please log in again.", "alert-danger");
+        navigate('/login');
+        return;
+      }
+
+      console.log('Saving user with valid token');
       await axios.post("http://localhost:5091/api/Users/Register", {
         firstName: FirstName,
         lastName: LastName,
@@ -98,8 +154,8 @@ function Users() {
       setIsFormVisible(false);
       loadUsers();
     } catch (err) {
+      console.error('Error during save operation:', err);
       showAlert(`Error: ${err.response.data}`, "alert-danger");
-      console.error("Error saving user:", err.response.data);
     }
   }
 
