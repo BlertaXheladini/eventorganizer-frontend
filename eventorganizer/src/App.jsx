@@ -14,7 +14,7 @@ import ContactAdmin from './admin/ContactAdmin';
 import Users from "./admin/Users";
 import Reservations from "./admin/Reservations"
 import Home from "./user/Home/Home";
-import AboutUs from "./user/AboutUs/AboutUs";
+import AboutUs from "./user/AboutUs/AboutUs.jsx";
 import RestaurantList from "./user/Restaurants/RestaurantList";
 import Login from "./login/Login";
 import Register from "./register/Register";
