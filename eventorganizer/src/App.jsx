@@ -16,7 +16,7 @@ import Reservations from "./admin/Reservations"
 import Home from "./user/Home/Home";
 import AboutUs from "./user/AboutUs/AboutUs";
 import RestaurantList from "./user/Restaurants/RestaurantList";
-import Login from "./login/login";
+import Login from "./login/Login";
 import Register from "./register/Register";
 import RestaurantDetails from "./user/Restaurants/RestaurantDetails";
 import EventList from "./user/Events/EventList";
