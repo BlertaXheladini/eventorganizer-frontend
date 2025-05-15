@@ -22,7 +22,7 @@ import RestaurantDetails from "./user/Restaurants/RestaurantDetails";
 import EventList from "./user/Events/EventList";
 import EventDetails from "./user/Events/EventDetails";
 import StaffList from "./user/Staff/StaffList"; 
-import FeedbackAdmin from "./Admin/FeedbackAdmin";
+import FeedbackAdmin from "./admin/FeedbackAdmin";
 import AddFeedback from "./user/Home/AddFeedback.jsx";
 import Contact from "./user/Contact/Contact";
 import UserReservation from "./user/UserReservations/UserReservation";
