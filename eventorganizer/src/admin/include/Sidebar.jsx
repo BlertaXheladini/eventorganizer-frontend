@@ -2,7 +2,7 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {FaUserShield, FaHome, FaUsers, FaCalendarDay, FaTag, FaListAlt,FaSignOutAlt, FaUtensils, FaConciergeBell, FaUserTie, FaEnvelope,FaComments,} from "react-icons/fa";
-import "../style.css";
+// import "../style.css";
 import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 
