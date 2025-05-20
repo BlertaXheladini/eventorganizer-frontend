@@ -1,6 +1,6 @@
 // Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -121,7 +121,7 @@ const Login = () => {
           <input className="inputButton" type="button" onClick={onLoginClick} value={'Log in'} />
         </div>
         <div className="forgotPasswordContainer">
-          <a href="/forgot-password" className="forgotPasswordLink">Forgot Password?</a>
+          <Link to="/forgot-password" className="forgotPasswordLink">Forgot Password?</Link>
         </div>
         <div className="registerContainer">
           <p>Don't have an account!</p>
