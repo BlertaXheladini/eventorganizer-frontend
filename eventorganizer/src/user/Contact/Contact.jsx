@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./contact.css";
+//import "./contact.css";
 import emailjs from '@emailjs/browser';
 
 import Navbar from '../include/Navbar';

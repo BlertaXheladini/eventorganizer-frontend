@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navbar from '../include/Navbar';
 import Footer from '../include/Footer';
 import { FaStar } from 'react-icons/fa'; // Importo ikonën për yjet
-import './aboutus.css';
+//import './aboutus.css';
 import aboutus2 from '../images/aboutus2.jpg'; 
 
 const AboutUs = () => {
