@@ -77,6 +77,23 @@
     background-color: #e76541 !important;
   }
 
+  .forgotPasswordContainer {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .forgotPasswordLink {
+    color: #ff7b54;
+    text-decoration: none;
+    font-family: "Unbounded", sans-serif;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .forgotPasswordLink:hover {
+    color: #e76541;
+    text-decoration: underline;
+  }
   
   .registerContainer p{
     text-align: center;

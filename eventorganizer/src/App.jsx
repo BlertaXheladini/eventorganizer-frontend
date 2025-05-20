@@ -28,6 +28,8 @@ import Contact from "./user/Contact/Contact";
 import UserReservation from "./user/UserReservations/UserReservation";
 import PaymentForm from "./user/Payment/PaymentForm";
 import UserProfile from "./user/UserProfile/UserProfile.jsx";
+import ForgotPassword from "./login/ForgotPassword";
+import ResetPassword from "./login/ResetPassword";
 
 
 function App() {
@@ -128,7 +130,9 @@ function App() {
 
                  {/* Login and Register */}
                  <Route path="/login" element={<Login />} />
-         <Route path="/register" element={<Register />} />
+                 <Route path="/register" element={<Register />} />
+                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                 <Route path="/reset-password" element={<ResetPassword />} />
  
          {/* User Part - Rrugë të mbrojtura për përdoruesit e loguar */}
          <Route

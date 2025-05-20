@@ -119,6 +119,9 @@ const Login = () => {
         <div className="inputContainer">
           <input className="inputButton" type="button" onClick={onLoginClick} value={'Log in'} />
         </div>
+        <div className="forgotPasswordContainer">
+          <a href="/forgot-password" className="forgotPasswordLink">Forgot Password?</a>
+        </div>
         <div className="registerContainer">
           <p>Don't have an account!</p>
           <input className="registerButton" type="button" value={'Register'} onClick={() => navigate('/register')} />
