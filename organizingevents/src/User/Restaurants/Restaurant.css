@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+
+
+.restaurant-container {
+    padding: 20px 150px;
+    margin-bottom: 80px;
+  }
+  
+
+  .restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  
+    gap: 20px;  
+  }
+  
+ 
+  .restaurant-card {
+    display: flex;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 350px;  
+  }
+  
+  
+  .restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  .restaurant-img {
+    width: 50%;  
+    object-fit: cover;
+    height: 100%; 
+  }
+  
+  
+  .restaurant-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;  
+  }
+  
+ 
+  .restaurant-title {
+    font-family: 'Allura', cursive;
+    font-weight: bold;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+ 
+  .restaurant-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  
+  .restaurant-btn {
+    background-color: #ff6f61;
+    color: white;
+    padding: 8px 16px;  
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: "Gruppo", sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    width: 220px;  
+    transition: background-color 0.3s ease;
+    text-align: center; 
+  }
+  
+  .restaurant-btn:hover {
+    background-color: #e55b50;
+  }
+
+  /* CSS për RestaurantDetails.js */
+.container-details {
+  padding: 30px 130px;
+}
+
+.restaurant-details-text {
+padding: 20px;
+max-width: 70%; 
+margin: 0 auto; 
+padding-left: 100px;
+color: #4f4f4f;
+}
+
+.restaurant-title-details {
+font-family: 'Allura', cursive;
+font-size: 45px;
+font-weight: bold;
+color: #000;
+}
+
+.restaurant-location-details {
+font-size: 30px;
+font-weight: bolder;
+color: #000; 
+font-family: "Gruppo", sans-serif;   
+}
+
+.restaurant-img-container-details {
+padding: 10px;
+width: 100%;
+max-width: 100%;
+}
+
+.restaurant-img-details {
+width: 100%;
+height: 430px;
+min-width: 520px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+transition: transform 0.3s ease;
+}
+
+.restaurant-img-details:hover {
+transform: scale(1.05); 
+}
+
+.btn-restaurant-back {
+background-color: #727b84;
+border: none;
+padding: 10px 30px;
+font-size: 18px;
+text-transform: uppercase;
+font-family: "Gruppo", sans-serif;  
+color: #fff;
+font-weight: bolder;
+}
+
+.btn-restaurant-back:hover {
+background-color: #5a6268;
+}
+
+/* Stilizimi i fushës për kërkim */
+.search-bar {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.search-input {
+  padding: 7px 20px;
+  width: 600px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  outline: none;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-family: "Gruppo", sans-serif;
+  font-weight: bolder;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.search-button:hover {
+  background-color: #e55b50;
+  box-shadow: 0 6px 12px rgba(187, 109, 0, 0.3);
+}

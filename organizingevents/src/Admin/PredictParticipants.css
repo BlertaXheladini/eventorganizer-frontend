@@ -1,0 +1,120 @@
+/* Gradient Background */
+.predict-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #a8e6cf, #74b9ff);
+}
+
+/* Card styling */
+.predict-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Titulli */
+.predict-card h2 {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Form Groups */
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+/* Label styling */
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+/* Input Styling */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+/* Input Focus */
+.form-control:focus {
+    border-color: #0984e3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(9, 132, 227, 0.5);
+}
+
+/* Buttons */
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Train Model Button */
+.btn-success {
+    background-color: #2d9b64;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218c58;
+}
+
+/* Predict Button */
+.btn-primary {
+    background-color: #0984e3;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #065ea6;
+}
+
+/* Alert Styling */
+.alert {
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Success Alert */
+.alert-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+/* Error Alert */
+.alert-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Result Box */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #dfe6e9;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #2d3436;
+    text-align: center;
+}
