@@ -105,4 +105,39 @@
   .backButton:hover {
     background-color: #242222;
   }
-  
+  @media (max-width: 600px) {
+  .reservationBox {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .reservationBox h2 {
+    font-size: 32px;
+  }
+
+  .inputContainer-reservation input {
+    width: 100%;
+  }
+
+  .inputButton {
+    width: 100%;
+  }
+
+  .inputContainer-reservation label {
+    padding-left: 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .reservationBox h2 {
+    font-size: 26px;
+  }
+
+  .backButton {
+    padding: 8px 15px;
+    top: 20px;
+    left: 15px;
+    font-size: 14px;
+  }
+}

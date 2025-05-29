@@ -144,3 +144,46 @@
   color: #000;
   font-size: 15px;
 }
+
+/* --- Responsive style për mobile & tablet --- */
+@media (max-width: 768px) {
+  .loginBox {
+    width: 90vw;       /* Gjerësia 90% e viewport-it */
+    height: auto;      /* Lartësi automatike që rritet me përmbajtje */
+    padding: 20px;
+  }
+
+  .inputContainer input {
+    width: 100%;       /* Input-et zënë të gjithë gjerësinë e kutisë */
+    font-size: 16px;   /* Pak më i madh për lexim më të mirë */
+  }
+
+  .inputContainer .inputButton, 
+  .registerContainer .registerButton {
+    width: 100%;       /* Butonat gjithashtu zënë të gjithë gjerësinë */
+  }
+
+  .titleContainer h2 {
+    font-size: 36px;   /* Titulli pak më i vogël në mobile */
+  }
+
+  .mainContainer {
+    padding: 20px 0;
+  }
+}
+
+/* Për telefona shumë të vegjël */
+@media (max-width: 400px) {
+  .loginBox {
+    width: 95vw;
+    padding: 15px;
+  }
+
+  .titleContainer h2 {
+    font-size: 28px;
+  }
+
+  .inputContainer input {
+    font-size: 14px;
+  }
+}

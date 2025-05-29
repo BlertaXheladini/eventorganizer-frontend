@@ -2,52 +2,70 @@
 
 .footer-container {
     background-color: #12112f;
-    padding: 50px;
+    padding: clamp(20px, 6vw, 50px);
     text-align: center;
     color: white;
-  }
-  
-  .footer-links {
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+.footer-links {
     display: flex;
     justify-content: center;
     gap: 25px;
     margin-bottom: 15px;
-  }
-  
-  .footer-links a {
+    flex-wrap: wrap;
+}
+
+.footer-links a {
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-size: clamp(18px, 3vw, 24px);
     transition: color 0.3s ease;
     font-family: "Gruppo", sans-serif;
-  }
-  
-  .footer-links a:hover {
+}
+
+.footer-links a:hover {
     color: #ffbf00; 
-  }
-  
-  .footer-icons {
+}
+
+.footer-icons {
     display: flex;
     justify-content: center;
     gap: 40px;
     margin-bottom: 35px;
     margin-top: 5px;
-  }
-  
-  .footer-icons a {
+    flex-wrap: wrap;
+}
+
+.footer-icons a {
     color: white;
-    font-size: 24px;
+    font-size: clamp(22px, 4vw, 30px);
     transition: color 0.3s ease;
-  }
-  
-  .footer-icons a:hover {
+}
+
+.footer-icons a:hover {
     color: #ffbf00; 
-  }
-  
-  .footer-text {
-    font-size: 16px;
+}
+
+.footer-text {
+    font-size: clamp(16px, 3vw, 22px);
     margin-top: 5px;
     margin-bottom: -5px;
     font-family: "Gruppo", sans-serif;
-  }
+}
+
+@media screen and (max-width: 600px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .footer-icons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .footer-container {
+        padding: 15px 5px;
+    }
+}
   

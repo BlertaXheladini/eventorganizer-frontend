@@ -1,5 +1,5 @@
 // Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,6 +10,7 @@ import logo from '../images/logo.jpg';
 const Navbar = () => {
   const navigate = useNavigate();
   const roleId = localStorage.getItem('roleId');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     // Pastro të gjitha të dhënat nga localStorage
@@ -29,9 +30,19 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
     <div className="navbar-container">
       <div className="navbar-top">
+        {/* Hamburger menu for mobile */}
+        <div className="hamburger" onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <img src={logo} alt="Organizing Events Logo" className="logo-home" />
         <div className="icons">
           {!roleId ? (
@@ -55,7 +66,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-bottom">
-        <ul className="nav-list">
+        <ul className={`nav-list${menuOpen ? ' open' : ''}`}>
           <li>
             <Link to="/" className="nav-link">Home</Link>
           </li>
@@ -83,14 +94,13 @@ const Navbar = () => {
               <Link to="/profile" className="nav-link">Profile</Link>
             </li>
           )}
-          {/* Shfaq Dashboard për SuperAdmin (roleId = '1') dhe Mod (roleId = '2') */}
           {(roleId === '1' || roleId === '2') && (
             <li>
               <Link to="/dashboard" className="nav-link">Dashboard</Link>
             </li>
           )}
           <li>
-          <Link to="/predictParticipants" className="nav-link">Predict Participants</Link>
+            <Link to="/predictParticipants" className="nav-link">Predict Participants</Link>
           </li>
         </ul>
       </div>

@@ -118,3 +118,27 @@
     font-size: 15px;
   }
   
+@media (max-width: 480px) {
+  .registerBox, .loginBox {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .titleContainer-register, .titleContainer h2 {
+    font-size: 36px;
+  }
+
+  .inputContainer-register input,
+  .inputContainer input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .inputContainer-register .inputButton,
+  .inputContainer .inputButton,
+  .loginContainer .loginButton,
+  .registerContainer .registerButton {
+    width: 100%;
+    max-width: none;
+  }
+}

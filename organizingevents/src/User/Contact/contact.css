@@ -5,39 +5,34 @@
 html, body {
     margin: 0;
     padding: 0;
-    /* overflow-y: hidden;  */
 }
-
 
 .contact-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    max-width: 1000px; 
+    max-width: 1000px;
     margin: 0 auto;
     height: 90vh;
+    padding: 20px;
+    flex-wrap: wrap;
 }
 
 .contact-image {
-    max-width: 40%; 
-    height: auto; 
-    margin-right: 0; 
-    margin-left: -100px; 
-    margin-bottom: 170px; 
-    position: relative; 
+    max-width: 40%;
+    height: auto;
+    margin-right: 20px;
+    position: relative;
 }
 
 .contact-form {
     flex-grow: 1;
     padding: 30px;
-    padding-bottom: 30px;
-    margin-bottom: 50px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    max-width: 600px; 
+    max-width: 600px;
     transition: transform 0.2s ease-in-out;
 }
-
 
 .contact-form h2 {
     text-align: center;
@@ -48,11 +43,9 @@ html, body {
     font-size: 35px;
 }
 
-
 .form-group-contact {
     margin-bottom: 10px;
 }
-
 
 .form-group-contact label {
     display: block;
@@ -61,7 +54,6 @@ html, body {
     font-family: "Unbounded", sans-serif;
     font-size: 14px;
 }
-
 
 .form-group-contact input,
 .form-group-contact textarea {
@@ -72,7 +64,6 @@ html, body {
     border-radius: 5px;
 }
 
-
 .text-center button {
     background-color: #ccc;
     border: none;
@@ -82,7 +73,6 @@ html, body {
     border-radius: 5px;
     font-size: 16px;
 }
-
 
 .alert-contact {
     margin-top: 20px;
@@ -102,7 +92,6 @@ html, body {
     color: white;
 }
 
-
 .btn-contact {
     background-color: #ff7b54;
     color: white;
@@ -116,4 +105,25 @@ html, body {
 
 .btn-contact:hover {
     background-color: #e76541;
+}
+@media (max-width: 768px) {
+    .contact-wrapper {
+        flex-direction: column;
+        align-items: center;
+        height: auto; /* hiq height */
+        min-height: auto; /* hiq min-height */
+        justify-content: flex-start; /* ose hiq fare */
+        padding: 20px 0;
+    }
+
+    .contact-image {
+        display: none;
+    }
+
+    .contact-form {
+        width: 90%;
+        margin-top: 100px; /* formën e lë më poshtë */
+        border: 2px solid beige;
+        border-radius: 10px;
+    }
 }

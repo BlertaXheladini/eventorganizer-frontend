@@ -86,4 +86,32 @@
   .inputButtonPayment:hover {
     background-color: #e76541 !important;
   }
-  
+  @media (max-width: 600px) {
+  .paymentFormBox {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .paymentFormBox h2 {
+    font-size: 32px;
+  }
+
+  .inputContainerPayment input {
+    width: 100%;
+  }
+
+  .inputButtonPayment {
+    width: 100%;
+  }
+
+  .inputContainerPayment label {
+    padding-left: 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .paymentFormBox h2 {
+    font-size: 26px;
+  }
+}

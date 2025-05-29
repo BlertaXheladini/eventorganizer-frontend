@@ -177,3 +177,155 @@ background-color: #5a6268;
   background-color: #e55b50;
   box-shadow: 0 6px 12px rgba(187, 109, 0, 0.3);
 }
+
+@media (max-width: 1024px) {
+  .restaurant-container {
+    padding: 20px 60px;
+  }
+
+  .container-details {
+    padding: 20px 40px;
+  }
+
+  .restaurant-details-text {
+    max-width: 90%;
+    padding-left: 20px;
+  }
+
+  .restaurant-img-details {
+    min-width: 100%;
+    height: auto;
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurant-container {
+    padding: 15px 30px;
+  }
+
+  .restaurant-grid {
+    grid-template-columns: 1fr; /* 1 kolone për mobile */
+  }
+
+  .restaurant-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .restaurant-img,
+  .restaurant-details {
+    width: 100%;
+  }
+
+  .restaurant-img {
+    height: 250px;
+  }
+
+  .restaurant-details-text {
+    padding-left: 0;
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .restaurant-title {
+    font-size: 26px;
+  }
+
+  .restaurant-title-details {
+    font-size: 38px;
+    text-align: center;
+  }
+
+  .restaurant-location-details {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .restaurant-img-details {
+    min-width: 100%;
+    height: 280px;
+    max-height: none;
+  }
+
+  .search-input {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .search-button {
+    margin-left: 5px;
+  }
+}@media (max-width: 768px) {
+  .restaurant-container {
+    padding: 15px 30px;
+  }
+
+  .restaurant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .restaurant-img,
+  .restaurant-details {
+    width: 100%;
+  }
+
+  .restaurant-img {
+    height: 250px;
+  }
+
+  .restaurant-details-text {
+    padding-left: 0;
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .restaurant-title {
+    font-size: 26px;
+  }
+
+  .restaurant-title-details {
+    font-size: 38px;
+    text-align: center;
+  }
+
+  .restaurant-location-details {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .restaurant-img-details {
+    min-width: 100%;
+    height: 280px;
+    max-height: none;
+  }
+
+  /* Search bar improved styling */
+  .search-bar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 10px 16px;
+    margin-bottom: 10px;
+  }
+
+  .search-button {
+    width: 100%;
+    max-width: 200px;
+    font-size: 15px;
+    padding: 10px 0;
+    border-radius: 10px;
+  }
+}
